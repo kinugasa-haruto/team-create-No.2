@@ -3,6 +3,7 @@
 int back_state;
 int back_timer;
 
+Conveyor conveyor[2] = { {{0, SCREEN_HALF_H - 50},{SCREEN_W, 100, 0, 0}},{{0, SCREEN_W - 150},{SCREEN_W, 100, 0, 0}} };
 
 void back_init()
 {
@@ -50,5 +51,10 @@ void back_render()
 {
 	// ‰æ–Ê‚ğÂ‚Å“h‚è‚Â‚Ô‚·
 	GameLib::clear(0.3f, 0.5f, 1.0f);
+
+	for (int i = 0; i < 2; i++)
+	{
+		primitive::rect(conveyor[i].GetPosition().x, conveyor[i].GetPosition().y,  conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0), 0.6f, 0.8f, 0.6f);
+	}
 
 }

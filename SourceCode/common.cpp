@@ -2,8 +2,10 @@
 
 //  íËêî
 const FLOAT PI{ DirectX::XM_PI };
-const LONG SCREEN_W{ 100 };
-const LONG SCREEN_H{ 1080 };
+const FLOAT SCREEN_W{ 1920 };
+const FLOAT SCREEN_H{ 1080 };
+const FLOAT SCREEN_HALF_W{ SCREEN_W * 0.5f };
+const FLOAT SCREEN_HALF_H{ SCREEN_H * 0.5f };
 const BOOL FULLSCREEN{ TRUE };
 const LPCWSTR APPLICATION_NAME{ L"C++ project template" };
 

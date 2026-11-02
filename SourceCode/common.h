@@ -12,8 +12,10 @@ using namespace GameLib;
 
 //  íËêî
 extern const FLOAT PI;
-extern const LONG SCREEN_W;
-extern const LONG SCREEN_H;
+extern const FLOAT SCREEN_W;
+extern const FLOAT SCREEN_H;
+extern const FLOAT SCREEN_HALF_W;
+extern const FLOAT SCREEN_HALF_H;
 extern const BOOL FULLSCREEN;
 extern const LPCWSTR APPLICATION_NAME;
 
