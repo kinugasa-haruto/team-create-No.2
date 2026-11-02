@@ -29,7 +29,7 @@ void title_update()
 
 	case 1:
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
-		int a = 0;
+
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
 
