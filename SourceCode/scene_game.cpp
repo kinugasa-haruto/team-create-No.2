@@ -29,7 +29,7 @@ void game_update()
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		
+		//Can();
 
 
 		game_state++;
@@ -37,7 +37,7 @@ void game_update()
 
 	case 2:
 		//////// ’Êí ////////
-
+		int GENERATE(int generate_timer, int generate_num);
 		
 		
 		break;
