@@ -3,6 +3,8 @@
 int game_state;
 int game_timer;
 
+Can can;
+
 void game_init()
 {
 	game_state      = 0;
@@ -27,18 +29,16 @@ void game_update()
 
 	case 1:
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
-
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		//Can();
-
-
+		
 		game_state++;
 		/*fallthrough*/
 
 	case 2:
 		//////// ’Êí ////////
-		int GENERATE(int generate_timer, int generate_num);
-		
+		can.CAN_GENERATE();//ŠÊ‚Ì¶¬ŠÖ”
+		can.CAN_MOVE();//ŠÊ‚ÌˆÚ“®ŠÖ”
+
 		
 		break;
 	}
@@ -52,6 +52,6 @@ void game_update()
 void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
-
+	can.CAN_RENDER();//ŠÊ‚Ì•`‰æŠÖ”
 	
 }
