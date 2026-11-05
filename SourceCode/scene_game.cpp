@@ -53,5 +53,5 @@ void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 
-	
+	back_render();
 }
