@@ -23,6 +23,8 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 	// オーディオの初期設定
 	audio_init();
 
+	srand(unsigned int(NULL));
+
 	while (GameLib::gameLoop())
 	{
 		// シーン切り替え処理

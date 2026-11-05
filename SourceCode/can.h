@@ -13,11 +13,12 @@ private:
 	int generate_num;
 	int can_num;
 	int can_color;
-
+	bool alive = false;
 
 
 public:
 	Can();
+	~Can();
 	void CAN_GENERATE();
 	void CAN_RENDER();
 	void CAN_MOVE();
