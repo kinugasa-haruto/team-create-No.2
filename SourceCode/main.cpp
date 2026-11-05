@@ -11,7 +11,7 @@
 
 //------< 変数 >----------------------------------------------------------------
 int curScene    = SCENE_NONE;
-int nextScene   = SCENE_GAME;
+int nextScene   = SCENE_TITLE;
 
 //------------------------------------------------------------------------------
 //  WinMain（エントリポイント）
@@ -42,6 +42,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			case SCENE_RESULT:
 				result_deinit();
 				break;
+
+			case SCENE_TUTORIAL:
+				tutorial_deinit();
+				break;
 			}
 
 			// 次のシーンに応じた初期設定処理
@@ -57,6 +61,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 			case SCENE_RESULT:
 				result_init();
+				break;
+
+			case SCENE_TUTORIAL:
+				tutorial_init();
 				break;
 			}
 
@@ -86,6 +94,11 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			result_update();
 			result_render();
 			break;
+
+		case SCENE_TUTORIAL:
+			tutorial_update();
+			tutorial_render();
+			break;
 		}
 
 		// デバッグ文字列の描画
@@ -110,6 +123,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	case SCENE_RESULT:
 		result_deinit();
+		break;
+
+	case SCENE_TUTORIAL:
+		tutorial_deinit();
 		break;
 	}
 
