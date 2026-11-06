@@ -21,6 +21,8 @@
 #include "scene_game.h"
 #include "scene_title.h"
 #include "scene_result.h"
+#include "can.h"
+
 #include "tutorial.h"
 
 // namespace
