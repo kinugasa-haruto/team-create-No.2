@@ -2,19 +2,26 @@
 
 int back_state;
 int back_timer;
+Sprite* back;
+Sprite* conveyor1;
+Sprite* conveyor2;
 
-Conveyor conveyor[2] = { {{0, SCREEN_HALF_H - 50},{SCREEN_W, 100, 0, 0}},{{0, SCREEN_W - 150},{SCREEN_W, 100, 0, 0}} };
+Conveyor conveyor[2] = { {{0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},{{0, SCREEN_W - 150},{0, 0, SCREEN_W, 238}} };
 
 void back_init()
 {
 	back_state = 0;
 	back_timer = 0;
+	back = sprite_load(L"./Data/Images/gamen.png");
+	conveyor1 = sprite_load(L"./Data/Images/Konbea_1.png");
+	conveyor2 = sprite_load(L"./Data/Images/Konbea_2.png");
 }
 
 void back_deinit()
 {
-
-
+	safe_delete(conveyor1);
+	safe_delete(conveyor2);
+	safe_delete(back);
 }
 
 void back_update()
@@ -50,10 +57,15 @@ void back_update()
 void back_render()
 {
 	// âÊñ Çê¬Ç≈ìhÇËÇ¬Ç‘Ç∑
+
+	sprite_render(back, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 	
 	for (int i = 0; i < 2; i++)
 	{
-		primitive::rect(conveyor[i].GetPosition().x, conveyor[i].GetPosition().y,  conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0), 0.6f, 0.8f, 0.6f);
+		sprite_render(conveyor1, conveyor[i].GetPosition().x, conveyor[i].GetPosition().y, 1, 1, conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0));
+		sprite_render(conveyor2, conveyor[i].GetPosition().x, conveyor[i].GetPosition().y, 1, 1, conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0));
+	
 	}
+	
 
 }

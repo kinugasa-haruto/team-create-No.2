@@ -24,6 +24,8 @@
 #include "can.h"
 #include "playerController.h"
 
+#include "tutorial.h"
+
 // namespace
 using namespace GameLib;
 using namespace input;

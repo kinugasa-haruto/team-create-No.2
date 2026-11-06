@@ -14,6 +14,7 @@ class Conveyor
 
 public:
 	Conveyor(VECTOR2 pos, VECTOR4 rect) : pos(pos), rect(rect) {};
+	
 	//~Conveyor();
 
 	const VECTOR2 GetPosition() { return pos; }
