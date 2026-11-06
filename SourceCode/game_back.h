@@ -14,6 +14,7 @@ class Conveyor
 
 public:
 	Conveyor(VECTOR2 pos, VECTOR4 rect) : pos(pos), rect(rect) {};
+	
 	//~Conveyor();
 
 	const VECTOR2 GetPosition() { return pos; }
@@ -21,7 +22,6 @@ public:
 	const VECTOR4 GetRect() { return rect; }
 	
 private:
-	Sprite* conveyor1, conveyor2;
 	VECTOR2 pos;
 	VECTOR4 rect;
 };

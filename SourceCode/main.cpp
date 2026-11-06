@@ -11,7 +11,7 @@
 
 //------< 変数 >----------------------------------------------------------------
 int curScene    = SCENE_NONE;
-int nextScene   = SCENE_TITLE;
+int nextScene   = SCENE_GAME;
 
 //------------------------------------------------------------------------------
 //  WinMain（エントリポイント）
@@ -22,6 +22,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	// オーディオの初期設定
 	audio_init();
+	back_init();
 
 	while (GameLib::gameLoop())
 	{
@@ -132,6 +133,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	// オーディオの終了処理
 	audio_deinit();
+	back_deinit();
 
 	// ゲームライブラリの終了処理
 	GameLib::uninit();

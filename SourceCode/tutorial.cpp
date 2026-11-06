@@ -3,6 +3,7 @@
 int tutorial_state;
 int tutorial_timer;
 
+float inv;
 
 void tutorial_init()
 {
@@ -32,6 +33,7 @@ void tutorial_update()
 
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
+		inv = 1.0f;
 
 		tutorial_state++;
 		/*fallthrough*/
@@ -39,6 +41,8 @@ void tutorial_update()
 	case 2:
 		//////// í èÌéû ////////
 
+		inv -= 0.01f;
+		if (inv <= 0.01f) inv = 0;
 		break;
 	}
 
@@ -51,11 +55,7 @@ void tutorial_render()
 	// âÊñ Çê¬Ç≈ìhÇËÇ¬Ç‘Ç∑
 	GameLib::clear(1, 1, 1);
 
-
-
-	for (float inv = 1.0f; inv > 0; inv *= 0.8f)
-	{
-		if (inv <= 0.1f) inv = 0;
-		primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
-	}
+	back_render();
+	primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
+	
 }

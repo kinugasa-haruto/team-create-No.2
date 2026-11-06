@@ -179,7 +179,6 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\common.h" />
     <ClInclude Include="SourceCode\game_back.h" />
     <ClInclude Include="SourceCode\scene_game.h" />
-    <ClInclude Include="SourceCode\scene_result.h" />
     <ClInclude Include="SourceCode\scene_title.h" />
     <ClInclude Include="SourceCode\scene_result.h" />
   </ItemGroup>
