@@ -22,6 +22,7 @@
 #include "scene_title.h"
 #include "scene_result.h"
 #include "can.h"
+#include "playerController.h"
 
 // namespace
 using namespace GameLib;
