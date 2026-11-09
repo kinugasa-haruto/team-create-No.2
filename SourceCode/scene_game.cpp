@@ -3,7 +3,9 @@
 int game_state;
 int game_timer;
 
+Can cans[CAN_NUM];
 Can can;
+playerController player;
 
 void game_init()
 {
@@ -30,14 +32,18 @@ void game_update()
 	case 1:
 		//////// パラメータの設定 ////////
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		
+
 		game_state++;
 		/*fallthrough*/
 
 	case 2:
 		//////// 通常時 ////////
-		can.CAN_GENERATE();//缶の生成関数
-		can.CAN_MOVE();//缶の移動関数
+		can.CAN_GENERATE(cans);		//缶の生成関数
+		can.CAN_MOVE(cans);			//缶の移動関数
+		player.HITCHECK_CAN(cans);	//缶と叩くエリアの当たり判定関数
+		player.PLAYER_HIT_CAN(cans);//playerの叩く動作関数
+		player.FLICKCHECK_CAN(cans);//缶と弾くエリアの当たり判定関数
+		player.PLAYER_FLICK_CAN(cans);//playerの弾く動作関数
 
 		
 		break;
@@ -52,6 +58,8 @@ void game_update()
 void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
-	can.CAN_RENDER();//缶の描画関数
-	
+	player.HITAREA_RENDER();	//叩くエリアの描画
+	player.FLICKAREA_RENDER();	//弾くエリアの描画
+	can.CAN_RENDER(cans);		//缶の描画関数
+
 }
