@@ -9,6 +9,52 @@
 //
 //******************************************************************************
 
+class Title
+{
+public:
+
+	static Title Instance()
+	{
+		Title instance;
+		return instance;
+	}
+
+	~Title()
+	{
+		selected = 0;
+		select = false;
+		selectTimer = 0;
+		inv = 0;
+	}
+
+	int GetSelected() { return selected; }
+	void ChangeSelected(const int select) { selected = select; }
+
+	bool GetSelect() { return select; }
+	void SetSelect(bool select) { this->select = select; }
+
+	float GetTimer() { return selectTimer; }
+	void AddTimer(float timer) { selectTimer += timer; }
+
+	float GetInv() { return inv; }
+	void AddInv(float inv) { this->inv += inv; }
+
+
+private:
+	Title()
+	{
+		selected = 0;
+		select = false;
+		selectTimer = 0;
+		inv = 0;
+	}
+
+	float inv;
+	int selected;
+	bool select;
+	float selectTimer;
+};
+
 // 関数のプロトタイプ宣言
 void title_init();
 void title_deinit();

@@ -16,11 +16,20 @@ public:
 	Conveyor(VECTOR2 pos, VECTOR4 rect) : pos(pos), rect(rect) {};
 	
 	//~Conveyor();
-
+	
 	const VECTOR2 GetPosition() { return pos; }
 
 	const VECTOR4 GetRect() { return rect; }
 	
+	void SetRect(VECTOR4 rect) { this->rect = rect; }
+
+	void AddRectX(const float rect) { this->rect.x = this->rect.x + rect;}
+	void AddRectZ(const float rect) { this->rect.z = this->rect.z + rect;}
+
+	void SetPositionX(const float pos) { this->pos.x = pos; }
+
+	void AddPositionX(const float pos) { this->pos.x += pos; }
+
 private:
 	VECTOR2 pos;
 	VECTOR4 rect;

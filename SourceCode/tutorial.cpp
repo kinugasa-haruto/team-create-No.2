@@ -13,7 +13,7 @@ void tutorial_init()
 
 void tutorial_deinit()
 {
-
+	
 
 }
 
@@ -43,6 +43,7 @@ void tutorial_update()
 
 		inv -= 0.01f;
 		if (inv <= 0.01f) inv = 0;
+		back_update();
 		break;
 	}
 
