@@ -22,6 +22,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	// オーディオの初期設定
 	audio_init();
+	back_init();
 
 	while (GameLib::gameLoop())
 	{
@@ -42,6 +43,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			case SCENE_RESULT:
 				result_deinit();
 				break;
+
+			case SCENE_TUTORIAL:
+				tutorial_deinit();
+				break;
 			}
 
 			// 次のシーンに応じた初期設定処理
@@ -57,6 +62,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 			case SCENE_RESULT:
 				result_init();
+				break;
+
+			case SCENE_TUTORIAL:
+				tutorial_init();
 				break;
 			}
 
@@ -86,6 +95,11 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 			result_update();
 			result_render();
 			break;
+
+		case SCENE_TUTORIAL:
+			tutorial_update();
+			tutorial_render();
+			break;
 		}
 
 		// デバッグ文字列の描画
@@ -111,10 +125,15 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 	case SCENE_RESULT:
 		result_deinit();
 		break;
+
+	case SCENE_TUTORIAL:
+		tutorial_deinit();
+		break;
 	}
 
 	// オーディオの終了処理
 	audio_deinit();
+	back_deinit();
 
 	// ゲームライブラリの終了処理
 	GameLib::uninit();
