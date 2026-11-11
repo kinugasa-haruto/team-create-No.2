@@ -19,14 +19,6 @@ public:
 		return instance;
 	}
 
-	~Title()
-	{
-		selected = 0;
-		select = false;
-		selectTimer = 0;
-		inv = 0;
-	}
-
 	int GetSelected() { return selected; }
 	void ChangeSelected(const int select) { selected = select; }
 

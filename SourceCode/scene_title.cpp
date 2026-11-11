@@ -13,7 +13,6 @@ void title_init()
 
 void title_deinit()
 {
-	title.~Title();
 
 }
 

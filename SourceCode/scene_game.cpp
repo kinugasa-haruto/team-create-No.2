@@ -38,6 +38,7 @@ void game_update()
 
 	case 2:
 		//////// 通常時 ////////
+		back_update();
 		can.CAN_GENERATE(cans);		//缶の生成関数
 		can.CAN_MOVE(cans);			//缶の移動関数
 		player.HITCHECK_CAN(cans);	//缶と叩くエリアの当たり判定関数
@@ -58,6 +59,7 @@ void game_update()
 void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
+	back_render();
 	player.HITAREA_RENDER();	//叩くエリアの描画
 	player.FLICKAREA_RENDER();	//弾くエリアの描画
 	can.CAN_RENDER(cans);		//缶の描画関数

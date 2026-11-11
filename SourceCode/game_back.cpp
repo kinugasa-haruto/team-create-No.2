@@ -3,6 +3,7 @@
 int back_state;
 int back_timer;
 Sprite* back;
+Sprite* judgeArea;
 Sprite* conveyor1;
 Sprite* conveyor2;
 
@@ -15,6 +16,7 @@ void back_init()
 	back_state = 0;
 	back_timer = 0;
 	back = sprite_load(L"./Data/Images/gamen.png");
+	judgeArea = sprite_load(L"./Data/Images/judge_area.png");
 	conveyor1 = sprite_load(L"./Data/Images/Konbea_1.png");
 	conveyor2 = sprite_load(L"./Data/Images/Konbea_2.png");
 }
@@ -24,6 +26,7 @@ void back_deinit()
 	safe_delete(conveyor1);
 	safe_delete(conveyor2);
 	safe_delete(back);
+	safe_delete(judgeArea);
 }
 
 void back_update()
@@ -84,6 +87,7 @@ void back_render()
 			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, 0 ,conveyor_2[i][j].GetRect().y, SCREEN_W, conveyor_2[i][j].GetRect().w, ToRadian(0));
 			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, conveyor_2[i][j].GetRect().x, conveyor_2[i][j].GetRect().y, conveyor_2[i][j].GetRect().z, conveyor_2[i][j].GetRect().w, ToRadian(0));
 		}
+		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, conveyor_1[i].GetRect().y, SCREEN_W, conveyor_1[i].GetRect().w, ToRadian(0));
 	}
 
 	
