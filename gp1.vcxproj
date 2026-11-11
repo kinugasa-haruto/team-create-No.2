@@ -177,6 +177,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\audio.h" />
     <ClInclude Include="SourceCode\can.h" />
     <ClInclude Include="SourceCode\common.h" />
+    <ClInclude Include="SourceCode\easing.h" />
     <ClInclude Include="SourceCode\game_back.h" />
     <ClInclude Include="SourceCode\playerController.h" />
     <ClInclude Include="SourceCode\scene_game.h" />
@@ -202,6 +203,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\audio.cpp" />
     <ClCompile Include="SourceCode\can.cpp" />
     <ClCompile Include="SourceCode\common.cpp" />
+    <ClCompile Include="SourceCode\easing.cpp" />
     <ClCompile Include="SourceCode\game_back.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\playerController.cpp" />

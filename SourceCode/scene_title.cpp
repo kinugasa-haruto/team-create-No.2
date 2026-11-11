@@ -57,7 +57,12 @@ void title_update()
 				if (timer >= 1) timer = 1;
 				title.SetScale(sinf(PI * timer));
 			}
-			if (title.GetTimer() >= 120) title.AddInv(0.01f);
+			if (title.GetTimer() >= 120)
+			{
+				static float timer = 0;
+				timer += 0.01f;
+				title.SetInv(Easing::easeOut3(timer));
+			}
 			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
 		}
 		debug::setString("scale:%f", title.GetScale());

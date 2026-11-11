@@ -29,7 +29,7 @@ public:
 	void AddTimer(float timer) { selectTimer += timer; }
 
 	float GetInv() { return inv; }
-	void AddInv(float inv) { this->inv += inv; }
+	void SetInv(float inv) { this->inv = inv; }
 
 	float GetScale() { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
