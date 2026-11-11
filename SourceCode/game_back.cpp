@@ -13,8 +13,6 @@ Conveyor conveyor_2[2][2] = { {{ {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},
 
 void back_init()
 {
-	back_state = 0;
-	back_timer = 0;
 	back = sprite_load(L"./Data/Images/gamen.png");
 	judgeArea = sprite_load(L"./Data/Images/judge_area.png");
 	conveyor1 = sprite_load(L"./Data/Images/Konbea_1.png");
@@ -31,46 +29,21 @@ void back_deinit()
 
 void back_update()
 {
-	switch (back_state)
+	for (int i = 0; i < 2; i++)
 	{
-	case 0:
-		//////// ‰ŠúÝ’è ////////
-
-
-		back_state++;
-		/*fallthrough*/
-
-	case 1:
-		//////// ƒpƒ‰ƒ[ƒ^‚ÌÝ’è ////////
-
-		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-		back_state++;
-		/*fallthrough*/
-
-	case 2:
-		//////// ’ÊíŽž ////////
-		
-		for (int i = 0; i < 2; i++)
+		conveyor_2[0][i].AddPositionX(-3.0f);
+		if (conveyor_2[0][i].GetPosition().x <= -SCREEN_W)
 		{
-			conveyor_2[0][i].AddPositionX(-3.0f);
-			if (conveyor_2[0][i].GetPosition().x <= -SCREEN_W)
-			{
-				conveyor_2[0][i].SetPositionX(SCREEN_W);
-			}
-
-			conveyor_2[1][i].AddPositionX(3.0f);
-			if (conveyor_2[1][i].GetPosition().x >= SCREEN_W)
-			{
-				conveyor_2[1][i].SetPositionX(-SCREEN_W);
-			}
+			conveyor_2[0][i].SetPositionX(SCREEN_W);
 		}
 
-		break;
+		conveyor_2[1][i].AddPositionX(3.0f);
+		if (conveyor_2[1][i].GetPosition().x >= SCREEN_W)
+		{
+			conveyor_2[1][i].SetPositionX(-SCREEN_W);
+		}
 	}
 
-
-	back_timer++;
 }
 
 void back_render()

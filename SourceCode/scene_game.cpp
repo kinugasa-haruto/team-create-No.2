@@ -3,6 +3,9 @@
 int game_state;
 int game_timer;
 
+// 1ゲームの長さ（秒）
+#define GAME_LENGTH 90
+
 Can cans[CAN_NUM];
 Can can;
 playerController player;
@@ -39,13 +42,27 @@ void game_update()
 	case 2:
 		//////// 通常時 ////////
 		back_update();
+		// ゲームの経過時間
+		static int gameTimer = 0;
+
+		// 1フレームの長さ（60フレーム＝1）
+		gameTimer += 1.0f / 60;
+
+		// 経過時間が1ゲームの長さを超えたらリザルトへ
+		if (gameTimer > GAME_LENGTH)
+		{
+			nextScene = SCENE_RESULT;
+		}
+		
+		
+		
 		can.CAN_GENERATE(cans);		//缶の生成関数
 		can.CAN_MOVE(cans);			//缶の移動関数
 		player.HITCHECK_CAN(cans);	//缶と叩くエリアの当たり判定関数
 		player.PLAYER_HIT_CAN(cans);//playerの叩く動作関数
 		player.FLICKCHECK_CAN(cans);//缶と弾くエリアの当たり判定関数
 		player.PLAYER_FLICK_CAN(cans);//playerの弾く動作関数
-
+		
 		
 		break;
 	}

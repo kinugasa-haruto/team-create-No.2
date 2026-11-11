@@ -31,6 +31,8 @@ public:
 	float GetInv() { return inv; }
 	void AddInv(float inv) { this->inv += inv; }
 
+	float GetScale() { return scale; }
+	void SetScale(float scale) { this->scale = scale; }
 
 private:
 	Title()
@@ -39,8 +41,10 @@ private:
 		select = false;
 		selectTimer = 0;
 		inv = 0;
+		scale = 0;
 	}
 
+	float scale;
 	float inv;
 	int selected;
 	bool select;

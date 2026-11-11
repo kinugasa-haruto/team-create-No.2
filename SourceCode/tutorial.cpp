@@ -20,8 +20,8 @@ void SkipButton::Update()
 
 	if (progress >= 1)
 	{
-		inv += 1.0f / 2;
-		if (inv >= 1) nextScene = SCENE_GAME;
+		inv += 0.5f / 4;
+		if (inv >= 0.5f) nextScene = SCENE_GAME;
 	}
 	debug::setString("timer:%d", timer);
 }
@@ -80,7 +80,7 @@ void tutorial_render()
 	GameLib::clear(1, 1, 1);
 
 	back_render();
-	primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
+	primitive::rect(0, 0, SCREEN_W, SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
 
 	skipbutton.Render();
 	
