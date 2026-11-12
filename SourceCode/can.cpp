@@ -15,10 +15,6 @@ Day days[] = {
 Can::Can() {
 	srand(unsigned int(NULL));
 
-	//sabaCan = sprite_load(L"./Data/Images/saba_can.png");
-	//ojisan = sprite_load(L"./Data/Images/ojisan.png");
-	//ojisan_push = sprite_load(L"./Data/Images/ojisan_push.png");
-
 	generate_num = 0;
 	generate_timer = 0;
 	can_num = 0;
@@ -32,9 +28,7 @@ Can::Can() {
 
 //デストラクタ
 Can::~Can() {
-	//safe_delete(sabaCan);
-	//safe_delete(ojisan);
-	//safe_delete(ojisan_push);
+
 }
 
 //缶の生成関数
@@ -69,8 +63,8 @@ void Can::CAN_RENDER(Can* can,int day) {
 	for (int i = 0; i < generate_num; i++) {
 		if (can[i].can_alive == true) {
 			if (can[i].can_color <= 100) {
-				//sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
-				//	0, 0, 125, 125, 0, 0, ToRadian(0));//サバ缶
+				sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
+					0, 0, 125, 125, 0, 0, ToRadian(0));//サバ缶
 
 				primitive::rect(can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, ToRadian(0), 0, 0, 1);//青缶

@@ -64,6 +64,7 @@ void game_update()
 void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
+	back_render();
 	player.HITAREA_FLICKAREA_RENDER();	//’@‚­,’e‚­ƒGƒŠƒA‚Ì•`‰æ
 	can.CAN_RENDER(cans,1);		//ŠÊ‚Ì•`‰æŠÖ”
 
