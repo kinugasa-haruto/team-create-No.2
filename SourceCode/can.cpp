@@ -21,9 +21,9 @@ Can::Can() {
 	can_color = 0;
 	can_alive = true;
 
-	pos = { SCREEN_W,SCREEN_H * 0.4f };
+	pos = { SCREEN_W,SCREEN_H * 0.48f };
 	//speed = { 3,0 };
-	scale = { 30,30 };
+	scale = { 1,1 };
 }
 
 //デストラクタ
@@ -66,8 +66,8 @@ void Can::CAN_RENDER(Can* can,int day) {
 				sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, 125, 125, 0, 0, ToRadian(0));//サバ缶
 
-				primitive::rect(can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
-					0, 0, ToRadian(0), 0, 0, 1);//青缶
+				primitive::rect(can[i].pos.x, can[i].pos.y, 150,150,
+					0, 0, ToRadian(0), 0, 0, 1,0.5f);//青缶
 			}
 			if (can[i].can_color <= 66) {
 				primitive::rect(can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
@@ -86,15 +86,15 @@ void Can::CAN_MOVE(Can* can,int day) {
 	debug::setString("posX:%fposX:%f", can[0].pos.x, can[0].pos.y);
 	for (int i = 0; i < generate_num; i++) {
 		if (can[i].can_alive == true) {
-			if (can[i].pos.y == SCREEN_H * 0.4f) {
+			if (can[i].pos.y == pos.y) {
 				can[i].pos.x -= days[day - 1].speed;
 			}
 
 			if (can[i].pos.x <= 0 - (can[i].scale.x * 2)) {
-				can[i].pos.y = SCREEN_H * 0.7f;
+				can[i].pos.y = SCREEN_H * 0.75f;
 			}
 
-			if (can[i].pos.y >= SCREEN_H * 0.7f) {
+			if (can[i].pos.y >= SCREEN_H * 0.75f) {
 				can[i].pos.x += days[day - 1].speed;
 				if (can[i].pos.x >= SCREEN_W) {
 					can[i].can_alive = false;
