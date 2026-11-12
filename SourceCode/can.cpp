@@ -70,12 +70,18 @@ void Can::CAN_RENDER(Can* can,int day) {
 					0, 0, ToRadian(0), 0, 0, 1,0.5f);//Р¬К 
 			}
 			if (can[i].can_color <= 66) {
+				sprite_render(ojisan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
+					0, 0, 200, 200, 0, 0, ToRadian(0));//В®ВґВ≥Вс
 				primitive::rect(can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, ToRadian(0), 1, 0, 0);//Р‘К 
 			}
 			if (can[i].can_color <= 33) {
+				sprite_render(obasan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
+					0, 0, 200, 200, 0, 0, ToRadian(0));//В®ВќВ≥Вс
+
 				primitive::rect(can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, ToRadian(0), 0, 1, 0);//ЧќК 
+
 			}
 		}
 	}

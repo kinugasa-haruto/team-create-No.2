@@ -10,6 +10,7 @@ extern Sprite* sabaCan;	//ƒTƒoŠÊ
 extern Sprite* ojisan;	//‚¨‚¶
 extern Sprite* ojisan_push;//‚Ô‚Á”ò‚Ñ‚¨‚¶
 extern Sprite* hand;	//Žè
+extern Sprite* obasan;	//‚¨‚Î‚³‚ñ
 
 void spriteload_init();
 
