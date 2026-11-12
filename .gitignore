@@ -1,4 +1,4 @@
 *.vs/
 *Debug/
 *Release/
-*SourceCode/gp1.log
+SourceCode/gp1.log
