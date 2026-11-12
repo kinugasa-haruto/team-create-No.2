@@ -1,32 +1,60 @@
 #include"all.h"
+extern  Day days[];
+
 
 //コンストラクタ
 playerController::playerController() {
+	//hand= sprite_load(L"./Data/Images/player_hand.png");
+
 	hitarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.4f };
 	hitarea_scale = { 50,50 };
 	flickarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.7f };
 	flickarea_scale = { 50,50 };
+	main_conveyor = true;
+	right_hit_area = true;
+	main_conveyor_color = 1.0f;
+	sub_conveyor_color = 1.0f;
 }
 
-//叩くエリアの描画関数
-void playerController::HITAREA_RENDER() {
-	primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y, hitarea_scale.x * 0.5f, hitarea_scale.y * 0.5f, ToRadian(0), 1, 1, 1);
+//デストラクタ
+playerController::~playerController() {
+	//safe_delete(hand);
+}
+
+//叩くエリアと弾くエリアの描画関数
+void playerController::HITAREA_FLICKAREA_RENDER() {
+	//叩くエリア
+	primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y,
+		0, 0, ToRadian(0), 1, 1, main_conveyor_color);
+
+	if (right_hit_area == true) {
+		sprite_render(hand, hitarea_pos.x, hitarea_pos.y, 1, 1, 0, 0, 150, 200, ToRadian(0));//正常
+	}
+	else {
+		sprite_render(hand, hitarea_pos.x, hitarea_pos.y, 1, 1, 0, 0, 150, 200, ToRadian(0));//反転
+	}
+
+	//弾くエリア
+	primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y,
+		0, 0, ToRadian(0), sub_conveyor_color, 1, 1);
 }
 
 //playerの叩く動作関数
-void playerController::PLAYER_HIT_CAN(Can* cans) {
-	for (int i = 0; i < CAN_NUM; i++) {
-		if (HITCHECK_CAN(&cans[i]) == true) {
-			if (TRG(0) & PAD_START) {
-				//音を鳴らす
-				music::play(1);
+void playerController::PLAYER_HIT_CAN(Can* cans, int day) {
+	if (main_conveyor == true) {
+		for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
+			if (HITCHECK_CAN(&cans[i], 1) == true) {
+				if (TRG(0) & PAD_START) {
+					//音を鳴らす
+					music::play(1);
+				}
 			}
 		}
 	}
 }
 
 //缶と叩くエリアの当たり判定関数
-bool playerController::HITCHECK_CAN(Can* can) {
+bool playerController::HITCHECK_CAN(Can* can, int day) {
 	float areaL = hitarea_pos.x;
 	float areaR = hitarea_pos.x + hitarea_scale.x;
 	float areaU = hitarea_pos.y;
@@ -46,25 +74,22 @@ bool playerController::HITCHECK_CAN(Can* can) {
 	return false;
 }
 
-//弾くエリアの描画関数
-void playerController::FLICKAREA_RENDER() {
-	primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y, flickarea_scale.x * 0.5f, flickarea_scale.y * 0.5f, ToRadian(0), 1, 1, 1);
-}
-
 //playerの弾く動作関数
-void playerController::PLAYER_FLICK_CAN(Can* can) {
-	for (int i = 0; i < CAN_NUM; i++) {
-		if (FLICKCHECK_CAN(&can[i]) == true) {
-			if (TRG(0) & PAD_START) {
-				//缶を弾く、消す
-				can[i].setCAN_ALIVE(false);
+void playerController::PLAYER_FLICK_CAN(Can* can, int day) {
+	if (main_conveyor == false) {
+		for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
+			if (FLICKCHECK_CAN(&can[i], day) == true) {
+				if (TRG(0) & PAD_START) {
+					//缶を弾く、消す
+					can[i].setCAN_ALIVE(false);
+				}
 			}
 		}
 	}
 }
 
 //缶と弾くエリアの当たり判定関数
-bool playerController::FLICKCHECK_CAN(Can* can) {
+bool playerController::FLICKCHECK_CAN(Can* can, int day) {
 	float areaL = flickarea_pos.x;
 	float areaR = flickarea_pos.x + flickarea_scale.x;
 	float areaU = flickarea_pos.y;
@@ -81,4 +106,32 @@ bool playerController::FLICKCHECK_CAN(Can* can) {
 		return true;
 	}
 	return false;
+}
+
+//ベルトコンベアの上下と叩くエリアの左右切り替え関数
+void playerController::BELTCONVEYOR_HITAREA_CHANGE() {
+	//上下
+	if (TRG(0) & PAD_UP) {
+		main_conveyor = true;
+	}
+	if (TRG(0) & PAD_DOWN) {
+		main_conveyor = false;
+	}
+	if (main_conveyor == true) {
+		main_conveyor_color = 1.0f;
+		sub_conveyor_color = 0.0f;
+	}
+	if (main_conveyor == false) {
+		sub_conveyor_color = 1.0f;
+		main_conveyor_color = 0.0f;
+	}
+
+	//左右
+	if (TRG(0) & PAD_RIGHT) {
+		right_hit_area = true;
+	}
+	if (TRG(0) & PAD_LEFT) {
+		right_hit_area = false;
+	}
+
 }
