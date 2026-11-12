@@ -22,7 +22,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	// オーディオの初期設定
 	audio_init();
-	back_init();
+	spriteload_init();
 
 	while (GameLib::gameLoop())
 	{
@@ -133,7 +133,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 
 	// オーディオの終了処理
 	audio_deinit();
-	back_deinit();
+	spriteload_deinit();
 
 	// ゲームライブラリの終了処理
 	GameLib::uninit();

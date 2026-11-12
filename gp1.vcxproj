@@ -174,6 +174,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="GameLib\vector.h" />
     <ClInclude Include="GameLib\view_settings.h" />
     <ClInclude Include="SourceCode\all.h" />
+    <ClInclude Include="SourceCode\Animation.h" />
     <ClInclude Include="SourceCode\audio.h" />
     <ClInclude Include="SourceCode\can.h" />
     <ClInclude Include="SourceCode\common.h" />
@@ -183,6 +184,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\scene_game.h" />
     <ClInclude Include="SourceCode\scene_title.h" />
     <ClInclude Include="SourceCode\scene_result.h" />
+    <ClInclude Include="SourceCode\spriteload.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLib\debug.cpp" />
@@ -200,6 +202,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="GameLib\vector.cpp" />
     <ClCompile Include="GameLib\view_settings.cpp" />
     <ClCompile Include="GameLib\wnd_proc.cpp" />
+    <ClCompile Include="SourceCode\Animation.cpp" />
     <ClCompile Include="SourceCode\audio.cpp" />
     <ClCompile Include="SourceCode\can.cpp" />
     <ClCompile Include="SourceCode\common.cpp" />
@@ -210,6 +213,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\scene_game.cpp" />
     <ClCompile Include="SourceCode\scene_result.cpp" />
     <ClCompile Include="SourceCode\scene_title.cpp" />
+    <ClCompile Include="SourceCode\spriteload.cpp" />
     <ClCompile Include="SourceCode\tutorial.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
