@@ -5,6 +5,27 @@ int tutorial_timer;
 
 float inv;
 
+SkipButton skipbutton = SkipButton::Instance();
+
+void SkipButton::Update()
+{
+	if (STATE(0) & PAD_START)
+	{
+		timer++;
+
+	}
+	else timer = 0;
+
+	progress = timer / 120.0f;
+
+	if (progress >= 1)
+	{
+		inv += 1.0f / 2;
+		if (inv >= 1) nextScene = SCENE_GAME;
+	}
+	debug::setString("timer:%d", timer);
+}
+
 void tutorial_init()
 {
 	tutorial_state = 0;
@@ -44,6 +65,8 @@ void tutorial_update()
 		inv -= 0.01f;
 		if (inv <= 0.01f) inv = 0;
 		back_update();
+		skipbutton.Update();
+
 		break;
 	}
 
@@ -58,5 +81,7 @@ void tutorial_render()
 
 	back_render();
 	primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
+
+	skipbutton.Render();
 	
 }
