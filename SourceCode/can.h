@@ -2,10 +2,6 @@
 
 class Can{
 private:
-	Sprite* sabaCan;
-	Sprite* ojisan;
-	Sprite* ojisan_push;
-
 	VECTOR2 pos;	//ŠÊ‚Ìpos
 	VECTOR2 speed;	//ŠÊ‚Ìspeed
 	VECTOR2 scale;	//ŠÊ‚Ìscale

@@ -4,8 +4,6 @@ extern  Day days[];
 
 //コンストラクタ
 playerController::playerController() {
-	//hand= sprite_load(L"./Data/Images/player_hand.png");
-
 	hitarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.4f };
 	hitarea_scale = { 50,50 };
 	flickarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.7f };
@@ -18,7 +16,7 @@ playerController::playerController() {
 
 //デストラクタ
 playerController::~playerController() {
-	//safe_delete(hand);
+
 }
 
 //叩くエリアと弾くエリアの描画関数

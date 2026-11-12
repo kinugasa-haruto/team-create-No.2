@@ -3,8 +3,6 @@
 class playerController
 {
 private:
-	Sprite* hand;
-
 	VECTOR2 hitarea_pos;	//叩くエリアのpos
 	VECTOR2 hitarea_scale;	//叩くエリアのscale
 	VECTOR2 flickarea_pos;	//弾くエリアのscale

@@ -11,7 +11,7 @@ void title_init()
 {
 	title_state = 0;
 	title_timer = 0;
-	titleCan = sprite_load(L"./Data/Images/can.png");
+	titleCan = sprite_load(L"./Data/Images/saba_can.png");
 }
 
 void title_deinit()
@@ -56,14 +56,17 @@ void title_update()
 				timer += 1.0f / 30;
 				if (timer >= 1) timer = 1;
 				title.SetScale(sinf(PI * timer));
+				if (title.GetInv() >= 0.98f) timer = 0;
 			}
 			if (title.GetTimer() >= 120)
 			{
 				static float timer = 0;
 				timer += 0.01f;
 				title.SetInv(Easing::easeOut3(timer));
+				if (title.GetInv() >= 0.98f) timer = 0;
 			}
 			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
+			
 		}
 		debug::setString("scale:%f", title.GetScale());
 		//if (title.GetSelected() == 0 && TRG(0) & PAD_RIGHT)
