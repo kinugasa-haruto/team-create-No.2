@@ -23,7 +23,7 @@ public:
 
 	void Render()
 	{
-		primitive::rect(pos.x, pos.y, rect.z * (progress * progress * progress), rect.w, 0, 0, ToRadian(0), 1, 1, 0, 0.5f);
+		primitive::rect(pos.x, pos.y, rect.z * progress, rect.w, 0, 0, ToRadian(0), 1, 1, 0, 0.5f);
 		
 		text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
 		primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);

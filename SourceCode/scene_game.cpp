@@ -4,6 +4,10 @@
 int game_state;
 int game_timer;
 
+// 1ゲームの長さ（秒）
+#define GAME_LENGTH 90
+
+//Can cans[CAN_NUM];
 Can cans[20];
 Can can;
 playerController player;
@@ -46,8 +50,6 @@ void game_update()
 		player.PLAYER_HIT_CAN(cans,1);//playerの叩く動作関数
 		player.FLICKCHECK_CAN(cans,1);//缶と弾くエリアの当たり判定関数
 		player.PLAYER_FLICK_CAN(cans,1);//playerの弾く動作関数
-		player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
-
 
 		
 		break;
