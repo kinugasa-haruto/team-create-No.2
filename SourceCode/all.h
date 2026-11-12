@@ -17,6 +17,9 @@
 
 // 個々のヘッダーファイルは下の方へ
 #include "audio.h"
+#include "spriteload.h"
+#include "easing.h"
+#include "Animation.h"
 #include "game_back.h"
 #include "scene_game.h"
 #include "scene_title.h"
