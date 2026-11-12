@@ -5,6 +5,7 @@ Sprite* judgeArea; // 赤いエリア
 Sprite* conveyor1; // コンベア（動かないほう）
 Sprite* conveyor2; // コンベア（動くほう）
 
+
 void spriteload_init()
 {
 	back = sprite_load(L"./Data/Images/gamen.png");
