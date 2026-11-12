@@ -26,8 +26,8 @@ Can::Can() {
 	can_alive = true;
 
 	pos = { SCREEN_W,SCREEN_H * 0.4f };
-	speed = { 10,0 };
-	scale = { 1,1 };
+	speed = { 3,0 };
+	scale = { 30,30 };
 }
 
 //デストラクタ
