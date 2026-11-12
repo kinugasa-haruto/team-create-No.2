@@ -11,6 +11,8 @@ Sprite* ojisan_push;//ぶっ飛びおじ
 Sprite* hand;//手
 
 Sprite* hannya; // おばちゃんレイジモード
+Sprite* fire; // 背景の炎
+
 
 void spriteload_init()
 {
@@ -25,6 +27,7 @@ void spriteload_init()
 	hand= sprite_load(L"./Data/Images/player_hand.png");
 	
 	hannya = sprite_load(L"./Data/Images/hannya.png");
+	fire = sprite_load(L"./Data/Images/fire.png");
 }
 
 void spriteload_deinit()
@@ -38,4 +41,7 @@ void spriteload_deinit()
 	safe_delete(ojisan);
 	safe_delete(ojisan_push);
 	safe_delete(hand);
+
+	safe_delete(hannya);
+	safe_delete(fire);
 }

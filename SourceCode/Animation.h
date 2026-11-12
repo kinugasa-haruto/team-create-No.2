@@ -18,9 +18,13 @@ public:
 	void AddRectZ(const float rect) { this->rect.z = this->rect.z + rect; }
 
 	const VECTOR2 GetPosition() { return pos; }
+
+	const int GetAnime() { return anime; }
+	void SetAnime(int anime) { this->anime = anime; }
 private:
 	VECTOR2 pos;
 	VECTOR4 rect;
 	float scale;
+	int anime;
 };
 
