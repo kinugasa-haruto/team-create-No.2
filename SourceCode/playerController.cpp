@@ -4,10 +4,10 @@ extern  Day days[];
 
 //ÉRÉìÉXÉgÉâÉNÉ^
 playerController::playerController() {
-	hitarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.4f };
-	hitarea_scale = { 50,50 };
-	flickarea_pos = { SCREEN_W * 0.5f,SCREEN_H * 0.7f };
-	flickarea_scale = { 50,50 };
+	hitarea_pos = { SCREEN_W * 0.507f,SCREEN_H * 0.5f };
+	hitarea_scale = { 166,120 };
+	flickarea_pos = { SCREEN_W * 0.507f,SCREEN_H * 0.77f };
+	flickarea_scale = { 166,120 };
 	main_conveyor = true;
 	right_hit_area = true;
 	main_conveyor_color = 1.0f;
@@ -23,18 +23,18 @@ playerController::~playerController() {
 void playerController::HITAREA_FLICKAREA_RENDER() {
 	//í@Ç≠ÉGÉäÉA
 	primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y,
-		0, 0, ToRadian(0), 1, 1, main_conveyor_color);
+		0, 0, ToRadian(0), 1, 1, main_conveyor_color, 0);
 
 	if (right_hit_area == true) {
-		sprite_render(hand, hitarea_pos.x, hitarea_pos.y, 1, 1, 0, 0, 150, 200, ToRadian(0));//ê≥èÌ
+		sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 40, 1, 1, 0, 0, 150, 200, ToRadian(0));//ê≥èÌ
 	}
-	else {
-		sprite_render(hand, hitarea_pos.x, hitarea_pos.y, 1, 1, 0, 0, 150, 200, ToRadian(0));//îΩì]
+	if (right_hit_area == false) {
+		sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 40, 1, 1, 0, 0, 150, 200, ToRadian(0));//îΩì]
 	}
 
 	//íeÇ≠ÉGÉäÉA
 	primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y,
-		0, 0, ToRadian(0), sub_conveyor_color, 1, 1);
+		0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0);
 }
 
 //playerÇÃí@Ç≠ìÆçÏä÷êî
@@ -59,9 +59,9 @@ bool playerController::HITCHECK_CAN(Can* can, int day) {
 	float areaD = hitarea_pos.y + hitarea_scale.y;
 
 	float canL = can->getCAN_POS().x;
-	float canR = can->getCAN_POS().x + can->getCAN_SCALE().x;
+	float canR = can->getCAN_POS().x + can->getCAN_SCALE().x * 125;
 	float canU = can->getCAN_POS().y;
-	float canD = can->getCAN_POS().y + can->getCAN_SCALE().y;
+	float canD = can->getCAN_POS().y + can->getCAN_SCALE().y * 125;
 
 	if (areaR > canL && areaL < canR &&
 		areaU<canD && areaD > canU) {
@@ -94,9 +94,9 @@ bool playerController::FLICKCHECK_CAN(Can* can, int day) {
 	float areaD = flickarea_pos.y + flickarea_scale.y;
 
 	float canL = can->getCAN_POS().x;
-	float canR = can->getCAN_POS().x + can->getCAN_SCALE().x;
+	float canR = can->getCAN_POS().x + can->getCAN_SCALE().x * 125;
 	float canU = can->getCAN_POS().y;
-	float canD = can->getCAN_POS().y + can->getCAN_SCALE().y;
+	float canD = can->getCAN_POS().y + can->getCAN_SCALE().y * 125;
 
 	if (areaR > canL && areaL < canR &&
 		areaU<canD && areaD > canU) {
@@ -125,11 +125,13 @@ void playerController::BELTCONVEYOR_HITAREA_CHANGE() {
 	}
 
 	//ç∂âE
-	if (TRG(0) & PAD_RIGHT) {
-		right_hit_area = true;
-	}
-	if (TRG(0) & PAD_LEFT) {
-		right_hit_area = false;
-	}
+	if (main_conveyor == true) {
 
+		if (TRG(0) & PAD_RIGHT) {
+			right_hit_area = true;
+		}
+		if (TRG(0) & PAD_LEFT) {
+			right_hit_area = false;
+		}
+	}
 }
