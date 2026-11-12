@@ -4,25 +4,28 @@ Hannya hannyA;
 
 void ObachanUpdate()
 {
-	static float timer = 0;
+	static int timer = 0;
+	static float animeTimer = 0;
 	static float scale = 1;
 	static bool h = false;
 	
-	if (!h) timer += 0.1f;
-	if (h) timer -= 0.1f;
+	timer++;
 
-	if (timer >= 1)
+	if (!h) animeTimer += 0.1f;
+	if (h) animeTimer -= 0.1f;
+
+	if (animeTimer >= 1)
 	{
 		h = true;
 		scale = 1;
 	}
-	if (timer <= 0)
+	if (animeTimer <= 0)
 	{
 		h = false;
 		scale = 0;
 	}
 
-	scale = sinf(timer) * 0.2f + 1.05f;
+	scale = sinf(animeTimer) * 0.2f + 1.05f;
 	hannyA.SetScale(scale);
 	debug::setString("scale:%f", hannyA.GetScale());
 }
