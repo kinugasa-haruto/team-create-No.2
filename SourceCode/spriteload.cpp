@@ -10,6 +10,7 @@ Sprite* ojisan;//おじ
 Sprite* ojisan_push;//ぶっ飛びおじ
 Sprite* hand;//手
 
+Sprite* hannya; // おばちゃんレイジモード
 
 void spriteload_init()
 {
@@ -22,7 +23,8 @@ void spriteload_init()
 	ojisan = sprite_load(L"./Data/Images/ojisan.png");
 	ojisan_push = sprite_load(L"./Data/Images/ojisan_push.png");
 	hand= sprite_load(L"./Data/Images/player_hand.png");
-
+	
+	hannya = sprite_load(L"./Data/Images/hannya.png");
 }
 
 void spriteload_deinit()

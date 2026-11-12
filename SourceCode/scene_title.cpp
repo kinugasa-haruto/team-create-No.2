@@ -5,18 +5,18 @@ int title_timer;
 
 Title title = Title::Instance();
 
-Sprite* titleCan;
+
 
 void title_init()
 {
 	title_state = 0;
 	title_timer = 0;
-	titleCan = sprite_load(L"./Data/Images/saba_can.png");
+
 }
 
 void title_deinit()
 {
-	safe_delete(titleCan);
+
 }
 
 void title_update()
@@ -50,15 +50,13 @@ void title_update()
 		if (title.GetSelect())
 		{
 			title.AddTimer(1.0f);
-			if (title.GetTimer() <= 30)
-			{
-				static float timer = 0;
-				timer += 1.0f / 30;
-				if (timer >= 1) timer = 1;
-				title.SetScale(sinf(PI * timer));
-				if (title.GetInv() >= 0.98f) timer = 0;
-			}
-			if (title.GetTimer() >= 120)
+			static float timer = 0;
+			timer += 1.0f / 30;
+			if (timer >= 1) timer = 1;
+			title.SetScale(sinf(PI * timer));
+			if (title.GetInv() >= 0.98f) timer = 0;
+			
+			if (title.GetTimer() >= 30)
 			{
 				static float timer = 0;
 				timer += 0.01f;
@@ -68,7 +66,7 @@ void title_update()
 			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
 			
 		}
-		debug::setString("scale:%f", title.GetScale());
+		ObachanUpdate();
 		//if (title.GetSelected() == 0 && TRG(0) & PAD_RIGHT)
 		//{
 		//	title.ChangeSelected(1);
@@ -96,8 +94,8 @@ void title_render()
 	back_render();
 
 	primitive::rect(SCREEN_W - 700, 150, 300, 300, 0, 0, ToRadian(0), 1, 1, 0);
-	sprite_render(titleCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale() , 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
-
+	sprite_render(sabaCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale() , 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
+	ObachanRender();
 	primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 	//switch (title.GetSelected())
 	//{

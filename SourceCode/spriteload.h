@@ -11,6 +11,9 @@ extern Sprite* ojisan;	//おじ
 extern Sprite* ojisan_push;//ぶっ飛びおじ
 extern Sprite* hand;	//手
 
+extern Sprite* hannya; // おばちゃんレイジモード
+
+
 void spriteload_init();
 
 void spriteload_deinit();
