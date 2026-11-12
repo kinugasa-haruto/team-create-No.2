@@ -2,56 +2,39 @@
 
 int back_state;
 int back_timer;
-Sprite* back;
-Sprite* conveyor1;
-Sprite* conveyor2;
 
-Conveyor conveyor[2] = { {{0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},{{0, SCREEN_W - 150},{0, 0, SCREEN_W, 238}} };
+Conveyor conveyor_1[2] = { { {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},{ {0, SCREEN_H - 300},{SCREEN_W, 0, SCREEN_W * 2, 238}} };
+Conveyor conveyor_2[2][2] = { {{ {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}}, {{SCREEN_W, SCREEN_HALF_H - 50},{SCREEN_W, 0, SCREEN_W * 2, 238} }},
+							{{ {0, SCREEN_H - 300},{0, 0, SCREEN_W, 238}},{{-SCREEN_W, SCREEN_H - 300},{SCREEN_W, 0, SCREEN_W * 2, 238}}}};
+
 
 void back_init()
 {
-	back_state = 0;
-	back_timer = 0;
-	back = sprite_load(L"./Data/Images/gamen.png");
-	conveyor1 = sprite_load(L"./Data/Images/Konbea_1.png");
-	conveyor2 = sprite_load(L"./Data/Images/Konbea_2.png");
+
 }
 
 void back_deinit()
 {
-	safe_delete(conveyor1);
-	safe_delete(conveyor2);
-	safe_delete(back);
+	
 }
 
 void back_update()
 {
-	switch (back_state)
+	for (int i = 0; i < 2; i++)
 	{
-	case 0:
-		//////// ‰ŠúÝ’è ////////
+		conveyor_2[0][i].AddPositionX(-3.0f);
+		if (conveyor_2[0][i].GetPosition().x <= -SCREEN_W)
+		{
+			conveyor_2[0][i].SetPositionX(SCREEN_W);
+		}
 
-
-		back_state++;
-		/*fallthrough*/
-
-	case 1:
-		//////// ƒpƒ‰ƒ[ƒ^‚ÌÝ’è ////////
-
-		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-
-		back_state++;
-		/*fallthrough*/
-
-	case 2:
-		//////// ’ÊíŽž ////////
-
-		break;
+		conveyor_2[1][i].AddPositionX(3.0f);
+		if (conveyor_2[1][i].GetPosition().x >= SCREEN_W)
+		{
+			conveyor_2[1][i].SetPositionX(-SCREEN_W);
+		}
 	}
 
-
-	back_timer++;
 }
 
 void back_render()
@@ -62,10 +45,16 @@ void back_render()
 	
 	for (int i = 0; i < 2; i++)
 	{
-		sprite_render(conveyor1, conveyor[i].GetPosition().x, conveyor[i].GetPosition().y, 1, 1, conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0));
-		sprite_render(conveyor2, conveyor[i].GetPosition().x, conveyor[i].GetPosition().y, 1, 1, conveyor[i].GetRect().x,conveyor[i].GetRect().y , conveyor[i].GetRect().z,conveyor[i].GetRect().w, ToRadian(0));
-	
+		sprite_render(conveyor1, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, conveyor_1[i].GetRect().y, SCREEN_W, conveyor_1[i].GetRect().w, ToRadian(0));
+		for (int j = 0; j < 2; j++)
+		{
+			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, 0 ,conveyor_2[i][j].GetRect().y, SCREEN_W, conveyor_2[i][j].GetRect().w, ToRadian(0));
+			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, conveyor_2[i][j].GetRect().x, conveyor_2[i][j].GetRect().y, conveyor_2[i][j].GetRect().z, conveyor_2[i][j].GetRect().w, ToRadian(0));
+		}
+		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, conveyor_1[i].GetRect().y, SCREEN_W, conveyor_1[i].GetRect().w, ToRadian(0));
 	}
+
+	
 	
 
 }
