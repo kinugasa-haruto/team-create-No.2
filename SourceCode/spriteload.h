@@ -12,6 +12,10 @@ extern Sprite* ojisan_push;//ぶっ飛びおじ
 extern Sprite* hand;	//手
 extern Sprite* obasan;	//おばさん
 
+extern Sprite* hannya; // おばちゃんレイジモード
+extern Sprite* fire; // 背景炎
+
+
 void spriteload_init();
 
 void spriteload_deinit();

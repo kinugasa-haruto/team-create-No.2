@@ -11,6 +11,10 @@ Sprite* ojisan_push;//ぶっ飛びおじ
 Sprite* hand;//手
 Sprite* obasan;//おばさん
 
+Sprite* hannya; // おばちゃんレイジモード
+Sprite* fire; // 背景の炎
+
+
 void spriteload_init()
 {
 	back = sprite_load(L"./Data/Images/gamen.png");
@@ -22,7 +26,7 @@ void spriteload_init()
 	ojisan = sprite_load(L"./Data/Images/ojisan.png");
 	ojisan_push = sprite_load(L"./Data/Images/ojisan_push.png");
 	hand= sprite_load(L"./Data/Images/player_hand.png");
-	obasan= sprite_load(L"./Data/Images/obasan.png");
+
 }
 
 void spriteload_deinit()
@@ -36,5 +40,4 @@ void spriteload_deinit()
 	safe_delete(ojisan);
 	safe_delete(ojisan_push);
 	safe_delete(hand);
-	safe_delete(obasan);
 }
