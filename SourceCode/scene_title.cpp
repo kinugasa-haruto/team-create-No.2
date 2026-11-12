@@ -41,13 +41,13 @@ void title_update()
 
 	case 2:
 		//////// �ʏ펞 ////////
-		if (title.GetSelected() == 0 && TRG(0) & PAD_START)
+		if (title.GetSelected() == 0 && TRG(0) & PAD_START && !title.GetSelect())
 		{
 			//nextScene = SCENE_TUTORIAL;
 			music::play(1, false);
 			title.SetSelect(true);
 		}
-		if (title.GetSelect() == true)
+		if (title.GetSelect())
 		{
 			title.AddTimer(1.0f);
 			if (title.GetTimer() <= 30)
