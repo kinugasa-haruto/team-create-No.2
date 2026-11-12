@@ -2,7 +2,7 @@
 
 Day days[] = {
 	//ê∂ê¨ä‘äu	ê∂ê¨å¬êî		ä ÇÃë¨ìx	ÇPì˙Ç…ó¨Ç∑ï®ÇÃéÌóﬁ
-	{ 60.0f,		20,			3.0f,			3},	// 0
+	{ 120.0f,		20,			3.0f,			3},	// 0
 		//{ 70, 2 },	// 1
 		//{ 60, 1 },	// 2
 		//{ 50, 6 },	// 3
@@ -66,7 +66,7 @@ void Can::CAN_RENDER(Can* can,int day) {
 				sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, 125, 125, 0, 0, ToRadian(0));//ÉTÉoä 
 
-				primitive::rect(can[i].pos.x, can[i].pos.y, 150,150,
+				primitive::rect(can[i].pos.x, can[i].pos.y, 125,125,
 					0, 0, ToRadian(0), 0, 0, 1,0.5f);//ê¬ä 
 			}
 			if (can[i].can_color <= 66) {
