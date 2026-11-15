@@ -8,6 +8,7 @@ Sprite* conveyor2; // コンベア（動くほう）
 Sprite* sabaCan;//サバ缶
 Sprite* ojisan;//おじ
 Sprite* ojisan_push;//ぶっ飛びおじ
+Sprite* tie;//ネクタイ
 Sprite* hand;//手
 Sprite* obasan;//おばさん
 
@@ -25,8 +26,9 @@ void spriteload_init()
 	sabaCan = sprite_load(L"./Data/Images/saba_can.png");
 	ojisan = sprite_load(L"./Data/Images/ojisan.png");
 	ojisan_push = sprite_load(L"./Data/Images/ojisan_push.png");
-	hand= sprite_load(L"./Data/Images/player_hand.png");
-	obasan= sprite_load(L"./Data/Images/obasan.png");
+	tie = sprite_load(L"./Data/Images/tie.png");
+	hand = sprite_load(L"./Data/Images/player_hand.png");
+	obasan = sprite_load(L"./Data/Images/obasan.png");
 
 }
 
@@ -40,6 +42,7 @@ void spriteload_deinit()
 	safe_delete(sabaCan);
 	safe_delete(ojisan);
 	safe_delete(ojisan_push);
+	safe_delete(tie);
 	safe_delete(hand);
 	safe_delete(obasan);
 }

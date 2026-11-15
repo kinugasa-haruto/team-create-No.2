@@ -9,6 +9,7 @@ extern Sprite* conveyor2; // コンベア（動くほう）
 extern Sprite* sabaCan;	//サバ缶
 extern Sprite* ojisan;	//おじ
 extern Sprite* ojisan_push;//ぶっ飛びおじ
+extern Sprite* tie;//ぶっ飛びおじ
 extern Sprite* hand;	//手
 extern Sprite* obasan;	//おばさん
 
