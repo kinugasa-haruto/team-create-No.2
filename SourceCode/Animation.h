@@ -62,3 +62,33 @@ private:
 };
 
 extern Binder resultBinder;
+
+class NextDay
+{
+public:
+
+	float GetTimer() { return timer; }
+	void SetTimer(float timer) { this->timer = timer; }
+
+	const VECTOR4 GetRect() { return rect; }
+
+	void SetRect(VECTOR4 rect) { this->rect = rect; }
+
+	void AddRectX(const float rect) { this->rect.x = this->rect.x + rect; }
+	void AddRectZ(const float rect) { this->rect.z = this->rect.z + rect; }
+
+	const VECTOR2 GetPosition() { return pos; }
+
+	const int GetAnime() { return anime; }
+	void SetAnime(int anime) { this->anime = anime; }
+
+	static void Update();
+	static void Render();
+
+
+private:
+	VECTOR2 pos;
+	VECTOR4 rect;
+	float timer;
+	int anime;
+};

@@ -74,7 +74,6 @@ void game_update()
 		player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 
 		can.CAN_ALL_VANISH(cans, obas, ojis, boms);//１日に流れるものが全部消えたかの処理
-		debug::setString("FLICK:%d MISS:%d", debug_flick, debug_miss);
 		gameTimer.timerUpdate();
 
 

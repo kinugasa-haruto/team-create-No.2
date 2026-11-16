@@ -25,9 +25,11 @@ void Number::NumberRender(VECTOR2 pos ,int number)
 		textPos = { data.pos_x, data.pos_y };
 		size = { data.width, data.height };
 	}
+
 }
 
 void Number::Render()
 {
+	//sprite_render(number, pos.x, pos.y, 1, 1, textPos.x, textPos.y, size.x, size.y, 0, 0);
 
 }
