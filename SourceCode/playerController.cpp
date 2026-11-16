@@ -6,10 +6,10 @@ int debug_flick = 0;
 
 //コンストラクタ
 playerController::playerController() {
-	hitarea_pos = { SCREEN_W * 0.507f,SCREEN_H * 0.5f };
-	hitarea_scale = { 166,120 };
-	flickarea_pos = { SCREEN_W * 0.507f,SCREEN_H * 0.77f };
-	flickarea_scale = { 166,120 };
+	hitarea_pos = { SCREEN_W * 0.516f,SCREEN_H * 0.5f };
+	hitarea_scale = { 130,120 };
+	flickarea_pos = { SCREEN_W * 0.516f,SCREEN_H * 0.77f };
+	flickarea_scale = { 130,120 };
 
 	Rhund_pos = { hitarea_pos.x + 120 ,hitarea_pos.y + 50 };
 	Lhund_pos = { hitarea_pos.x + 30 ,hitarea_pos.y + 50 };
@@ -33,7 +33,7 @@ playerController::~playerController() {
 void playerController::HITAREA_FLICKAREA_RENDER() {
 	//叩くエリア
 	primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y,
-		0, 0, ToRadian(0), 1, 1, main_conveyor_color, 0.0f);
+		0, 0, ToRadian(0), 1, 1, main_conveyor_color, 0.5f);
 
 	if (main_conveyor == true) {
 		if (right_hit_area == true) {
@@ -52,7 +52,7 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 
 	//弾くエリア
 	primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y,
-		0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0.0f);//手
+		0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0.5f);//手
 
 	if (main_conveyor == false) {
 		sprite_render(hand_hold, flickarea_pos.x + 50, flickarea_pos.y - 40,
@@ -65,7 +65,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
 		if (control_stop_timer <= 0) {
 			if (main_conveyor == true) {
-				if (TRG(0) & PAD_START) {
+				if (TRG(0) & PAD_TRG1) {
 					if (cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (right_hit_area == true) {
 							if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getBBOM_POS(), boms[i].getBBOM_SCALE())) {//右手と青ボタンの処理
@@ -266,14 +266,12 @@ bool playerController::HITCHECK_HUND_BUTTON(
 
 }
 
-
-
 //playerの弾く動作関数
 void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {	
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
 		if (control_stop_timer <= 0) {
 			if (main_conveyor == false) {
-				if (TRG(0) & PAD_START) {
+				if (TRG(0) & PAD_TRG1) {
 					if (cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
 							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true) {
@@ -457,18 +455,18 @@ void playerController::BELTCONVEYOR_HITAREA_CHANGE() {
 	}
 }
 
-
-
-
 VECTOR2 playerController::getRHUND_POS() {
 	return Rhund_pos;
 }
+
 VECTOR2 playerController::getLHUND_POS() {
 	return Lhund_pos;
 }
+
 VECTOR2 playerController::getRHUND_SCALE() {
 	return Rhund_scale;
 }
+
 VECTOR2 playerController::getLHUND_SCALE() {
 	return Lhund_scale;
 }
