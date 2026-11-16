@@ -12,15 +12,21 @@ private:
 	float main_conveyor_color;	//メインベルトコンベアの色
 	float sub_conveyor_color;	//サブベルトコンベアの色
 
+	int control_stop_timer;//プレイヤーの停止時間
+
 public:
 	playerController();				//コンストラクタ
 	~playerController();				//デストラクタ
 	void HITAREA_FLICKAREA_RENDER();		//叩くエリアと弾くエリアの描画関数
-	void PLAYER_HIT_CAN(Can* can, int day);	//playerの叩く動作関数
-	bool HITCHECK_CAN(Can* cans, int day);	//缶と叩くエリアの当たり判定関数
+	void PLAYER_HIT_CAN(Can* can, Can* oba,Can*oji, int day);	//playerの缶を叩く動作関数
+	bool HITCHECK_CAN(Can* can);	//缶と叩くエリアの当たり判定関数
+	bool HITCHECK_OBA(Can* oba);	//おばさんと叩くエリアの当たり判定関数
+	bool HITCHECK_OJI(Can* oji);	//おじさんと叩くエリアの当たり判定関数
+
 	void PLAYER_FLICK_CAN(Can* can, int day);//playerの弾く動作関数
 	bool FLICKCHECK_CAN(Can* cans, int day);	//缶と弾くエリアの当たり判定関数
 	void BELTCONVEYOR_HITAREA_CHANGE();		//ベルトコンベアの上下切り替え関数
+
 };
 
 

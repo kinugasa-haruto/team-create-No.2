@@ -8,11 +8,12 @@ int game_timer;
 #define GAME_LENGTH 90
 GameTimer gameTimer = GameTimer::Instance();
 
-
-//Can cans[CAN_NUM];
-Can cans[20];
+Can cans[100];
+Can obas[100];
+Can ojis[100];
 Can can;
 playerController player;
+
 
 void game_init()
 {
@@ -47,9 +48,12 @@ void game_update()
 		//////// 通常時 ////////
 		back_update();
 		can.CAN_GENERATE(cans,1);		//缶の生成関数
-		can.CAN_MOVE(cans,1);			//缶の移動関数
-		player.HITCHECK_CAN(cans,1);	//缶と叩くエリアの当たり判定関数
-		player.PLAYER_HIT_CAN(cans,1);//playerの叩く動作関数
+		can.CAN_MOVE(cans,obas,ojis,1);			//缶の移動関数
+		player.HITCHECK_CAN(cans);	//缶と叩くエリアの当たり判定関数
+		player.HITCHECK_OBA(obas);	//おばさんと叩くエリアの当たり判定関数
+		player.HITCHECK_OJI(ojis);	//おじさんと叩くエリアの当たり判定関数
+		player.PLAYER_HIT_CAN(cans,obas,ojis,1);//playerの叩く動作関数
+
 		player.FLICKCHECK_CAN(cans,1);//缶と弾くエリアの当たり判定関数
 		player.PLAYER_FLICK_CAN(cans,1);//playerの弾く動作関数
 		player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
@@ -72,6 +76,9 @@ void game_render()
 	back_render();
 	conveyor_render();
 	can.CAN_RENDER(cans,1);		//缶の描画関数
+	can.OJI_BACK_RENDER(cans,ojis);
+	//can.OJI_FRONT_RENDER(cans,ojis);
+	can.CAN_RENDER(cans,obas,ojis,1);		//缶の描画関数
 	player.HITAREA_FLICKAREA_RENDER();	//叩く,弾くエリアの描画
 
 	gameTimer.timerRender();
