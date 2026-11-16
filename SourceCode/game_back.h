@@ -39,6 +39,7 @@ private:
 // 関数のプロトタイプ宣言
 void back_update();
 void back_render();
+void conveyor_render();
 void back_init();
 void back_deinit();
 #endif//game_back_H

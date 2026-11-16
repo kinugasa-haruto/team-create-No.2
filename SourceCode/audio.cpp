@@ -6,6 +6,7 @@ void audio_init()
 	
 	// // ステージ用のSE
 	music::load(1, L"./Data/Sounds/canhit.wav");//缶の音
+	music::load(2, L"./Data/Sounds/no_canhit.wav");//間違った缶の音
 
 }
 

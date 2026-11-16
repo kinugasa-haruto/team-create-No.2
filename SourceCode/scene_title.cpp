@@ -96,6 +96,7 @@ void title_render()
 	primitive::rect(SCREEN_W - 700, 150, 300, 300, 0, 0, ToRadian(0), 1, 1, 0);
 	sprite_render(sabaCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale() , 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
 	ObachanRender();
+	conveyor_render();
 	primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 	//switch (title.GetSelected())
 	//{

@@ -19,6 +19,15 @@ public:
 		return instance;
 	}
 
+	void Reset()
+	{
+		pos = { SCREEN_W - 300, SCREEN_H - 150 };
+		rect = { 0, 0, 150, 50 };
+		timer = 0;
+		inv = 0;
+		progress = 0;
+	}
+
 	void Update();
 
 	void Render()

@@ -28,3 +28,37 @@ private:
 	int anime;
 };
 
+
+class Binder
+{
+public:
+	float GetScale() { return scale; }
+	void SetScale(float scale) { this->scale = scale; }
+
+	float GetTimer() { return timer; }
+	void SetTimer(float timer) { this->timer = timer; }
+
+	const VECTOR4 GetRect() { return rect; }
+
+	void SetRect(VECTOR4 rect) { this->rect = rect; }
+
+	void AddRectX(const float rect) { this->rect.x = this->rect.x + rect; }
+	void AddRectZ(const float rect) { this->rect.z = this->rect.z + rect; }
+
+	const VECTOR2 GetPosition() { return pos; }
+
+	const int GetAnime() { return anime; }
+	void SetAnime(int anime) { this->anime = anime; }
+
+	void Update();
+	void Render();
+
+private:
+	VECTOR2 pos;
+	VECTOR4 rect;
+	float timer;
+	float scale;
+	int anime;
+};
+
+extern Binder resultBinder;

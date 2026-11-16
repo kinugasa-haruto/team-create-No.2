@@ -30,6 +30,7 @@ void tutorial_init()
 {
 	tutorial_state = 0;
 	tutorial_timer = 0;
+	skipbutton.Reset();
 }
 
 void tutorial_deinit()
@@ -85,8 +86,9 @@ void tutorial_render()
 	GameLib::clear(1, 1, 1);
 
 	back_render();
-	primitive::rect(0, 0, SCREEN_W, SCREEN_H - SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
+	conveyor_render();
 
+	primitive::rect(0, 0, SCREEN_W, SCREEN_H - SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
 	skipbutton.Render();
 	
 }
