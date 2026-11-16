@@ -31,8 +31,6 @@ void spriteload_init()
 	hand = sprite_load(L"./Data/Images/player_hand.png");
 	obasan = sprite_load(L"./Data/Images/obasan.png");
 
-	hand= sprite_load(L"./Data/Images/player_hand.png");
-	
 	hannya = sprite_load(L"./Data/Images/hannya.png");
 	fire = sprite_load(L"./Data/Images/fire.png");
 
