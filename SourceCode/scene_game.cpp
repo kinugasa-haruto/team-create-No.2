@@ -75,7 +75,7 @@ void game_render()
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 	back_render();
 	conveyor_render();
-	can.CAN_RENDER(cans,1);		//ŠÊ‚Ì•`‰æŠÖ”
+	can.CAN_RENDER(cans,obas,ojis,1);		//ŠÊ‚Ì•`‰æŠÖ”
 	can.OJI_BACK_RENDER(cans,ojis);
 	//can.OJI_FRONT_RENDER(cans,ojis);
 	can.CAN_RENDER(cans,obas,ojis,1);		//ŠÊ‚Ì•`‰æŠÖ”

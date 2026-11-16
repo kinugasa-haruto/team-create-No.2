@@ -18,6 +18,7 @@
 // 個々のヘッダーファイルは下の方へ
 #include "audio.h"
 #include "spriteload.h"
+#include "number.h"
 #include "easing.h"
 #include "Animation.h"
 #include "game_timer.h"
