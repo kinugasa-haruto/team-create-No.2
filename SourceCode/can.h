@@ -92,3 +92,6 @@ struct Day
 	int can_pro;//ŠÊ‚ÌŠm—¦
 };
 
+void GAME_DAY(int num);
+void GAME_DAY_RENDER(int num);
+
