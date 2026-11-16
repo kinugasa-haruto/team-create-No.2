@@ -4,12 +4,13 @@ int tutorial_state;
 int tutorial_timer;
 
 float inv;
+static float timer;
 
 SkipButton skipbutton = SkipButton::Instance();
 
 void SkipButton::Update()
 {
-	if (STATE(0) & PAD_START)
+	if (STATE(0) & PAD_TRG1)
 	{
 		timer++;
 
@@ -31,6 +32,7 @@ void tutorial_init()
 	tutorial_state = 0;
 	tutorial_timer = 0;
 	skipbutton.Reset();
+	timer = 0;
 }
 
 void tutorial_deinit()
@@ -64,7 +66,6 @@ void tutorial_update()
 		//////// �ʏ펞 ////////
 		if (inv < 1)
 		{
-			static float timer = 0;
 			timer += 0.01f;
 			inv = Easing::easeIn3(timer);
 			if (inv >= 9.99f) inv = 1;
@@ -88,7 +89,9 @@ void tutorial_render()
 	back_render();
 	conveyor_render();
 
-	primitive::rect(0, 0, SCREEN_W, SCREEN_H - SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
-	skipbutton.Render();
 	
+	skipbutton.Render();
+	primitive::rect(0, 0, SCREEN_W, SCREEN_H - SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
 }
+
+

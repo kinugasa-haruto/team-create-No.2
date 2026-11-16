@@ -19,6 +19,8 @@ Sprite* fire; // ”wŒi‚Ì‰Š
 
 Sprite* binder; // ƒoƒCƒ“ƒ_[
 
+Sprite* number; // ”š
+
 void spriteload_init()
 {
 	back = sprite_load(L"./Data/Images/gamen.png");
@@ -39,6 +41,8 @@ void spriteload_init()
 	fire = sprite_load(L"./Data/Images/fire.png");
 
 	binder = sprite_load(L"./Data/Images/binder.png");
+
+	number = sprite_load(L"./Data/Images/number.png");
 }
 
 void spriteload_deinit()
@@ -61,4 +65,6 @@ void spriteload_deinit()
 	safe_delete(fire);
 
 	safe_delete(binder);
+
+	safe_delete(number);
 }

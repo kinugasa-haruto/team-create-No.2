@@ -42,7 +42,7 @@ void GAME_DAY(int num) {
 
 	player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 	can.CAN_ALL_VANISH(cans, obas, ojis, boms);//１日に流れるものが全部消えたかの処理
-	gameTimer.timerUpdate();
+
 }
 void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
@@ -53,7 +53,6 @@ void GAME_DAY_RENDER(int num) {
 	player.HITAREA_FLICKAREA_RENDER();	//叩く,弾くエリアの描画
 	can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
 
-	gameTimer.timerRender();
 }
 
 //コンストラクタ

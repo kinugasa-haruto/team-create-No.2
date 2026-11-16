@@ -1,20 +1,20 @@
 #include "all.h"
 
-Number::Number()
+gameNumber::gameNumber()
 {
-	map_["0"] = {};
-	map_["1"] = {};
-	map_["2"] = {};
-	map_["3"] = {};
-	map_["4"] = {};
-	map_["5"] = {};
-	map_["6"] = {};
-	map_["7"] = {};
-	map_["8"] = {};
-	map_["9"] = {};
+	map_["0"] = {0 , 0, 100, 100};
+	map_["1"] = {100, 100, 100, 100};
+	map_["2"] = {200, 200, 100, 100};
+	map_["3"] = {300, 300, 100, 100};
+	map_["4"] = {400, 400, 100, 100};
+	map_["5"] = {500, 500, 100, 100};
+	map_["6"] = {600, 600, 100, 100};
+	map_["7"] = {700, 700, 100, 100};
+	map_["8"] = {800, 800, 100, 100};
+	map_["9"] = {900, 900, 100, 100};
 }
 
-void Number::NumberRender(VECTOR2 pos ,int number)
+void gameNumber::NumberRender(VECTOR2 pos ,int number)
 {
 	auto str_num = std::to_string(number);
 
@@ -28,8 +28,7 @@ void Number::NumberRender(VECTOR2 pos ,int number)
 
 }
 
-void Number::Render()
+void gameNumber::Render()
 {
-	//sprite_render(number, pos.x, pos.y, 1, 1, textPos.x, textPos.y, size.x, size.y, 0, 0);
-
+	sprite_render(number, pos.x, pos.y, 0.5f, 0.5f, textPos.x, textPos.y, size.x, size.y, 0, 0);
 }

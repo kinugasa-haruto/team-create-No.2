@@ -9,6 +9,9 @@
 //
 //******************************************************************************
 
+extern int gameDay;
+extern bool nextDay;
+
 // 関数のプロトタイプ宣言
 void game_init();
 void game_deinit();

@@ -37,13 +37,7 @@ void result_update()
 
 	case 2:
 		//////// �ʏ펞 ////////
-		resultBinder.Update();
-
-		if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
-		{
-			nextScene = SCENE_TITLE;
-		}
-
+		
 		break;
 	}
 
@@ -56,6 +50,5 @@ void result_update()
 void result_render()
 {
 	GameLib::clear(0,0,0);
-	resultBinder.Render();
 
 }
