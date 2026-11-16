@@ -5,9 +5,15 @@ class playerController
 private:
 	VECTOR2 hitarea_pos;	//叩くエリアのpos
 	VECTOR2 hitarea_scale;	//叩くエリアのscale
-	VECTOR2 flickarea_pos;	//弾くエリアのscale
+	VECTOR2 flickarea_pos;	//弾くエリアのpos
 	VECTOR2 flickarea_scale;//弾くエリアのscale
-	bool main_conveyor;		//メインコンベアかの判断
+
+	VECTOR2 Rhund_pos;		//右手のpos
+	VECTOR2 Lhund_pos;		//左手のpos
+	VECTOR2 Rhund_scale;	//右手のscale
+	VECTOR2 Lhund_scale;	//左手のscale
+
+	bool main_conveyor;			//メインコンベアかの判断
 	bool right_hit_area;		//右の叩くエリアかの判断
 	float main_conveyor_color;	//メインベルトコンベアの色
 	float sub_conveyor_color;	//サブベルトコンベアの色
@@ -15,17 +21,32 @@ private:
 	int control_stop_timer;//プレイヤーの停止時間
 
 public:
-	playerController();				//コンストラクタ
+	playerController();					//コンストラクタ
 	~playerController();				//デストラクタ
-	void HITAREA_FLICKAREA_RENDER();		//叩くエリアと弾くエリアの描画関数
-	void PLAYER_HIT_CAN(Can* can, Can* oba,Can*oji, int day);	//playerの缶を叩く動作関数
-	bool HITCHECK_CAN(Can* can);	//缶と叩くエリアの当たり判定関数
-	bool HITCHECK_OBA(Can* oba);	//おばさんと叩くエリアの当たり判定関数
-	bool HITCHECK_OJI(Can* oji);	//おじさんと叩くエリアの当たり判定関数
+	void HITAREA_FLICKAREA_RENDER();	//叩くエリアと弾くエリアの描画関数
+	void PLAYER_HIT_CAN(Can* can, Can* oba,Can*oji, Can*bom,int day);	//playerの缶を叩く動作関数
 
-	void PLAYER_FLICK_CAN(Can* can, int day);//playerの弾く動作関数
-	bool FLICKCHECK_CAN(Can* cans, int day);	//缶と弾くエリアの当たり判定関数
+	//bool HITCHECK_CAN(Can* can);	//缶と叩くエリアの当たり判定関数
+	//bool HITCHECK_OBA(Can* oba);	//おばさんと叩くエリアの当たり判定関数
+	//bool HITCHECK_OJI(Can* oji);	//おじさんと叩くエリアの当たり判定関数
+	//bool HITCHECK_BOM(Can* bom);	//爆弾と叩くエリアの当たり判定関数
+
+	bool HITCHECK_THING(Can*thing, float textX, float textY);	//流れている物と叩くエリアの当たり判定関数
+	bool HITCHECK_HUND_BUTTON(VECTOR2 hund_pos, VECTOR2 hund_size,VECTOR2 button_pos, VECTOR2 button_size);//左右の手と爆弾の左右のボタンの当たり判定関数
+
+
+	void PLAYER_FLICK_CAN(Can* can,Can*oba,Can*oji,Can*bom, int day);//playerの弾く動作関数
+	bool FLICKCHECK_THING(Can* thing, float textX, float textY);	//流れている物と弾くエリアの当たり判定関数
+	//bool FLICKCHECK_CAN(Can* cans);	//缶と弾くエリアの当たり判定関数
+	//bool FLICKCHECK_OJI(Can* ojis);	//おじさんと弾くエリアの当たり判定関数
+	//bool FLICKCHECK_OBA(Can* obas);	//おばさんと弾くエリアの当たり判定関数
+	//bool FLICKCHECK_BOM(Can* boms);	//爆弾と弾くエリアの当たり判定関数
 	void BELTCONVEYOR_HITAREA_CHANGE();		//ベルトコンベアの上下切り替え関数
+
+	VECTOR2 getRHUND_POS();
+	VECTOR2 getLHUND_POS();
+	VECTOR2 getRHUND_SCALE();
+	VECTOR2 getLHUND_SCALE();
 
 };
 
