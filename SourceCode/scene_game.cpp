@@ -18,10 +18,13 @@ playerController player;
 extern int debug_flick;
 extern int debug_miss;
 
+int Day;
+
 void game_init()
 {
 	game_state      = 0;
 	game_timer      = 0;
+	Day = 1;
 }
 
 void game_deinit()
@@ -45,6 +48,7 @@ void game_update()
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
 		game_state++;
+		
 		/*fallthrough*/
 
 	case 2:
