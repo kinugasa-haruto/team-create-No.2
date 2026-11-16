@@ -17,6 +17,7 @@ Sprite* Bom;		//爆弾
 Sprite* hannya; // おばちゃんレイジモード
 Sprite* fire; // 背景の炎
 
+Sprite* binder; // バインダー
 
 void spriteload_init()
 {
@@ -34,6 +35,10 @@ void spriteload_init()
 	obasan = sprite_load(L"./Data/Images/obasan.png");
 	Bom = sprite_load(L"./Data/Images/bom.png");
 
+	hannya = sprite_load(L"./Data/Images/hannya.png");
+	fire = sprite_load(L"./Data/Images/fire.png");
+
+	binder = sprite_load(L"./Data/Images/binder.png");
 }
 
 void spriteload_deinit()
@@ -51,4 +56,9 @@ void spriteload_deinit()
 	safe_delete(hand_hold);
 	safe_delete(obasan);
 	safe_delete(Bom);
+
+	safe_delete(hannya);
+	safe_delete(fire);
+
+	safe_delete(binder);
 }

@@ -8,7 +8,7 @@ int debug_bom = 0;
 //日にち事の設定
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
-	{ 90.0f,		20,		3.0f,		20,			40,				60,				80,					100},	// １日目
+	{ 90.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// １日目
 	//{ 70, 2 },	// 2日目
 	//{ 60, 1 },	// 3日目
 	//{ 50, 6 },	// 4日目
@@ -136,12 +136,6 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		if (oji[i].can_alive == true) {
 			if (can[i].oji_back == false) {
 				if (can[i].can_color > days[day - 1].oba_pro && can[i].can_color <= days[day - 1].oji_pro) {
-					if (oji[i].oji_hit == true) {
-						sprite_render(ojisan_push, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
-							0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
-						sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 150, oji[i].scale.x, oji[i].scale.y,
-							0, 0, 60, 65, 0, 0, ToRadian(0));//ネクタイ
-					}
 					if (oji[i].oji_hit == false) {
 						sprite_render(ojisan, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 							0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
@@ -295,7 +289,7 @@ void Can::OJI_BACK_RENDER(Can* can, Can* oji, int day) {
 	for (int i = 0; i < generate_num; i++) {
 		if (oji[i].can_alive == true) {
 			if (oji[i].oji_back == true) {
-				if (can[i].can_color < days[day - 1].oji_pro /*&& can[i].can_color <= 66*/) {
+				if (can[i].can_color < days[day - 1].oji_pro) {
 					sprite_render(ojisan_push, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 						0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
 					sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 150, oji[i].scale.x, oji[i].scale.y,

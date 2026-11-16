@@ -42,20 +42,21 @@ void back_render()
 	// ‰æ–Ê‚ğÂ‚Å“h‚è‚Â‚Ô‚·
 
 	sprite_render(back, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
-	
+
+
+}
+
+void conveyor_render()
+{
 	for (int i = 0; i < 2; i++)
 	{
 		sprite_render(conveyor1, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, conveyor_1[i].GetRect().y, SCREEN_W, conveyor_1[i].GetRect().w, ToRadian(0));
 		for (int j = 0; j < 2; j++)
 		{
-			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, 0 ,conveyor_2[i][j].GetRect().y, SCREEN_W, conveyor_2[i][j].GetRect().w, ToRadian(0));
+			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, 0, conveyor_2[i][j].GetRect().y, SCREEN_W, conveyor_2[i][j].GetRect().w, ToRadian(0));
 			sprite_render(conveyor2, conveyor_2[i][j].GetPosition().x, conveyor_2[i][j].GetPosition().y, 1, 1, conveyor_2[i][j].GetRect().x, conveyor_2[i][j].GetRect().y, conveyor_2[i][j].GetRect().z, conveyor_2[i][j].GetRect().w, ToRadian(0));
 		}
 
 		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, 0, SCREEN_W, 238, 0, 0, ToRadian(0));
 	}
-
-	
-	
-
 }

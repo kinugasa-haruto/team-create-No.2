@@ -6,6 +6,7 @@ int game_timer;
 
 // 1ゲームの長さ（秒）
 #define GAME_LENGTH 90
+GameTimer gameTimer = GameTimer::Instance();
 
 Can cans[500];
 Can obas[500];
@@ -25,7 +26,7 @@ void game_init()
 
 void game_deinit()
 {
-
+	gameTimer.reset();
 }
 
 void game_update()
@@ -70,6 +71,10 @@ void game_update()
 
 		can.CAN_ALL_VANISH(cans, obas, ojis, boms);//１日に流れるものが全部消えたかの処理
 		debug::setString("FLICK:%d MISS:%d", debug_flick, debug_miss);
+		gameTimer.timerUpdate();
+
+
+
 		break;
 	}
 
@@ -83,10 +88,11 @@ void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 	back_render();
-	can.OJI_BACK_RENDER(cans,ojis,1);
-	//can.OJI_FRONT_RENDER(cans,ojis);
+	can.OJI_BACK_RENDER(cans,ojis,1);//おじさんがコンベアの後ろに消える処理
+	conveyor_render();
 	can.CAN_RENDER(cans,obas,ojis,boms,1);		//缶の描画関数
 	player.HITAREA_FLICKAREA_RENDER();	//叩く,弾くエリアの描画
 	can.DAY_CLEAR(cans, obas, ojis, boms, 1);//CLEAR時の関数	ゲージの描画
 
+	gameTimer.timerRender();
 }
