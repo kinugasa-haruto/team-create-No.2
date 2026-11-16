@@ -6,6 +6,8 @@ int game_timer;
 
 // 1ゲームの長さ（秒）
 #define GAME_LENGTH 90
+GameTimer gameTimer = GameTimer::Instance();
+
 
 //Can cans[CAN_NUM];
 Can cans[20];
@@ -20,7 +22,7 @@ void game_init()
 
 void game_deinit()
 {
-
+	gameTimer.reset();
 }
 
 void game_update()
@@ -51,7 +53,10 @@ void game_update()
 		player.FLICKCHECK_CAN(cans,1);//缶と弾くエリアの当たり判定関数
 		player.PLAYER_FLICK_CAN(cans,1);//playerの弾く動作関数
 		player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
-		
+		gameTimer.timerUpdate();
+
+
+
 		break;
 	}
 
@@ -65,7 +70,9 @@ void game_render()
 {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 	back_render();
+	conveyor_render();
 	can.CAN_RENDER(cans,1);		//缶の描画関数
 	player.HITAREA_FLICKAREA_RENDER();	//叩く,弾くエリアの描画
 
+	gameTimer.timerRender();
 }

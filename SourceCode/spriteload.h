@@ -14,6 +14,8 @@ extern Sprite* hand;	//手
 extern Sprite* hannya; // おばちゃんレイジモード
 extern Sprite* fire; // 背景炎
 
+extern Sprite* binder; // バインダー
+
 
 void spriteload_init();
 

@@ -13,6 +13,7 @@ Sprite* hand;//手
 Sprite* hannya; // おばちゃんレイジモード
 Sprite* fire; // 背景の炎
 
+Sprite* binder; // バインダー
 
 void spriteload_init()
 {
@@ -28,6 +29,8 @@ void spriteload_init()
 	
 	hannya = sprite_load(L"./Data/Images/hannya.png");
 	fire = sprite_load(L"./Data/Images/fire.png");
+
+	binder = sprite_load(L"./Data/Images/binder.png");
 }
 
 void spriteload_deinit()
@@ -44,4 +47,6 @@ void spriteload_deinit()
 
 	safe_delete(hannya);
 	safe_delete(fire);
+
+	safe_delete(binder);
 }
