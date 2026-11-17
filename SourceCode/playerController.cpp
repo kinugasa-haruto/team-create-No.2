@@ -2,7 +2,6 @@
 extern  Day days[];
 extern Can ojis[];
 extern Can can;
-int debug_flick = 0;
 
 //コンストラクタ
 playerController::playerController() {
@@ -22,6 +21,8 @@ playerController::playerController() {
 	sub_conveyor_color = 1.0f;
 
 	control_stop_timer = 0;
+	flick_errorcan_count = 0;
+	flick_other_count = 0;
 }
 
 //デストラクタ
@@ -267,41 +268,47 @@ bool playerController::HITCHECK_HUND_BUTTON(
 }
 
 //playerの弾く動作関数
-void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {	
+void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
+	debug::setString("flick_error_can:%i", flick_errorcan_count);
+	debug::setString("flick_other:%i", flick_other_count);
+
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
 		if (control_stop_timer <= 0) {
 			if (main_conveyor == false) {
 				if (TRG(0) & PAD_TRG1) {
-					if (cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
+					if (boms[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
 							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true) {
 							//爆弾を弾く、消す
+							flick_other_count++;
 							boms[i].setCAN_ALIVE(false);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].bom_pro && cans[i].getCAN_COLOR() <= days[day - 1].oba_pro) {//おばさん
+					if (obas[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].bom_pro && cans[i].getCAN_COLOR() <= days[day - 1].oba_pro) {//おばさん
 						if (FLICKCHECK_THING(&obas[i], obas[i].getCAN_SCALE().x * obas[i].getCAN_TEXTSIZE().x,
 							obas[i].getCAN_SCALE().y * obas[i].getCAN_TEXTSIZE().y) == true) {
 							//おばさんを弾く、消す
+							flick_other_count++;
 							obas[i].setCAN_ALIVE(false);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//おじさん
+					if (ojis[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//おじさん
 						if (FLICKCHECK_THING(&ojis[i], ojis[i].getCAN_SCALE().x * ojis[i].getCAN_TEXTSIZE().x * 1.5f,
 							ojis[i].getCAN_SCALE().y * ojis[i].getCAN_TEXTSIZE().y) == true) {
 							//おじさんを弾く、消す
+							flick_other_count++;
 							ojis[i].setCAN_ALIVE(false);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].oji_pro && cans[i].getCAN_COLOR() <= days[day - 1].errorcan_pro) {//不正解の缶
+					if (cans[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oji_pro && cans[i].getCAN_COLOR() <= days[day - 1].errorcan_pro) {//不正解の缶
 						if (FLICKCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
 							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
 							//缶を弾く、消す
+							flick_errorcan_count++;
 							cans[i].setCAN_ALIVE(false);
-							debug_flick = 1;
 
 						}
 					}
@@ -469,4 +476,14 @@ VECTOR2 playerController::getRHUND_SCALE() {
 
 VECTOR2 playerController::getLHUND_SCALE() {
 	return Lhund_scale;
+}
+
+//不正解の缶の回収数のゲッター関数
+int playerController::getFLICK_ERRORCAN_COUNT() {
+	return flick_errorcan_count;
+}
+
+//缶以外の物の回収した合計数のゲッター関数
+int playerController::getFLICK_OTHERCAN_COUNT() {
+	return flick_other_count;
 }
