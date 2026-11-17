@@ -39,6 +39,9 @@ private:
 
 	int kigen;
 
+	int errorcan_count;//不正解の缶の生成した数の変数
+	int othercan_count;//缶以外の物を生成した数の変数
+
 
 public:
 	Can();//コンストラクタ
@@ -64,6 +67,8 @@ public:
 	bool getOBA_HIT();				//oba_hitのゲッター関数
 	void setOBA_HIT(bool hit);		//oba_hitのセッター関数
 	int getCAN_COLOR();				//缶のcolorのゲッター関数
+	int getERRORCAN_COUNT();		//不正解の缶の生成数のゲッター関数
+	int getOTHERCAN_COUNT();		//缶以外の生成合計数のゲッター関数
 	VECTOR2 getCAN_POS();			//缶のposのゲッター関数
 	VECTOR2 getOBA_POS();			//おばさんのposのゲッター関数
 	VECTOR2 getOJI_POS();			//おじさんのposのゲッター関数

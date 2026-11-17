@@ -4,13 +4,13 @@ extern Can obas[500];
 extern Can ojis[500];
 extern Can boms[500];
 extern Can can;
-extern playerController player; 
+extern playerController player;
 extern GameTimer gameTimer;
 
 //日にち事の設定
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
-	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
+	//{ 100.0f,		20,		5.0f,		15,			30,				45,				80,					100},	// デバック用
 	{ 200.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
@@ -18,6 +18,7 @@ Day days[] = {
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
+
 	{ 200.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 8チュートリアル1//タイトルの缶
 	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 9チュートリアル2
 
@@ -131,6 +132,8 @@ Can::Can() {
 	oba_hit = false;
 
 	kigen = 100;
+	errorcan_count = 0;
+	othercan_count = 0;
 }
 
 //デストラクタ
@@ -141,9 +144,11 @@ Can::~Can() {
 //缶の生成関数
 void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 	debug::setString("generate:%i", generate_timer);
+	debug::setString("error_can:%i", errorcan_count);
+	debug::setString("other_can:%i", othercan_count);
 
 	generate_timer--;
-	if (generate_timer < 0 &&generate_num < days[day - 1].CAN_NUM) {
+	if (generate_timer < 0 && generate_num < days[day - 1].CAN_NUM) {
 		int i = generate_num;
 		can_num = rand() % 100 + 1;
 
@@ -151,17 +156,25 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 		if (can_num <= days[day - 1].bom_pro) {// 爆弾
 			boms[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else if (can_num <= days[day - 1].oba_pro) {// おばさん
+
+		if (can_num > days[day - 1].bom_pro && can_num <= days[day - 1].oba_pro) {// おばさん
 			obas[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else if (can_num <= days[day - 1].oji_pro) {// おじさん
+
+		if (can_num > days[day - 1].oba_pro && can_num <= days[day - 1].oji_pro) {// おじさん
 			ojis[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else {
+
+		if (can_num > days[day - 1].oji_pro && can_num <= days[day - 1].errorcan_pro) {
+			cans[i].setCAN_ALIVE(true);//缶
+			errorcan_count++;
+		}
+
+		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
 			cans[i].setCAN_ALIVE(true);//缶
 		}
 
@@ -169,10 +182,6 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 		generate_timer = days[day - 1].timer;
 		generate_num++;
-		//can[generate_num].can_color = can_num;
-		//generate_timer = days[day - 1].timer;
-		//generate_num++;
-		//can[generate_num].setOJI_HIT(false);
 	}
 
 	if (generate_num > days[day - 1].CAN_NUM) {
@@ -302,7 +311,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 
 				if (oba[i].pos.x >= SCREEN_W) {
 					oba[i].can_alive = false;
-					kigen -= 10; 
+					kigen -= 10;
 				}
 			}
 		}
@@ -422,7 +431,6 @@ void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		kigen = 0;
 	}
 	primitive::rect(SCREEN_W * 0.5, 0, kigen * 2.5f, 50, 0, 0, ToRadian(0), 1, 0, 0);
-	primitive::rect(0, 0, 800, 400, 0, 0, ToRadian(0), 0, 0, 0);
 	if (kigen <= 0) {
 		text_out(1, "game over", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 1);
 	}
@@ -432,6 +440,9 @@ void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
 	}
 }
+
+
+
 
 
 //缶のcolorのゲッター関数
@@ -542,7 +553,18 @@ void Can::setOBA_HIT(bool hit) {
 	oba_hit = hit;
 }
 
+//kigenのセッター関数
 void Can::setKIGEN(int k) {
 
 	kigen -= k;
+}
+
+//不正解の缶の生成数のゲッター関数
+int Can::getERRORCAN_COUNT() {
+	return errorcan_count;
+}
+
+//缶以外の生成合計数のゲッター関数
+int Can::getOTHERCAN_COUNT() {
+	return othercan_count;
 }
