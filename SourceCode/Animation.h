@@ -57,6 +57,14 @@ public:
 	void Down();
 	void Render();
 
+	void reset()
+	{
+		scale = 0;
+		timer = 0;
+		binderType = 0;
+		anime = 0;
+	}
+
 private:
 	VECTOR2 pos;
 	VECTOR4 rect;

@@ -63,8 +63,11 @@ void game_update()
 			if (!nextDay)
 			{
 				// Ç±Ç±Ç…èâä˙âªèàóù
-
 				GAME_DAY(1);
+				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				nextday.Reset();
+				gameTimer.reset();
+				resultBinder.reset();
 				nextDay = true;
 			}
 			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
@@ -76,19 +79,17 @@ void game_update()
 				if (gameTimer.timerUpdate() == true) {}
 				else
 				{
-					resultBinder.Up();
-
 					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
 					{
 						resultBinder.SetBinderType(1);
-						gameTimer.reset();
-						gameDay++;
 					}
-					if (resultBinder.GetBinderType() == 1)resultBinder.Down();
+
+					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+
 					
 					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
 					{
-						gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay);
 						nextday.Update();
 					}
 					
@@ -96,7 +97,42 @@ void game_update()
 			}
 			break;
 		case 2:
-			GAME_DAY(2);
+			if (!nextDay)
+			{
+				// Ç±Ç±Ç…èâä˙âªèàóù
+
+				GAME_DAY(2);
+				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				nextday.Reset();
+				gameTimer.reset();
+				resultBinder.reset();
+				nextDay = true;
+			}
+			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
+			{
+				GAME_DAY(2);
+			}
+			else
+			{
+				if (gameTimer.timerUpdate() == true) {}
+				else
+				{
+					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
+					{
+						resultBinder.SetBinderType(1);
+					}
+
+					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+
+
+					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
+					{
+						nextday.Update();
+					}
+
+				}
+			}
 			break;
 		}
 
@@ -115,7 +151,7 @@ void game_update()
 void game_render()
 {
 	GAME_DAY_RENDER(1);
+	gameTimer.timerRender();
 	resultBinder.Render();
-	gamenumber.Render();
 	nextday.Render();
 }

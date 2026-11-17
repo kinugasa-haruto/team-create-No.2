@@ -49,16 +49,18 @@ void Binder::Up()
 
 	scale = Easing::easeOut3(timer);
 	if (scale >= 0.999f) scale = 1;
-
-	debug::setString("scale:%f", GetScale());
+	if (timer >= 1) timer = 1;
 }
 
 void Binder::Down()
 {
+
+	if (scale >= 0.999f) scale = 1;
 	timer -= 1.0f / (60 * 2);
 
-	scale = Easing::easeOut3(timer);
+	scale = 1 - Easing::easeOut3(1 - timer);
 	if (scale <= 0.001f) scale = 0;
+	debug::setString("scale:%f", GetScale());
 }
 
 void Binder::Render()
@@ -72,11 +74,11 @@ void NextDay::Update()
 {
 	if (!swap)
 	{
-		timer += 1 / 120.0f;
+		timer += 1 / 240.0f;
 	}
 	else
 	{
-		timer -= 1 / 120.0f;
+		timer -= 1 / 240.0f;
 	}
 	if (!swap)
 	{
@@ -94,6 +96,7 @@ void NextDay::Update()
 	if (swap && inv <= 0.002f)
 	{
 		inv = 0;
+		gameDay++;
 		nextDay = false;
 	}
 }
@@ -101,4 +104,5 @@ void NextDay::Update()
 void NextDay::Render()
 {
 	primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	gamenumber.Render();
 }

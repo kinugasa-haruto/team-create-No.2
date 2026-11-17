@@ -11,7 +11,7 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 200.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 1日目
+	{ 1.0f,		1,		40.0f,		0,			0,				0,				100,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
@@ -394,10 +394,10 @@ void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		text_out(1, "game over", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 1);
 	}
 
-	if (generate_num >= days[day - 1].CAN_NUM &&
-		CAN_ALL_VANISH(can, oba, oji, bom) == true) {
-		text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
-	}
+	//if (generate_num >= days[day - 1].CAN_NUM &&
+	//	CAN_ALL_VANISH(can, oba, oji, bom) == true) {
+	//	text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
+	//}
 }
 
 

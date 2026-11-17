@@ -9,10 +9,14 @@ bool GameTimer::timerUpdate()
 	{
 		animeTimer += 0.01f;
 		scaleY = Easing::easeOut3(animeTimer);
-		if (scaleY >= 0.98f) return false;
+		if (scaleY >= 0.98f)
+		{
+			scaleY = 1;
+			return false;
+		}
 	}
 	return true;
-	debug::setString("gametimer:%f", timer);
+	debug::setString("gametimer:%f", scaleY);
 }
 
 void GameTimer::timerRender()
