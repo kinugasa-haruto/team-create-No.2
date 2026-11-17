@@ -1,6 +1,6 @@
 #include "all.h"
 
-void GameTimer::timerUpdate()
+bool GameTimer::timerUpdate()
 {
 	//1ƒtƒŒ[ƒ€‚Ì•b”‚ð‚Â‚¢‚©
 	timer += 1 / 60.0f;
@@ -9,9 +9,14 @@ void GameTimer::timerUpdate()
 	{
 		animeTimer += 0.01f;
 		scaleY = Easing::easeOut3(animeTimer);
-		if (scaleY >= 0.98f) nextScene = SCENE_RESULT;
+		if (scaleY >= 0.98f)
+		{
+			scaleY = 1;
+			return false;
+		}
 	}
-	debug::setString("gametimer:%f", timer);
+	return true;
+	debug::setString("gametimer:%f", scaleY);
 }
 
 void GameTimer::timerRender()

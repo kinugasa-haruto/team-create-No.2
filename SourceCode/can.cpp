@@ -46,7 +46,7 @@ void GAME_DAY(int num) {
 
 	player.BELTCONVEYOR_HITAREA_CHANGE();//ƒxƒ‹ƒgƒRƒ“ƒxƒA‚Ìã‰º‚Æ’@‚­ƒGƒŠƒA‚Ì¶‰EØ‚è‘Ö‚¦ŠÖ”
 	can.CAN_ALL_VANISH(cans, obas, ojis, boms);//‚P“ú‚É—¬‚ê‚é‚à‚Ì‚ª‘S•”Á‚¦‚½‚©‚Ìˆ—
-	gameTimer.timerUpdate();
+
 }
 void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
@@ -57,7 +57,6 @@ void GAME_DAY_RENDER(int num) {
 	player.HITAREA_FLICKAREA_RENDER();			//’@‚­,’e‚­ƒGƒŠƒA‚Ì•`‰æ
 	can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEARŽž‚ÌŠÖ”	ƒQ[ƒW‚Ì•`‰æ
 
-	gameTimer.timerRender();
 }
 //void TUTORIAL_UPDATE() {
 //	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);
@@ -435,10 +434,10 @@ void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		text_out(1, "game over", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 1);
 	}
 
-	if (generate_num >= days[day - 1].CAN_NUM &&
-		CAN_ALL_VANISH(can, oba, oji, bom) == true) {
-		text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
-	}
+	//if (generate_num >= days[day - 1].CAN_NUM &&
+	//	CAN_ALL_VANISH(can, oba, oji, bom) == true) {
+	//	text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
+	//}
 }
 
 

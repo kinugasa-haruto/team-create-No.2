@@ -20,6 +20,8 @@ extern Sprite* fire; // 背景炎
 
 extern Sprite* binder; // バインダー
 
+extern Sprite* number; // 数字
+
 
 void spriteload_init();
 
