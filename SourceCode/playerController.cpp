@@ -133,6 +133,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 	}
 	//プレイヤーが操作できないタイムの減少
 	if (control_stop_timer > 0) {
+		ObachanUpdate();
 		control_stop_timer--;
 	}
 }

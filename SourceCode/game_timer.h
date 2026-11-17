@@ -18,7 +18,6 @@ public:
 	{
 		timer = 0;
 		animeTimer = 0;
-		max_timer = GAME_LENGTH;
 		scaleY = 0;
 	}
 
@@ -27,13 +26,11 @@ private:
 	{
 		timer = 0;
 		animeTimer = 0;
-		max_timer = GAME_LENGTH;
 		scaleY = 0;
 	}
 
 	float timer = 0;
 	float animeTimer;
 	float scaleY;
-	float max_timer = GAME_LENGTH;
 };
 

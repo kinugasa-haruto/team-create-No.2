@@ -58,9 +58,4 @@ void Binder::Render()
 	sprite_render(binder, 0, 1080 - 1080 * scale, 1, 1, 0, 0, 1980, 1080, 0, 0, ToRadian(0));
 
 	if (scale == 1.0f) text_out(1, "Enter To Title", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
-	
-
-
-
-
 }

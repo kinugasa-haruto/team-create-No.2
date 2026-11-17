@@ -70,7 +70,7 @@ void title_update()
 			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
 
 		}
-		ObachanUpdate();
+		
 		//if (title.GetSelected() == 0 && TRG(0) & PAD_RIGHT)
 		//{
 		//	title.ChangeSelected(1);
