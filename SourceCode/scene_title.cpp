@@ -5,7 +5,11 @@ int title_timer;
 
 Title title = Title::Instance();
 
-
+extern Can cans[500];
+extern Can obas[500];
+extern Can ojis[500];
+extern Can boms[500];
+extern Can can;
 
 void title_init()
 {
@@ -32,9 +36,9 @@ void title_update()
 
 	case 1:
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
-	
+
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		
+
 
 		title_state++;
 		/*fallthrough*/
@@ -55,7 +59,7 @@ void title_update()
 			if (timer >= 1) timer = 1;
 			title.SetScale(sinf(PI * timer));
 			if (title.GetInv() >= 0.98f) timer = 0;
-			
+
 			if (title.GetTimer() >= 30)
 			{
 				static float timer = 0;
@@ -64,7 +68,7 @@ void title_update()
 				if (title.GetInv() >= 0.98f) timer = 0;
 			}
 			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
-			
+
 		}
 		
 		//if (title.GetSelected() == 0 && TRG(0) & PAD_RIGHT)
@@ -78,6 +82,9 @@ void title_update()
 
 
 		back_update();
+
+		can.CAN_GENERATE(cans, obas, ojis, boms, 8);//‚P‚Â‚ÌŠÊ‚Ì¶¬ŠÖ”
+		can.CAN_MOVE(cans, obas, ojis, boms, 8);	//‚P‚Â‚ÌŠÊ‚ÌˆÚ“®ŠÖ”
 
 		break;
 	}
@@ -94,7 +101,8 @@ void title_render()
 	back_render();
 
 	primitive::rect(SCREEN_W - 700, 150, 300, 300, 0, 0, ToRadian(0), 1, 1, 0);
-	sprite_render(sabaCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale() , 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
+	sprite_render(sabaCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale(), 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
+	ObachanRender();
 	conveyor_render();
 	primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 	//switch (title.GetSelected())
@@ -110,5 +118,8 @@ void title_render()
 	//	break;
 	//}
 
+		
+
+	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1‚Â‚ÌŠÊ‚Ì•`‰æŠÖ”
 
 }
