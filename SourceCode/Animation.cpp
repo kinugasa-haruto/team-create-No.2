@@ -79,7 +79,7 @@ void Binder::NumberUpdate()
 	//collectCan += Easing::easeOut3(collectCan / );// ここにゲッター；
 	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
 
-	collectCan.Update({ 727, 505 }, 11, 1, 1.2f);
+	collectCan.Update({ 727, 505 }, 11, 1, 1.002f);
 	goNext = true;
 }
 

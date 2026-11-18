@@ -36,6 +36,6 @@ private:
 	float inv;
 	float scale;
 
-	std::unordered_map<std::string, Data> map_;
+	std::unordered_map<char, Data> map_;
 	std::vector<Numbers> numbers_;
 };
