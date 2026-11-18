@@ -47,6 +47,7 @@ public:
 	//void OJI_FRONT_RENDER(Can*can,Can* oji);//おじさんがコンベアよりも前の時の処理
 	void CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day);				//缶の生成関数
 	void CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day);	//缶の描画関数
+
 	void CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day);		//缶の移動関数
 	void OJI_JUMP(Can* oji);		//おじさんが飛んでいく処理
 	bool CHECK_IMPURITY_FLOW();		//間違った物がレーンを流れ切った時の処理
@@ -94,4 +95,12 @@ struct Day
 
 void GAME_DAY(int num);
 void GAME_DAY_RENDER(int num);
+//void TUTORIAL_RENDER();
+//void TUTORIAL_UPDATE();
+void TITLE_CAN_UPDATE();
+void TITLE_CAN_RENDER();
+void TUTORIAL_CAN_UPDATE();
+//void TUTORIAL_CAN_RENDER();
+void TUTORIAL_MISSCAN_UPDATE();
+//void TUTORIAL_MISSCAN_RENDER();
 

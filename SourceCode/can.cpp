@@ -11,13 +11,16 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 200.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 1日目
+	{ 1.0f,		1,		40.0f,		0,			0,				0,				100,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
+	{ 200.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 8チュートリアル1//タイトルの缶
+	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 9チュートリアル2
+
 };
 
 //ゲームでの関数をまとめた関数
@@ -42,19 +45,55 @@ void GAME_DAY(int num) {
 
 	player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 	can.CAN_ALL_VANISH(cans, obas, ojis, boms);//１日に流れるものが全部消えたかの処理
-	gameTimer.timerUpdate();
+
 }
 void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 	back_render();
 	can.OJI_BACK_RENDER(cans, ojis, num);//おじさんがコンベアの後ろに消える処理
 	conveyor_render();
-	can.CAN_RENDER(cans, obas, ojis, boms, num);		//缶の描画関数
-	player.HITAREA_FLICKAREA_RENDER();	//叩く,弾くエリアの描画
+	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
+	player.HITAREA_FLICKAREA_RENDER();			//叩く,弾くエリアの描画
 	can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
 
-	gameTimer.timerRender();
 }
+//void TUTORIAL_UPDATE() {
+//	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);
+//	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 8);//playerの叩く動作関数
+//
+//	player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);
+//	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 8);//playerの弾く動作関数
+//
+//	player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
+//
+//
+//}
+//void TUTORIAL_RENDER() {
+//	player.HITAREA_FLICKAREA_RENDER();			//叩く,弾くエリアの描画
+//
+//}
+void TUTORIAL_CAN_UPDATE() {
+	can.CAN_GENERATE(cans, obas, ojis, boms, 8);										//缶の生成関数
+	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);	//缶と叩くエリアの当たり判定関数
+	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 8);									//playerの缶を叩く動作関数
+	player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//缶と弾くエリアの当たり判定関数
+	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 8);									//playerの缶を弾く動作関数
+}
+//void TUTORIAL_CAN_RENDER() {
+//	can.CAN_RENDER(cans, obas, ojis, boms, 8);	//缶の描画関数
+//}
+void TUTORIAL_MISSCAN_UPDATE() {
+	can.CAN_GENERATE(cans, obas, ojis, boms, 9);										//不正解の缶の生成関数
+	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);	//不正解の缶と叩くエリアの当たり判定関数
+	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9);									//playerの不正解の缶を叩く動作関数
+	player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//不正解の缶と弾くエリアの当たり判定関数
+	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9);									//playerの不正解の缶を弾く動作関数
+}
+//void TUTORIAL_MISSCAN_RENDER() {
+//	can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数
+//}
+
+
 
 //コンストラクタ
 Can::Can() {
@@ -368,14 +407,6 @@ bool Can::CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom) {
 		if (can[i].can_alive == true || oba[i].can_alive == true ||
 			oji[i].can_alive == true || bom[i].can_alive == true) {
 
-			debug::setString(
-				"i:%d CAN:%d OBA:%d OJI:%d BOM:%d",
-				i,
-				can[i].can_alive,
-				oba[i].can_alive,
-				oji[i].can_alive,
-				bom[i].can_alive
-			);
 			return false;
 		}
 	}
@@ -395,13 +426,11 @@ void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 		text_out(1, "game over", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 1);
 	}
 
-	if (generate_num >= days[day - 1].CAN_NUM &&
-		CAN_ALL_VANISH(can, oba, oji, bom) == true) {
-		text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
-	}
+	//if (generate_num >= days[day - 1].CAN_NUM &&
+	//	CAN_ALL_VANISH(can, oba, oji, bom) == true) {
+	//	text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
+	//}
 }
-
-
 
 
 //缶のcolorのゲッター関数

@@ -11,7 +11,7 @@ public:
 		GameTimer instance;
 		return instance;
 	}
-	void timerUpdate();
+	bool timerUpdate();
 	void timerRender();
 
 	void reset()

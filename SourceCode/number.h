@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-class Number
+class gameNumber
 {
 	struct Data {
 		float pos_x{};
@@ -11,17 +11,19 @@ class Number
 		float height{};
 	};
 public:
-	Number();
-	~Number() = default;
-	void NumberRender(VECTOR2 pos,int number);
+	gameNumber();
+	~gameNumber() = default;
+	void NumberRender(VECTOR2 pos,int number, float inv);
 	void Render();
 
+	void reset();
 
 private:
 
 	VECTOR2 pos;
 	VECTOR2 textPos;
 	VECTOR2 size;
-	
+	float inv;
+
 	std::unordered_map<std::string, Data> map_;
 };

@@ -7,6 +7,7 @@ int game_timer;
 // 1ÉQÅ[ÉÄÇÃí∑Ç≥ÅiïbÅj
 #define GAME_LENGTH 90
 GameTimer gameTimer = GameTimer::Instance();
+NextDay nextday = NextDay::Instance();
 
 Can cans[500];
 Can obas[500];
@@ -18,13 +19,16 @@ playerController player;
 extern int debug_flick;
 extern int debug_miss;
 
-int Day;
+bool nextDay;
+int gameDay;
+gameNumber gamenumber;
 
 void game_init()
 {
 	game_state      = 0;
 	game_timer      = 0;
-	Day = 1;
+	gameDay = 1;
+	nextDay = false;
 }
 
 void game_deinit()
@@ -53,7 +57,84 @@ void game_update()
 
 	case 2:
 		//////// í èÌéû ////////
-		GAME_DAY(1);
+		switch (gameDay)
+		{
+		case 1:
+			if (!nextDay)
+			{
+				// Ç±Ç±Ç…èâä˙âªèàóù
+				GAME_DAY(1);
+				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				nextday.Reset();
+				gameTimer.reset();
+				resultBinder.reset();
+				nextDay = true;
+			}
+			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
+			{
+         				GAME_DAY(1);
+			}
+			else
+			{
+				if (gameTimer.timerUpdate() == true) {}
+				else
+				{
+					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
+					{
+						resultBinder.SetBinderType(1);
+					}
+
+					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+
+					
+					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
+					{
+						nextday.Update();
+					}
+					
+				}
+			}
+			break;
+		case 2:
+			if (!nextDay)
+			{
+				// Ç±Ç±Ç…èâä˙âªèàóù
+
+				GAME_DAY(2);
+				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				nextday.Reset();
+				gameTimer.reset();
+				resultBinder.reset();
+				nextDay = true;
+			}
+			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
+			{
+				GAME_DAY(2);
+			}
+			else
+			{
+				if (gameTimer.timerUpdate() == true) {}
+				else
+				{
+					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
+					{
+						resultBinder.SetBinderType(1);
+					}
+
+					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+
+
+					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
+					{
+						nextday.Update();
+					}
+
+				}
+			}
+			break;
+		}
 
 
 
@@ -70,5 +151,7 @@ void game_update()
 void game_render()
 {
 	GAME_DAY_RENDER(1);
-
+	gameTimer.timerRender();
+	resultBinder.Render();
+	nextday.Render();
 }
