@@ -127,6 +127,28 @@ void NextDay::Update()
 
 void NextDay::Render()
 {
-	gamenumber.Render();
-	primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	sprite_render(nowday, SCREEN_HALF_W - 250, SCREEN_HALF_H - 50, 1, 1, 0, gameDay * (1300 / 7.0f), 150, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	sprite_render(nowday, SCREEN_HALF_W - 50, SCREEN_HALF_H - 50, 1, 1, 150, 0, 400, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	//primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
+}
+
+void TitleIcon::Update()
+{
+	timer++;
+	scaleTimer++;
+	if (scaleTimer <= 10)
+	{
+		scale += 0.01f;
+	}
+	if (timer % 30 == 0)
+	{
+		scaleTimer = 0;
+		scale = 1.0f;
+	}
+	debug::setString("scale:%f", scale);
+}
+
+void TitleIcon::Render()
+{
+	sprite_render(titleIcon, pos.x, pos.y, scale, scale, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
 }

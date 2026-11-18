@@ -43,6 +43,7 @@ void tutorial_init()
 	tutorial_state = 0;
 	tutorial_timer = 0;
 	skipbutton.Reset();
+	can.CAN_RESET(cans, obas, ojis, boms);  // 試験的に追加したやつ
 	timer = 0;
 	tutorialTimer = 0;
 }
@@ -141,6 +142,7 @@ void tutorial_render()
 	//正しい缶と不正解の缶のRENDER関数は必要に応じて呼んでほしい
 	can.CAN_RENDER(cans, obas, ojis, boms, 8);		//正解の缶の描画関数
 	//can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数
+	judgearea_render();
 	player.HITAREA_FLICKAREA_RENDER();			//手の描画
 	
 	skipbutton.Render();

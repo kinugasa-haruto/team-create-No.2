@@ -19,8 +19,8 @@ Day days[] = {
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
 	{ 100.0f,		50,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
-	{ 0.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
-	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 10チュートリアル2
+	{ 1.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
+	{ 1.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 10チュートリアル2
 
 };
 
@@ -54,6 +54,7 @@ void GAME_DAY_RENDER(int num) {
 	can.OJI_BACK_RENDER(cans, ojis, num);//おじさんがコンベアの後ろに消える処理
 	conveyor_render();
 	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
+	judgearea_render();
 	player.HITAREA_FLICKAREA_RENDER();			//叩く,弾くエリアの描画
 	can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
 
@@ -545,4 +546,16 @@ void Can::setOBA_HIT(bool hit) {
 void Can::setKIGEN(int k) {
 
 	kigen -= k;
+}
+
+
+void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
+{
+	for (int i = 0; i < generate_num; i++)
+	{
+		if (can[i].can_alive == true)	can[i] = {};
+		if (oba[i].can_alive == true)	oba[i] = {};
+		if (oji[i].can_alive == true)	oji[i] = {};
+		if (bom[i].can_alive == true)	bom[i] = {};
+	}
 }

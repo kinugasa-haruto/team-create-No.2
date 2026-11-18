@@ -20,8 +20,8 @@ playerController player;
 extern int debug_flick;
 extern int debug_miss;
 
-bool nextDay;
-int gameDay;
+bool nextDay; // Ÿ‚Ì“ú‚És‚Á‚½‚©‚Ç‚¤‚©
+int gameDay; // Œ»İ‚Ì“ú•t
 gameNumber gamenumber;
 
 void game_init()

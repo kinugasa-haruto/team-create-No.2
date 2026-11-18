@@ -139,3 +139,32 @@ private:
 	int anime;
 	float inv;
 };
+
+class TitleIcon
+{
+public:
+	static TitleIcon Instance()
+	{
+		TitleIcon instance;
+		return instance;
+	}
+
+	void Update();
+	
+	void Render();
+
+	float GetScale() { return scale; }
+private:
+	TitleIcon()
+	{
+		timer = 0;
+		scaleTimer = 0;
+		scale = 1.0f;
+		pos = { 80 + 931 * 0.5f,  100 + 314 * 0.5f };
+	}
+	
+	int timer; // ‘S‘ÌŽžŠÔ
+	int scaleTimer; // ‚Å‚©‚­‚·‚éŽžŠÔ
+	float scale;
+	VECTOR2 pos;
+};
