@@ -14,22 +14,30 @@ gameNumber::gameNumber()
 	map_["9"] = {900, 0, 100, 100};
 }
 
-void gameNumber::NumberRender(VECTOR2 pos ,int number, float inv)
+void gameNumber::Update(VECTOR2 pos ,const int number, const float inv, const float scale)
 {
 	auto str_num = std::to_string(number);
 
-	this->inv = inv;
-	this->pos = pos;
+	numbers_.clear();
+	int index = 0;
 
 	for (const auto& str : str_num) {
 		auto& data = map_[&str];
-		textPos = { data.pos_x, data.pos_y };
-		size = { data.width, data.height };
+		Numbers num;
+		num.inv = inv;
+		num.pos = { pos.x + index * data.width , pos.y };
+		num.textPos = { data.pos_x, data.pos_y };
+		num.size = { data.width, data.height };
+
+		numbers_.push_back(num);
 	}
 
 }
 
 void gameNumber::Render()
 {
-	sprite_render(number, pos.x, pos.y, 0.5f, 0.5f, textPos.x, textPos.y, size.x, size.y, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	for (const auto& num : numbers_)
+	{
+		sprite_render(number, num.pos.x, num.pos.y, num.scale, num.scale, num.textPos.x, num.textPos.y, num.size.x, num.size.y, 0, 0, ToRadian(0), 1, 1, 1, num.inv);
+	}
 }

@@ -35,6 +35,8 @@ public:
 	float GetScale() { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
 
+	bool GetNext() { return goNext; }
+
 	int GetBinderType() { return binderType; }
 	void SetBinderType(int binderType) { this->binderType = binderType; }
 
@@ -57,12 +59,15 @@ public:
 	void Down();
 	void Render();
 
+	void NumberUpdate();
+
 	void reset()
 	{
 		scale = 0;
 		timer = 0;
 		binderType = 0;
 		anime = 0;
+		goNext = false;
 	}
 
 private:
@@ -72,6 +77,7 @@ private:
 	float timer;
 	float scale;
 	int anime;
+	bool goNext;
 };
 
 extern Binder resultBinder;
@@ -112,6 +118,7 @@ public:
 		anime = 0;
 		inv = 0;
 		swap = false;
+		
 	}
 
 private:

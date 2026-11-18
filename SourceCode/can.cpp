@@ -11,7 +11,7 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔		生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 1.0f,		20,		5.0f,		0,			0,				0,				100,					100},	// 1日目
+	{ 40.0f,		40,		50.0f,		0,			0,				0,				20,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
@@ -25,7 +25,7 @@ Day days[] = {
 
 //ゲームでの関数をまとめた関数
 void GAME_DAY(int num) {
-	back_update();
+	back_update(days[num - 1].speed);
 	can.CAN_GENERATE(cans, obas, ojis, boms, num);			//缶の生成関数
 	can.CAN_MOVE(cans, obas, ojis, boms, num);//缶の移動関数
 

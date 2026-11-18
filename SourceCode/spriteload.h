@@ -22,6 +22,7 @@ extern Sprite* binder; // バインダー
 
 extern Sprite* number; // 数字
 
+extern Sprite* startCan;
 
 void spriteload_init();
 

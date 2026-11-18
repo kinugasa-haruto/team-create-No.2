@@ -21,6 +21,8 @@ Sprite* binder; // バインダー
 
 Sprite* number; // 数字
 
+Sprite* startCan; // スタートボタン
+
 void spriteload_init()
 {
 	back = sprite_load(L"./Data/Images/gamen.png");
@@ -43,6 +45,8 @@ void spriteload_init()
 	binder = sprite_load(L"./Data/Images/binder.png");
 
 	number = sprite_load(L"./Data/Images/number.png");
+
+	startCan = sprite_load(L"./Data/Images/start.png");
 }
 
 void spriteload_deinit()
@@ -67,4 +71,6 @@ void spriteload_deinit()
 	safe_delete(binder);
 
 	safe_delete(number);
+
+	safe_delete(startCan);
 }

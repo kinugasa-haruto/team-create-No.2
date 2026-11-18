@@ -35,7 +35,6 @@ void ObachanUpdate()
 	debug::setString("scale:%f", hannyA.GetScale());
 }
 
-Binder resultBinder;
 
 void ObachanRender()
 {
@@ -43,12 +42,18 @@ void ObachanRender()
 	sprite_render(fire, 0, 0, 1, 1, SCREEN_W, 0, SCREEN_W, SCREEN_H);
 }
 
+Binder resultBinder;
+
 void Binder::Up()
 {
 	timer += 1.0f / (60 * 2);
 
 	scale = Easing::easeOut3(timer);
-	if (scale >= 0.999f) scale = 1;
+	if (scale >= 0.999f)
+	{
+		scale = 1;
+		NumberUpdate();
+	}
 	if (timer >= 1) timer = 1;
 }
 
@@ -63,11 +68,30 @@ void Binder::Down()
 	debug::setString("scale:%f", GetScale());
 }
 
+gameNumber maxCan;
+gameNumber collectCan;
+
+gameNumber maxOther;
+gameNumber collectOther;
+
+void Binder::NumberUpdate()
+{
+	//collectCan += Easing::easeOut3(collectCan / );// ここにゲッター；
+	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
+
+	collectCan.Update({ 727, 505 }, 11, 1, 1.2f);
+	goNext = true;
+}
+
 void Binder::Render()
 {
 	sprite_render(binder, 0, 1080 - 1080 * scale, 1, 1, 0, 0, 1980, 1080, 0, 0, ToRadian(0));
 
-	if (scale == 1.0f) text_out(1, "Enter To Title", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
+	if (scale == 1.0f)
+	{
+		text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
+		collectCan.Render();
+	}
 }
 
 void NextDay::Update()
@@ -103,6 +127,6 @@ void NextDay::Update()
 
 void NextDay::Render()
 {
-	primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
 	gamenumber.Render();
+	primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
 }

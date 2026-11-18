@@ -78,7 +78,7 @@ void tutorial_update()
 			if (inv >= 9.99f) inv = 1;
 		}
 
-		back_update();
+		back_update(2.0f);
 		skipbutton.Update();
 
 		//缶の移動関数はずっと呼んでいて欲しい、正しい缶と不正解の缶のUPDATE関数は必要に応じて呼んでほしい
@@ -110,7 +110,7 @@ void tutorial_render()
 	//can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数
 	player.HITAREA_FLICKAREA_RENDER();			//手の描画
 
-
+	skipbutton.Render();
 	primitive::rect(0, 0, SCREEN_W, SCREEN_H - SCREEN_H * inv, 0, 0, ToRadian(0), 0, 0, 0);
 }
 

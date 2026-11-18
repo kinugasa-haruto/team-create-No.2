@@ -7,6 +7,7 @@ Conveyor conveyor_1[2] = { { {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},{ {0
 Conveyor conveyor_2[2][2] = { {{ {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}}, {{SCREEN_W, SCREEN_HALF_H - 50},{SCREEN_W, 0, SCREEN_W * 2, 238} }},
 							{{ {0, SCREEN_H - 300},{0, 0, SCREEN_W, 238}},{{-SCREEN_W, SCREEN_H - 300},{SCREEN_W, 0, SCREEN_W * 2, 238}}}};
 
+extern Day days[];
 
 void back_init()
 {
@@ -18,17 +19,17 @@ void back_deinit()
 	
 }
 
-void back_update()
+void back_update(float speed)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		conveyor_2[0][i].AddPositionX(-3.0f);
+		conveyor_2[0][i].AddPositionX(-speed);
 		if (conveyor_2[0][i].GetPosition().x <= -SCREEN_W)
 		{
 			conveyor_2[0][i].SetPositionX(SCREEN_W);
 		}
 
-		conveyor_2[1][i].AddPositionX(3.0f);
+		conveyor_2[1][i].AddPositionX(speed);
 		if (conveyor_2[1][i].GetPosition().x >= SCREEN_W)
 		{
 			conveyor_2[1][i].SetPositionX(-SCREEN_W);

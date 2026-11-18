@@ -58,6 +58,11 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 		sprite_render(hand_hold, flickarea_pos.x + 50, flickarea_pos.y - 40,
 			1, 1, 0, 0, 200, 200, ToRadian(0));//’e‚­ƒGƒŠƒA‚Ìè
 	}
+	if (control_stop_timer > 0)
+	{
+		ObachanRender();
+	}
+
 }
 
 //player‚Ì’@‚­“®ìŠÖ”
