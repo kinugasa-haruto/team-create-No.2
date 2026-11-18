@@ -11,15 +11,16 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔		生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 40.0f,		40,		50.0f,		0,			0,				0,				20,					100},	// 1日目
+	{ 40.0f,		1,		2.0f,		0,			0,				0,				20,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
-	{ 200.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 8チュートリアル1//タイトルの缶
-	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 9チュートリアル2
+	{ 100.0f,		50,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
+	{ 0.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
+	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 10チュートリアル2
 
 };
 
@@ -73,21 +74,21 @@ void GAME_DAY_RENDER(int num) {
 //
 //}
 void TUTORIAL_CAN_UPDATE() {
-	can.CAN_GENERATE(cans, obas, ojis, boms, 8);										//缶の生成関数
+	can.CAN_GENERATE(cans, obas, ojis, boms, 9);										//缶の生成関数
 	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);	//缶と叩くエリアの当たり判定関数
-	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 8);									//playerの缶を叩く動作関数
+	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9);									//playerの缶を叩く動作関数
 	player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//缶と弾くエリアの当たり判定関数
-	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 8);									//playerの缶を弾く動作関数
+	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9);									//playerの缶を弾く動作関数
 }
 //void TUTORIAL_CAN_RENDER() {
 //	can.CAN_RENDER(cans, obas, ojis, boms, 8);	//缶の描画関数
 //}
 void TUTORIAL_MISSCAN_UPDATE() {
-	can.CAN_GENERATE(cans, obas, ojis, boms, 9);										//不正解の缶の生成関数
+	can.CAN_GENERATE(cans, obas, ojis, boms, 10);										//不正解の缶の生成関数
 	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);	//不正解の缶と叩くエリアの当たり判定関数
-	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9);									//playerの不正解の缶を叩く動作関数
+	player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 10);									//playerの不正解の缶を叩く動作関数
 	player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//不正解の缶と弾くエリアの当たり判定関数
-	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9);									//playerの不正解の缶を弾く動作関数
+	player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 10);									//playerの不正解の缶を弾く動作関数
 }
 //void TUTORIAL_MISSCAN_RENDER() {
 //	can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数

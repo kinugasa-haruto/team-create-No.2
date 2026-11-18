@@ -19,6 +19,7 @@ extern Sprite* hannya; // おばちゃんレイジモード
 extern Sprite* fire; // 背景炎
 
 extern Sprite* binder; // バインダー
+extern Sprite* shutter; // シャッター
 
 extern Sprite* number; // 数字
 

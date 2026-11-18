@@ -18,6 +18,7 @@ Sprite* hannya; // おばちゃんレイジモード
 Sprite* fire; // 背景の炎
 
 Sprite* binder; // バインダー
+Sprite* shutter; // シャッター
 
 Sprite* number; // 数字
 
@@ -46,6 +47,7 @@ void spriteload_init()
 	fire = sprite_load(L"./Data/Images/fire.png");
 
 	binder = sprite_load(L"./Data/Images/binder.png");
+	shutter = sprite_load(L"./Data/Images/shutter.png");
 
 	number = sprite_load(L"./Data/Images/number.png");
 
@@ -75,6 +77,7 @@ void spriteload_deinit()
 	safe_delete(fire);
 
 	safe_delete(binder);
+	safe_delete(shutter);
 
 	safe_delete(number);
 

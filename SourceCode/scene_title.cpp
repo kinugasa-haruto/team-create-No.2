@@ -11,11 +11,12 @@ extern Can ojis[500];
 extern Can boms[500];
 extern Can can;
 
+
+
 void title_init()
 {
 	title_state = 0;
 	title_timer = 0;
-
 }
 
 void title_deinit()
@@ -58,16 +59,16 @@ void title_update()
 			timer += 1.0f / 30;
 			if (timer >= 1) timer = 1;
 			title.SetScale(sinf(PI * timer));
-			if (title.GetInv() >= 0.98f) timer = 0;
+			if (title.GetInv() >= 0.99f) timer = 0;
 
 			if (title.GetTimer() >= 30)
 			{
 				static float timer = 0;
 				timer += 0.01f;
 				title.SetInv(Easing::easeOut3(timer));
-				if (title.GetInv() >= 0.98f) timer = 0;
+				if (title.GetInv() >= 0.99f) timer = 0;
 			}
-			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
+			if (title.GetInv() >= 0.99f) nextScene = SCENE_TUTORIAL;
 
 		}
 		
@@ -120,5 +121,7 @@ void title_render()
 
 	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1Ç¬ÇÃä ÇÃï`âÊä÷êî
 
-	primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
+	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+
+	//primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 }

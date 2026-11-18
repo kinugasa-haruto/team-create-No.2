@@ -29,8 +29,9 @@ void gameNumber::Update(VECTOR2 pos ,const int number, const float inv, const fl
 		num.pos = { pos.x + index * data.width , pos.y };
 		num.textPos = { data.pos_x, data.pos_y };
 		num.size = { data.width, data.height };
-
 		numbers_.push_back(num);
+
+		index++;
 	}
 
 }

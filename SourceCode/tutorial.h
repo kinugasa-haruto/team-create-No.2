@@ -9,6 +9,8 @@
 //
 //******************************************************************************
 
+#define TEXT_LINE 860 / 8.0f
+
 class SkipButton
 {
 public:
@@ -54,6 +56,63 @@ private:
 	float inv;
 	int timer;
 };
+
+class TutorialText
+{
+public:
+
+	static TutorialText Instance()
+	{
+		TutorialText instance;
+		return instance;
+	}
+
+	void SetProgress(int progress) { this->progress = progress; }
+	int GetProgress() { return progress; }
+
+	void Render()
+	{
+		sprite_render(tutorialBubble, 0, 0, 1.15f, 0.7f, 0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
+		switch (progress)
+		{
+		default:
+			break;
+		case 0:
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, 0, SCREEN_W, TEXT_LINE * 3);
+			break;
+			
+		case 1:
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 3, SCREEN_W, TEXT_LINE * 3, 0, 0);
+			break;
+		case 2:
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 6:
+
+			break;
+		}
+	}
+
+
+private:
+	TutorialText() 
+	{
+		progress = 2;
+	};
+	int progress;
+
+
+};
+
 
 // 関数のプロトタイプ宣言
 void tutorial_init();
