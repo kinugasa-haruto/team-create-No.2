@@ -23,6 +23,9 @@ Sprite* number; // 数字
 
 Sprite* startCan; // スタートボタン
 
+Sprite* tutorialBubble; // チュートリアル吹き出し
+Sprite* tutorialText; // チュートリアル文言
+
 void spriteload_init()
 {
 	back = sprite_load(L"./Data/Images/gamen.png");
@@ -47,6 +50,9 @@ void spriteload_init()
 	number = sprite_load(L"./Data/Images/number.png");
 
 	startCan = sprite_load(L"./Data/Images/start.png");
+
+	tutorialBubble = sprite_load(L"./Data/Images/text_bublle.png");
+	tutorialText = sprite_load(L"./Data/Images/tutorial_text.png");
 }
 
 void spriteload_deinit()
@@ -73,4 +79,7 @@ void spriteload_deinit()
 	safe_delete(number);
 
 	safe_delete(startCan);
+
+	safe_delete(tutorialBubble);
+	safe_delete(tutorialText);
 }

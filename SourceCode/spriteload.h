@@ -22,7 +22,10 @@ extern Sprite* binder; // バインダー
 
 extern Sprite* number; // 数字
 
-extern Sprite* startCan;
+extern Sprite* startCan; // スタート鯖缶
+
+extern Sprite* tutorialBubble; // 吹き出しチュートリアル
+extern Sprite* tutorialText; // チュートリアル言葉
 
 void spriteload_init();
 

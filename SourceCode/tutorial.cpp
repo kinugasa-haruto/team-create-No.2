@@ -1,5 +1,7 @@
 #include "all.h"
 
+#define TEXT_LINE 860 / 8.0f
+
 int tutorial_state;
 int tutorial_timer;
 
