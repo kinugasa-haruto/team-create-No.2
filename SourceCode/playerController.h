@@ -22,6 +22,9 @@ private:
 	int flick_errorcan_count;	//不正解の缶を回収した合計変数
 	int flick_other_count;		//缶以外の物を回収した合計変数
 
+	float hit_timer;			//叩いた時に手の画像位置を変える時間
+	float flick_timer;			//弾いた時に手の画像位置を変える時間
+
 public:
 	playerController();					//コンストラクタ
 	~playerController();				//デストラクタ
@@ -54,4 +57,6 @@ public:
 
 };
 
+#define HIT_HUND_RENDER_TIMER (5)	//叩いた時に手の画像位置を変える時間
+#define FLICK_HUND_RENDER_TIMER (5)	//弾いた時に手の画像位置を変える時間
 

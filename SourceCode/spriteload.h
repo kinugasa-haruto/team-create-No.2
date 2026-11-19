@@ -15,6 +15,15 @@ extern Sprite* hand_hold;	//‰ñû—p‚Ìè
 extern Sprite* obasan;		//‚¨‚Î‚³‚ñ
 extern Sprite* Bom;			//”š’e
 
+extern Sprite* sub_gauge;	//ƒQ[ƒW‚Ì˜g
+extern Sprite* main_gauge;	//ƒQ[ƒW‚Ì–{‘Ì
+extern Sprite* jousi1;		//ãi1
+extern Sprite* jousi2;		//ãi2
+extern Sprite* jousi3;		//ãi3
+extern Sprite* jousi4;		//ãi4
+extern Sprite* jousi5;		//ãi5
+extern Sprite* jousi6;		//ãi6
+
 extern Sprite* hannya; // ‚¨‚Î‚¿‚á‚ñƒŒƒCƒWƒ‚[ƒh
 extern Sprite* fire; // ”wŒi‰Š
 

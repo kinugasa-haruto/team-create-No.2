@@ -37,10 +37,17 @@ private:
 
 	bool oba_hit;//おばさんが叩かれたかの変数
 
-	int kigen;
+	float kigen;
 
 	int errorcan_count;//不正解の缶の生成した数の変数
 	int othercan_count;//缶以外の物を生成した数の変数
+
+	float gravity;//回収時に流れているものに対する重力
+	bool gravity_flag;//重力をかけ始める判断
+
+	VECTOR2 gauge_pos;
+	VECTOR2 gauge_scale;
+	float gaugeW;
 
 
 public:
@@ -56,7 +63,9 @@ public:
 	bool CHECK_IMPURITY_FLOW();		//間違った物がレーンを流れ切った時の処理
 
 	bool CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom);//１日に流れるものが全部消えたかの処理
-	void DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day);//CLEAR時の関数
+	//void DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day);//CLEAR時の関数
+	void GAUGE_UPDATE();//ゲージの処理関数
+	void GAUGE_RENDER();//ゲージの描画関数
 
 	void setCAN_ALIVE(bool alive);	//can_aliveのセッター関数
 	bool getCAN_ALIVE();			//can_aliveのゲッター関数
@@ -83,6 +92,8 @@ public:
 	VECTOR2 getOJI_TEXTSIZE();		//おじさんの大きさのゲッター関数
 
 	void setKIGEN(int k);//kigenのセッター関数
+
+	void setGRA_FLAG(bool gra);
 };
 
 //日にち事の設定

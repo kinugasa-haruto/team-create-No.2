@@ -14,6 +14,15 @@ Sprite* hand_hold;	//‰ñû—p‚Ìè
 Sprite* obasan;		//‚¨‚Î‚³‚ñ
 Sprite* Bom;		//”š’e
 
+Sprite* sub_gauge;	//ƒQ[ƒW‚Ì˜g
+Sprite* main_gauge;	//ƒQ[ƒW‚Ì–{‘Ì
+Sprite* jousi1;		//ãi1
+Sprite* jousi2;		//ãi2
+Sprite* jousi3;		//ãi3
+Sprite* jousi4;		//ãi4
+Sprite* jousi5;		//ãi5
+Sprite* jousi6;		//ãi6
+
 Sprite* hannya; // ‚¨‚Î‚¿‚á‚ñƒŒƒCƒWƒ‚[ƒh
 Sprite* fire; // ”wŒi‚Ì‰Š
 
@@ -36,6 +45,15 @@ void spriteload_init()
 	hand_hold = sprite_load(L"./Data/Images/player_hold.png");
 	obasan = sprite_load(L"./Data/Images/obasan.png");
 	Bom = sprite_load(L"./Data/Images/bom.png");
+
+	sub_gauge= sprite_load(L"./Data/Images/gauge_1.png");
+	main_gauge= sprite_load(L"./Data/Images/gauge_2.png");
+	jousi1= sprite_load(L"./Data/Images/face_1.png");
+	jousi2= sprite_load(L"./Data/Images/face_2.png");
+	jousi3= sprite_load(L"./Data/Images/face_3.png");
+	jousi4= sprite_load(L"./Data/Images/face_4.png");
+	jousi5= sprite_load(L"./Data/Images/face_5.png");
+	jousi6= sprite_load(L"./Data/Images/face_6.png");
 
 	hannya = sprite_load(L"./Data/Images/hannya.png");
 	fire = sprite_load(L"./Data/Images/fire.png");
@@ -60,6 +78,15 @@ void spriteload_deinit()
 	safe_delete(hand_hold);
 	safe_delete(obasan);
 	safe_delete(Bom);
+
+	safe_delete(sub_gauge);
+	safe_delete(main_gauge);
+	safe_delete(jousi1);
+	safe_delete(jousi2);
+	safe_delete(jousi3);
+	safe_delete(jousi4);
+	safe_delete(jousi5);
+	safe_delete(jousi6);
 
 	safe_delete(hannya);
 	safe_delete(fire);
