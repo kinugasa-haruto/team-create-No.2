@@ -27,7 +27,7 @@ Day days[] = {
 //ゲームでの関数をまとめた関数
 void GAME_DAY(int num) {
 	back_update(days[num - 1].speed);
-	can.CAN_GENERATE(cans, obas, ojis, boms, num);			//缶の生成関数
+	can.CAN_GENERATE(cans, obas, ojis, boms, num);//缶の生成関数
 	can.CAN_MOVE(cans, obas, ojis, boms, num);//缶の移動関数
 
 	//流れている物と叩くエリアの当たり判定関数
@@ -138,8 +138,11 @@ Can::Can() {
 	othercan_count = 0;
 
 	gravity = 20;//重力
+	gravity_flag = false;//重力をかけ始める判断
+
 	gauge_pos = { SCREEN_W * 0.7f,SCREEN_W * 0.0f };
 	gauge_scale = { 0.5f,0.5f };
+	gaugeW = 0;
 }
 
 //デストラクタ
@@ -201,9 +204,9 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 	for (int i = 0; i < generate_num; i++) {
 		if (bom[i].can_alive == true) {
 			if (can[i].can_color <= days[day - 1].bom_pro) {
-				sprite_render(Bom, bom[i].pos.x, bom[i].pos.y + 20, bom[i].scale.x * 0.8, bom[i].scale.y,
+				sprite_render(Bom, bom[i].pos.x, bom[i].pos.y + 20, bom[i].scale.x * 0.8f, bom[i].scale.y,
 					0, 0, bom_textsize.x, bom_textsize.y, 0, 0, ToRadian(0));//爆弾
-				primitive::rect(bom[i].pos.x, bom[i].pos.y + 20, bom_textsize.x * 0.8, bom_textsize.y,
+				primitive::rect(bom[i].pos.x, bom[i].pos.y + 20, bom_textsize.x * 0.8f, bom_textsize.y,
 					0, 0, ToRadian(0), 1, 0, 1, 0.3f);//デバック用の当たり判定
 				primitive::rect(bom[i].Bbom_pos.x, bom[i].Bbom_pos.y, bom[i].Bbom_scale.x, bom[i].Bbom_scale.y,
 					0, 0, ToRadian(0), 1, 1, 1, 0.7f);//青ボタンののデバック用の当たり判定
@@ -389,12 +392,12 @@ void Can::OJI_JUMP(Can* oji) {
 		oji->scale.x -= 0.01f;
 		oji->scale.y -= 0.01f;
 
-		if (oji->pos.y <= SCREEN_H * 0.45) {
+		if (oji->pos.y <= SCREEN_H * 0.45f) {
 			oji->oji_back = true;
 		}
 
-		if (oji->pos.y >= SCREEN_H * 0.6) {
-			oji->pos.y = SCREEN_H * 0.6;
+		if (oji->pos.y >= SCREEN_H * 0.6f) {
+			oji->pos.y = SCREEN_H * 0.6f;
 
 			oji->setCAN_ALIVE(false);
 			oji->oji_jump = false;
@@ -416,6 +419,18 @@ void Can::OJI_BACK_RENDER(Can* can, Can* oji, int day) {
 			}
 		}
 	}
+}
+
+void Can::BOM_EFFECT(Can*bom) {
+	
+
+}
+
+void Can::BOM_EFFECT_RENDER(Can* bom) {
+	//if(Bomeffect_flag == true)
+	
+	sprite_render(Bom_effect, bom->pos.x, bom->pos.y, 1, 1, 0, 0, Beffect_textsize.x, Beffect_textsize.y, 0, 0, ToRadian(0));
+
 }
 
 //おじさんがコンベアよりも前の時の処理
@@ -650,6 +665,10 @@ int Can::getOTHERCAN_COUNT() {
 
 void Can::setGRA_FLAG(bool gra) {
 	gravity_flag = gra;
+}
+
+void Can::setBOM_EFFECT(bool effect) {
+	Bomeffect_flag = effect;
 }
 
 

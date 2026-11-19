@@ -20,7 +20,7 @@ private:
 	VECTOR2 Bbom_scale;//爆弾の青ボタンのscale
 	VECTOR2 Rbom_scale;//爆弾の赤ボタンのscale
 
-	int generate_timer;	//缶の生成間隔
+	float generate_timer;	//缶の生成間隔
 	int generate_num;	//生成した缶の数
 
 	int can_num;		//乱数を入れる変数
@@ -49,6 +49,9 @@ private:
 	VECTOR2 gauge_scale;
 	float gaugeW;
 
+	VECTOR2 Beffect_textsize = { 10000,1500 };//爆弾エフェクトの画像サイズ
+	bool Bomeffect_flag;//爆弾のエフェクト開始時のflag
+
 
 public:
 	Can();//コンストラクタ
@@ -60,6 +63,8 @@ public:
 
 	void CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day);		//缶の移動関数
 	void OJI_JUMP(Can* oji);		//おじさんが飛んでいく処理
+	void BOM_EFFECT(Can*bom);
+	void BOM_EFFECT_RENDER(Can*bom);
 	bool CHECK_IMPURITY_FLOW();		//間違った物がレーンを流れ切った時の処理
 
 	bool CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom);//１日に流れるものが全部消えたかの処理
@@ -94,6 +99,7 @@ public:
 	void setKIGEN(int k);//kigenのセッター関数
 
 	void setGRA_FLAG(bool gra);
+	void setBOM_EFFECT(bool effect);
 
 
 	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // 缶のリセット
@@ -116,8 +122,8 @@ void GAME_DAY(int num);
 void GAME_DAY_RENDER(int num);
 //void TUTORIAL_RENDER();
 //void TUTORIAL_UPDATE();
-void TITLE_CAN_UPDATE();
-void TITLE_CAN_RENDER();
+//void TITLE_CAN_UPDATE();
+//void TITLE_CAN_RENDER();
 void TUTORIAL_CAN_UPDATE();
 //void TUTORIAL_CAN_RENDER();
 void TUTORIAL_MISSCAN_UPDATE();

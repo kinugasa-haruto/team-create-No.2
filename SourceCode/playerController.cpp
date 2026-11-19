@@ -100,6 +100,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							}
 							if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//右手と赤ボタンの処理
 								//爆発
+								boms[i].setBOM_EFFECT(true);
 								boms[i].setCAN_ALIVE(false);
 							}
 						}
@@ -109,6 +110,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							}
 							if (HITCHECK_HUND_BUTTON(Lhund_pos, Lhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//左手と赤ボタンの処理
 								//爆発
+								boms[i].setBOM_EFFECT(true);
 								boms[i].setCAN_ALIVE(false);
 							}
 						}

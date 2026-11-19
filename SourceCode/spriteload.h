@@ -15,6 +15,7 @@ extern Sprite* hand;		//手
 extern Sprite* hand_hold;	//回収用の手
 extern Sprite* obasan;		//おばさん
 extern Sprite* Bom;			//爆弾
+extern Sprite* Bom_effect;	//爆弾のエフェクト
 
 extern Sprite* sub_gauge;	//ゲージの枠
 extern Sprite* main_gauge;	//ゲージの本体
