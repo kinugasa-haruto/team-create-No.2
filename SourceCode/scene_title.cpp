@@ -4,6 +4,7 @@ int title_state;
 int title_timer;
 
 Title title = Title::Instance();
+TitleIcon icon = TitleIcon::Instance();
 
 extern Can cans[500];
 extern Can obas[500];
@@ -11,11 +12,12 @@ extern Can ojis[500];
 extern Can boms[500];
 extern Can can;
 
+
+
 void title_init()
 {
 	title_state = 0;
 	title_timer = 0;
-
 }
 
 void title_deinit()
@@ -58,18 +60,19 @@ void title_update()
 			timer += 1.0f / 30;
 			if (timer >= 1) timer = 1;
 			title.SetScale(sinf(PI * timer));
-			if (title.GetInv() >= 0.98f) timer = 0;
+			if (title.GetInv() >= 0.99f) timer = 0;
 
 			if (title.GetTimer() >= 30)
 			{
 				static float timer = 0;
 				timer += 0.01f;
 				title.SetInv(Easing::easeOut3(timer));
-				if (title.GetInv() >= 0.98f) timer = 0;
+				if (title.GetInv() >= 0.99f) timer = 0;
 			}
-			if (title.GetInv() >= 0.98f) nextScene = SCENE_TUTORIAL;
+			if (title.GetInv() >= 0.99f) nextScene = SCENE_TUTORIAL;
 
 		}
+
 		
 		//if (title.GetSelected() == 0 && TRG(0) & PAD_RIGHT)
 		//{
@@ -80,8 +83,8 @@ void title_update()
 		//	title.ChangeSelected(0);
 		//}
 
-
-		back_update();
+		icon.Update();
+		back_update(2.0f);
 
 		can.CAN_GENERATE(cans, obas, ojis, boms, 8);//ÇPÇ¬ÇÃä ÇÃê∂ê¨ä÷êî
 		can.CAN_MOVE(cans, obas, ojis, boms, 8);	//ÇPÇ¬ÇÃä ÇÃà⁄ìÆä÷êî
@@ -100,11 +103,10 @@ void title_render()
 
 	back_render();
 
-	primitive::rect(SCREEN_W - 700, 150, 300, 300, 0, 0, ToRadian(0), 1, 1, 0);
-	sprite_render(sabaCan, SCREEN_W - 700, 150 + (125 * 0.1f) * title.GetScale(), 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125);
-	ObachanRender();
+	//primitive::rect(SCREEN_W - 700, 150, 300, 300, 0, 0, ToRadian(0), 1, 1, 0);
+	if (title.GetSelect())	sprite_render(startCan, SCREEN_W - 500, 260 + (125 * 0.1f) * title.GetScale(), 2.5f, 2.5f - 0.1f * title.GetScale(), 0, 0, 125, 125, 125 * 0.5f, 125 * 0.5f);
+	else sprite_render(startCan, SCREEN_W - 500, 260, 2.5f + 1 - icon.GetScale(), 2.5f + 1 - icon.GetScale(),  0, 0, 125, 125, 125 * 0.5f, 125 * 0.5f);
 	conveyor_render();
-	primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 	//switch (title.GetSelected())
 	//{
 	//case 0:
@@ -118,8 +120,11 @@ void title_render()
 	//	break;
 	//}
 
-		
-
 	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1Ç¬ÇÃä ÇÃï`âÊä÷êî
+	judgearea_render();
+	icon.Render();
 
+	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+
+	//primitive::rect(0, 0, SCREEN_W, SCREEN_H * title.GetInv(), 0, 0, ToRadian(0), 0, 0, 0);
 }

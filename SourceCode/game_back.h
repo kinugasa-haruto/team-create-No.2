@@ -9,10 +9,22 @@
 //
 //******************************************************************************
 
+class BackAngle
+{
+public:
+	BackAngle(float angle) : angle(angle) {};
+	float GetAngle() { return angle; }
+	void SetAngle(float angle) { this->angle = angle; }
+private:
+	float angle;
+};
+
 class Conveyor
 {
 
 public:
+	
+
 	Conveyor(VECTOR2 pos, VECTOR4 rect) : pos(pos), rect(rect) {};
 	
 	//~Conveyor();
@@ -30,6 +42,7 @@ public:
 
 	void AddPositionX(const float pos) { this->pos.x += pos; }
 
+
 private:
 	VECTOR2 pos;
 	VECTOR4 rect;
@@ -37,9 +50,10 @@ private:
 
 
 // 関数のプロトタイプ宣言
-void back_update();
+void back_update(float speed);
 void back_render();
 void conveyor_render();
+void judgearea_render();
 void back_init();
 void back_deinit();
 #endif//game_back_H

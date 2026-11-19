@@ -94,6 +94,9 @@ public:
 	void setKIGEN(int k);//kigenのセッター関数
 
 	void setGRA_FLAG(bool gra);
+
+
+	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // 缶のリセット
 };
 
 //日にち事の設定

@@ -1,5 +1,6 @@
 #include "all.h"
 #include <vector>
+#include <sstream>
 
 int game_state;
 int game_timer;
@@ -19,8 +20,8 @@ playerController player;
 extern int debug_flick;
 extern int debug_miss;
 
-bool nextDay;
-int gameDay;
+bool nextDay; // éüÇÃì˙Ç…çsÇ¡ÇΩÇ©Ç«Ç§Ç©
+int gameDay; // åªç›ÇÃì˙ït
 gameNumber gamenumber;
 
 void game_init()
@@ -64,7 +65,7 @@ void game_update()
 			{
 				// Ç±Ç±Ç…èâä˙âªèàóù
 				GAME_DAY(1);
-				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
 				nextday.Reset();
 				gameTimer.reset();
 				resultBinder.reset();
@@ -72,14 +73,14 @@ void game_update()
 			}
 			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
 			{
-         				GAME_DAY(1);
+         		GAME_DAY(1);
 			}
 			else
 			{
 				if (gameTimer.timerUpdate() == true) {}
 				else
 				{
-					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
+					if (resultBinder.GetNext() && TRG(0) & PAD_START)
 					{
 						resultBinder.SetBinderType(1);
 					}
@@ -102,7 +103,7 @@ void game_update()
 				// Ç±Ç±Ç…èâä˙âªèàóù
 
 				GAME_DAY(2);
-				gamenumber.NumberRender({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
 				nextday.Reset();
 				gameTimer.reset();
 				resultBinder.reset();
@@ -153,7 +154,7 @@ void game_update()
 //--------------------------------------
 void game_render()
 {
-	GAME_DAY_RENDER(1);
+	GAME_DAY_RENDER(gameDay);
 	gameTimer.timerRender();
 	resultBinder.Render();
 	nextday.Render();

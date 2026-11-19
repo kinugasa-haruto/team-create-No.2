@@ -9,7 +9,7 @@ bool GameTimer::timerUpdate()
 	{
 		animeTimer += 0.01f;
 		scaleY = Easing::easeOut3(animeTimer);
-		if (scaleY >= 0.98f)
+		if (scaleY >= 0.99f)
 		{
 			scaleY = 1;
 			return false;
@@ -27,6 +27,7 @@ void GameTimer::timerRender()
 	}
 	if (timer > 2)
 	{
-		primitive::rect(0, 0, SCREEN_W, SCREEN_H * scaleY, 0, 0, ToRadian(0), 0, 0, 0);
+		sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * scaleY, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0 ,0);
+		//primitive::rect(0, 0, SCREEN_W, SCREEN_H * scaleY, 0, 0, ToRadian(0), 0, 0, 0);
 	}
 }

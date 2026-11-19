@@ -2,6 +2,7 @@
 
 // ここにextern
 extern Sprite* back; // 背景
+extern Sprite* sprTime; // 窓の外の景色
 extern Sprite* judgeArea; // 赤いエリア
 extern Sprite* conveyor1; // コンベア（動かないほう）
 extern Sprite* conveyor2; // コンベア（動くほう）
@@ -28,9 +29,16 @@ extern Sprite* hannya; // おばちゃんレイジモード
 extern Sprite* fire; // 背景炎
 
 extern Sprite* binder; // バインダー
+extern Sprite* shutter; // シャッター
+extern Sprite* nowday; // 今日が何日目か
 
 extern Sprite* number; // 数字
 
+extern Sprite* startCan; // スタート 鯖缶
+extern Sprite* titleIcon; // タイトルアイコン
+
+extern Sprite* tutorialBubble; // 吹き出しチュートリアル
+extern Sprite* tutorialText; // チュートリアル言葉
 
 void spriteload_init();
 

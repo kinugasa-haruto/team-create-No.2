@@ -80,6 +80,11 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 				1, 1, 0, 0, 200, 200, 0,0,ToRadian(-45));//’e‚­ƒGƒŠƒA‚Ì’e‚¢‚½‚Ìè
 		}
 	}
+	if (control_stop_timer > 0)
+	{
+		ObachanRender();
+	}
+
 }
 
 //player‚Ì’@‚­“®ìŠÖ”
