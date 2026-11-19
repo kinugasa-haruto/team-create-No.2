@@ -1,9 +1,19 @@
 #pragma once
 
 #include <unordered_map>
+#include <vector>
 
 class gameNumber
 {
+	struct Numbers
+	{
+		VECTOR2 pos;
+		VECTOR2 textPos;
+		VECTOR2 size;
+		float inv;
+		float scale;
+	};
+
 	struct Data {
 		float pos_x{};
 		float pos_y{};
@@ -13,7 +23,7 @@ class gameNumber
 public:
 	gameNumber();
 	~gameNumber() = default;
-	void NumberRender(VECTOR2 pos,int number, float inv);
+	void Update(VECTOR2 pos,const int number, const float inv = 1.0f, const float scale = 0.5f);
 	void Render();
 
 	void reset();
@@ -24,6 +34,8 @@ private:
 	VECTOR2 textPos;
 	VECTOR2 size;
 	float inv;
+	float scale;
 
-	std::unordered_map<std::string, Data> map_;
+	std::unordered_map<char, Data> map_;
+	std::vector<Numbers> numbers_;
 };

@@ -3,10 +3,12 @@
 int back_state;
 int back_timer;
 
+
 Conveyor conveyor_1[2] = { { {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}},{ {0, SCREEN_H - 300},{SCREEN_W, 0, SCREEN_W * 2, 238}} };
 Conveyor conveyor_2[2][2] = { {{ {0, SCREEN_HALF_H - 50},{0, 0, SCREEN_W, 238}}, {{SCREEN_W, SCREEN_HALF_H - 50},{SCREEN_W, 0, SCREEN_W * 2, 238} }},
 							{{ {0, SCREEN_H - 300},{0, 0, SCREEN_W, 238}},{{-SCREEN_W, SCREEN_H - 300},{SCREEN_W, 0, SCREEN_W * 2, 238}}}};
-
+BackAngle angle(ToRadian(110));
+extern Day days[];
 
 void back_init()
 {
@@ -18,29 +20,29 @@ void back_deinit()
 	
 }
 
-void back_update()
+void back_update(float speed)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		conveyor_2[0][i].AddPositionX(-3.0f);
+		conveyor_2[0][i].AddPositionX(-speed);
 		if (conveyor_2[0][i].GetPosition().x <= -SCREEN_W)
 		{
 			conveyor_2[0][i].SetPositionX(SCREEN_W);
 		}
 
-		conveyor_2[1][i].AddPositionX(3.0f);
+		conveyor_2[1][i].AddPositionX(speed);
 		if (conveyor_2[1][i].GetPosition().x >= SCREEN_W)
 		{
 			conveyor_2[1][i].SetPositionX(-SCREEN_W);
 		}
 	}
-
+	angle.SetAngle(angle.GetAngle() - ToRadian(360.0f / (90.0f * 60))); // Ç∞Ç´Ç´Ç‡åvéZ
 }
 
 void back_render()
 {
 	// âÊñ Çê¬Ç≈ìhÇËÇ¬Ç‘Ç∑
-
+	sprite_render(sprTime, SCREEN_HALF_W + 300, SCREEN_HALF_H + 150, 1.8f, 1.8f, 0, 0, 1500, 1500, 750, 750, angle.GetAngle());
 	sprite_render(back, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 
 
@@ -58,5 +60,13 @@ void conveyor_render()
 		}
 
 		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, 0, SCREEN_W, 238, 0, 0, ToRadian(0));
+	}
+}
+
+void judgearea_render()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, 0, SCREEN_W, 238, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
 	}
 }

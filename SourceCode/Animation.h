@@ -35,6 +35,8 @@ public:
 	float GetScale() { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
 
+	bool GetNext() { return goNext; }
+
 	int GetBinderType() { return binderType; }
 	void SetBinderType(int binderType) { this->binderType = binderType; }
 
@@ -57,12 +59,15 @@ public:
 	void Down();
 	void Render();
 
+	void NumberUpdate();
+
 	void reset()
 	{
 		scale = 0;
 		timer = 0;
 		binderType = 0;
 		anime = 0;
+		goNext = false;
 	}
 
 private:
@@ -72,6 +77,7 @@ private:
 	float timer;
 	float scale;
 	int anime;
+	bool goNext;
 };
 
 extern Binder resultBinder;
@@ -112,6 +118,7 @@ public:
 		anime = 0;
 		inv = 0;
 		swap = false;
+		
 	}
 
 private:
@@ -131,4 +138,33 @@ private:
 	float timer;
 	int anime;
 	float inv;
+};
+
+class TitleIcon
+{
+public:
+	static TitleIcon Instance()
+	{
+		TitleIcon instance;
+		return instance;
+	}
+
+	void Update();
+	
+	void Render();
+
+	float GetScale() { return scale; }
+private:
+	TitleIcon()
+	{
+		timer = 0;
+		scaleTimer = 0;
+		scale = 1.0f;
+		pos = { 80 + 931 * 0.5f,  100 + 314 * 0.5f };
+	}
+	
+	int timer; // ‘S‘ÌŽžŠÔ
+	int scaleTimer; // ‚Å‚©‚­‚·‚éŽžŠÔ
+	float scale;
+	VECTOR2 pos;
 };
