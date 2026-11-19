@@ -2,7 +2,6 @@
 extern  Day days[];
 extern Can ojis[];
 extern Can can;
-int debug_flick = 0;
 
 //コンストラクタ
 playerController::playerController() {
@@ -22,6 +21,11 @@ playerController::playerController() {
 	sub_conveyor_color = 1.0f;
 
 	control_stop_timer = 0;
+	flick_errorcan_count = 0;
+	flick_other_count = 0;
+
+	hit_timer = 0;
+	flick_timer = 0;
 }
 
 //デストラクタ
@@ -37,16 +41,28 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 
 	if (main_conveyor == true) {
 		if (right_hit_area == true) {
-			sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 40,
-				1, 1, 0, 0, 150, 200, ToRadian(0));//正常
-			primitive::rect(hitarea_pos.x + 120, hitarea_pos.y + 50,
+			primitive::rect(hitarea_pos.x + 120, hitarea_pos.y + 40,
 				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//右の時のデバック用の当たり判定
+			if (hit_timer == 0) {
+				sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 20,
+					1, 1, 0, 0, 150, 200,0,0, ToRadian(0));//右手の通常時
+			}
+			if (hit_timer > 0) {
+				sprite_render(hand, hitarea_pos.x + 100, hitarea_pos.y - 40,
+					1, 0.85f, 0, 0, 150, 200, ToRadian(0));//右手の叩いた時
+			}
 		}
 		if (right_hit_area == false) {
-			sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 40,
-				1, 1, 0, 0, 150, 200, ToRadian(0));//反転
 			primitive::rect(hitarea_pos.x + 30, hitarea_pos.y + 50,
 				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//左の時のデバック用の当たり判定
+			if (hit_timer == 0) {
+				sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 20,
+					1, 1, 0, 0, 150, 200,0,0, ToRadian(0));//左手の通常時
+			}
+			if (hit_timer > 0) {
+				sprite_render(hand, hitarea_pos.x - 50, hitarea_pos.y - 40,
+					1, 0.85f, 0, 0, 150, 200,0,0, ToRadian(0));//左手の叩いた時
+			}
 		}
 	}
 
@@ -55,8 +71,14 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 		0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0.5f);//手
 
 	if (main_conveyor == false) {
-		sprite_render(hand_hold, flickarea_pos.x + 50, flickarea_pos.y - 40,
-			1, 1, 0, 0, 200, 200, ToRadian(0));//弾くエリアの手
+		if (flick_timer == 0) {
+			sprite_render(hand_hold, flickarea_pos.x + 50, flickarea_pos.y - 40,
+				1, 1, 0, 0, 200, 200,0,0, ToRadian(0));//弾くエリアの通常時の手
+		}
+		if (flick_timer > 0) {
+			sprite_render(hand_hold, flickarea_pos.x - 50, flickarea_pos.y + 140,
+				1, 1, 0, 0, 200, 200, 0,0,ToRadian(-45));//弾くエリアの弾いた時の手
+		}
 	}
 	if (control_stop_timer > 0)
 	{
@@ -140,6 +162,13 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 	if (control_stop_timer > 0) {
 		ObachanUpdate();
 		control_stop_timer--;
+	}
+
+	hit_timer--;
+	if (hit_timer <= 0)
+		hit_timer = 0;
+	if (TRG(0) & PAD_TRG1 && control_stop_timer <= 0) {
+		hit_timer = HIT_HUND_RENDER_TIMER;
 	}
 }
 
@@ -272,42 +301,47 @@ bool playerController::HITCHECK_HUND_BUTTON(
 }
 
 //playerの弾く動作関数
-void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {	
+void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
+	debug::setString("flick_error_can:%i", flick_errorcan_count);
+	debug::setString("flick_other:%i", flick_other_count);
+
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
 		if (control_stop_timer <= 0) {
 			if (main_conveyor == false) {
 				if (TRG(0) & PAD_TRG1) {
-					if (cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
+					if (boms[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
 							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true) {
 							//爆弾を弾く、消す
-							boms[i].setCAN_ALIVE(false);
+							flick_other_count++;
+							boms[i].setGRA_FLAG(true);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].bom_pro && cans[i].getCAN_COLOR() <= days[day - 1].oba_pro) {//おばさん
+					if (obas[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].bom_pro && cans[i].getCAN_COLOR() <= days[day - 1].oba_pro) {//おばさん
 						if (FLICKCHECK_THING(&obas[i], obas[i].getCAN_SCALE().x * obas[i].getCAN_TEXTSIZE().x,
 							obas[i].getCAN_SCALE().y * obas[i].getCAN_TEXTSIZE().y) == true) {
 							//おばさんを弾く、消す
-							obas[i].setCAN_ALIVE(false);
+							flick_other_count++;
+							obas[i].setGRA_FLAG(true);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//おじさん
+					if (ojis[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//おじさん
 						if (FLICKCHECK_THING(&ojis[i], ojis[i].getCAN_SCALE().x * ojis[i].getCAN_TEXTSIZE().x * 1.5f,
 							ojis[i].getCAN_SCALE().y * ojis[i].getCAN_TEXTSIZE().y) == true) {
 							//おじさんを弾く、消す
-							ojis[i].setCAN_ALIVE(false);
+							flick_other_count++;
+							ojis[i].setGRA_FLAG(true);
 						}
 					}
 
-					if (cans[i].getCAN_COLOR() > days[day - 1].oji_pro && cans[i].getCAN_COLOR() <= days[day - 1].errorcan_pro) {//不正解の缶
+					if (cans[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oji_pro && cans[i].getCAN_COLOR() <= days[day - 1].errorcan_pro) {//不正解の缶
 						if (FLICKCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
 							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
 							//缶を弾く、消す
-							cans[i].setCAN_ALIVE(false);
-							debug_flick = 1;
-
+							flick_errorcan_count++;
+							cans[i].setGRA_FLAG(true);
 						}
 					}
 
@@ -315,14 +349,20 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 						if (FLICKCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
 							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
 							//缶を弾く、消す
-							cans[i].setCAN_ALIVE(false);
 							can.setKIGEN(10);
+							cans[i].setGRA_FLAG(true);
 
 						}
 					}
 				}
 			}
 		}
+	}
+	flick_timer--;
+	if (flick_timer <= 0)
+		flick_timer = 0;
+	if (TRG(0) & PAD_TRG1 && control_stop_timer <= 0) {
+		flick_timer = FLICK_HUND_RENDER_TIMER;
 	}
 }
 
@@ -474,4 +514,14 @@ VECTOR2 playerController::getRHUND_SCALE() {
 
 VECTOR2 playerController::getLHUND_SCALE() {
 	return Lhund_scale;
+}
+
+//不正解の缶の回収数のゲッター関数
+int playerController::getFLICK_ERRORCAN_COUNT() {
+	return flick_errorcan_count;
+}
+
+//缶以外の物の回収した合計数のゲッター関数
+int playerController::getFLICK_OTHERCAN_COUNT() {
+	return flick_other_count;
 }

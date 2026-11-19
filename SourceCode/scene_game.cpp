@@ -142,7 +142,10 @@ void game_update()
 			break;
 		}
 
-
+		can.getERRORCAN_COUNT();//不正解の缶の生成数のゲッター関数
+		can.getOTHERCAN_COUNT();//缶以外の生成合計数のゲッター関数
+		player.getFLICK_ERRORCAN_COUNT();//不正解の缶の回収数のゲッター関数
+		player.getFLICK_OTHERCAN_COUNT();//缶以外の物の回収した合計数のゲッター関数
 
 
 		break;

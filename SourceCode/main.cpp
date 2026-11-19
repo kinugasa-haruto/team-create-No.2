@@ -104,7 +104,7 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 		}
 
 		// デバッグ文字列の描画
-		debug::display(1.0f, 1.0f, 1.0f, 1, 1);
+		debug::display(0.0f, 0.0f, 0.0f, 1, 1);
 
 		//debug::setString("GP1_08 SAMPLE");
 

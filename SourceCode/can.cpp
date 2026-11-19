@@ -4,14 +4,14 @@ extern Can obas[500];
 extern Can ojis[500];
 extern Can boms[500];
 extern Can can;
-extern playerController player; 
+extern playerController player;
 extern GameTimer gameTimer;
 
 //日にち事の設定
 Day days[] = {
-	//生成間隔		生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
-	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 150.0f,		3,		2.0f,		0,			80,				0,				0,					100},	// 1日目
+	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
+	//{ 100.0f,		20,		5.0f,		25,			30,				45,				80,					100},	// デバック用
+	{ 200.0f,		20,		2.0f,		10,			20,				30,				50,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
@@ -47,6 +47,8 @@ void GAME_DAY(int num) {
 	player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 	can.CAN_ALL_VANISH(cans, obas, ojis, boms);//１日に流れるものが全部消えたかの処理
 
+	can.GAUGE_UPDATE();
+
 }
 void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
@@ -56,8 +58,8 @@ void GAME_DAY_RENDER(int num) {
 	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
 	judgearea_render();
 	player.HITAREA_FLICKAREA_RENDER();			//叩く,弾くエリアの描画
-	can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
-
+	//can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
+	can.GAUGE_RENDER();
 }
 //void TUTORIAL_UPDATE() {
 //	player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);
@@ -131,6 +133,12 @@ Can::Can() {
 	oba_hit = false;
 
 	kigen = 100;
+	errorcan_count = 0;
+	othercan_count = 0;
+
+	gravity = 20;//重力
+	gauge_pos = { SCREEN_W * 0.7f,SCREEN_W * 0.0f };
+	gauge_scale = { 0.5f,0.5f };
 }
 
 //デストラクタ
@@ -141,9 +149,11 @@ Can::~Can() {
 //缶の生成関数
 void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 	debug::setString("generate:%i", generate_timer);
+	debug::setString("error_can:%i", errorcan_count);
+	debug::setString("other_can:%i", othercan_count);
 
 	generate_timer--;
-	if (generate_timer < 0 &&generate_num < days[day - 1].CAN_NUM) {
+	if (generate_timer < 0 && generate_num < days[day - 1].CAN_NUM) {
 		int i = generate_num;
 		can_num = rand() % 100 + 1;
 
@@ -151,17 +161,25 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 		if (can_num <= days[day - 1].bom_pro) {// 爆弾
 			boms[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else if (can_num <= days[day - 1].oba_pro) {// おばさん
+
+		if (can_num > days[day - 1].bom_pro && can_num <= days[day - 1].oba_pro) {// おばさん
 			obas[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else if (can_num <= days[day - 1].oji_pro) {// おじさん
+
+		if (can_num > days[day - 1].oba_pro && can_num <= days[day - 1].oji_pro) {// おじさん
 			ojis[i].setCAN_ALIVE(true);
+			othercan_count++;
 		}
-		
-		else {
+
+		if (can_num > days[day - 1].oji_pro && can_num <= days[day - 1].errorcan_pro) {
+			cans[i].setCAN_ALIVE(true);//缶
+			errorcan_count++;
+		}
+
+		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
 			cans[i].setCAN_ALIVE(true);//缶
 		}
 
@@ -169,10 +187,6 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 		generate_timer = days[day - 1].timer;
 		generate_num++;
-		//can[generate_num].can_color = can_num;
-		//generate_timer = days[day - 1].timer;
-		//generate_num++;
-		//can[generate_num].setOJI_HIT(false);
 	}
 
 	if (generate_num > days[day - 1].CAN_NUM) {
@@ -302,7 +316,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 
 				if (oba[i].pos.x >= SCREEN_W) {
 					oba[i].can_alive = false;
-					kigen -= 10; 
+					kigen -= 10;
 				}
 			}
 		}
@@ -330,6 +344,38 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 
 			bom[i].Rbom_pos.x = bom[i].pos.x + 120;
 			bom[i].Rbom_pos.y = bom[i].pos.y + 50;
+
+		}
+
+		if (boms[i].gravity_flag == true) {
+			boms[i].pos.y += gravity;
+		}
+		if (boms[i].pos.y >= SCREEN_H + 250) {
+			boms[i].setCAN_ALIVE(false);
+		}
+
+		if (obas[i].gravity_flag == true) {
+			obas[i].pos.y += gravity;
+		}
+		if (obas[i].pos.y >= SCREEN_H + 250) {
+			obas[i].setCAN_ALIVE(false);
+
+		}
+
+		if (ojis[i].gravity_flag == true) {
+			ojis[i].pos.y += gravity;
+		}
+		if (ojis[i].pos.y >= SCREEN_H + 250) {
+			ojis[i].setCAN_ALIVE(false);
+
+		}
+
+		if (cans[i].gravity_flag == true) {
+			cans[i].pos.y += gravity;
+		}
+		if (cans[i].pos.y >= SCREEN_H + 250) {
+			cans[i].setCAN_ALIVE(false);
+
 		}
 	}
 }
@@ -415,23 +461,66 @@ bool Can::CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom) {
 	return true;
 }
 
-//CLEAR時の関数	ゲージの描画
-void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
-	debug::setString("DAY_CLEAR KIGEN:%d", kigen);
+////CLEAR時の関数
+//void Can::DAY_CLEAR(Can* can, Can* oba, Can* oji, Can* bom, int day) {
+//
+//	//if (generate_num >= days[day - 1].CAN_NUM &&
+//	//	CAN_ALL_VANISH(can, oba, oji, bom) == true) {
+//	//	text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
+//	//}
+//}
+
+//ゲージの処理関数
+void Can::GAUGE_UPDATE() {
+	debug::setString("KIGEN:%f", kigen);
 	if (kigen < 0) {
 		kigen = 0;
 	}
-	primitive::rect(SCREEN_W * 0.5, 0, kigen * 2.5f, 50, 0, 0, ToRadian(0), 1, 0, 0);
-	primitive::rect(0, 0, 800, 400, 0, 0, ToRadian(0), 0, 0, 0);
-	if (kigen <= 0) {
-		text_out(1, "game over", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 1);
+
+	if (kigen <= 0) {//機嫌ゲージが０になった時の処理
+
 	}
 
-	//if (generate_num >= days[day - 1].CAN_NUM &&
-	//	CAN_ALL_VANISH(can, oba, oji, bom) == true) {
-	//	text_out(1, "game clear", SCREEN_W * 0.4f, SCREEN_H * 0.4f, 2, 2, 0, 0, 0);
-	//}
+	float g = kigen * 0.01f;
+	gaugeW = 760 * g;
 }
+
+//ゲージの描画関数
+void Can::GAUGE_RENDER() {
+	sprite_render(sub_gauge, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	sprite_render(main_gauge, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, gaugeW, 300, 0, 0, ToRadian(0));
+
+	if (kigen >= 100) {
+		sprite_render(jousi1, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+			0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+	if (kigen < 100 && kigen >= 80) {
+	sprite_render(jousi2, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+	if (kigen < 80 && kigen >= 60) {
+	sprite_render(jousi3, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+	if (kigen < 60 && kigen >= 40) {
+	sprite_render(jousi4, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+	if (kigen < 40 && kigen >= 20) {
+	sprite_render(jousi5, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+	if (kigen < 20 && kigen >= 0) {
+	sprite_render(jousi6, gauge_pos.x, gauge_pos.y, gauge_scale.x, gauge_scale.y,
+		0, 0, 1000, 300, 0, 0, ToRadian(0));
+	}
+
+}
+
+
+
 
 
 //缶のcolorのゲッター関数
@@ -542,9 +631,24 @@ void Can::setOBA_HIT(bool hit) {
 	oba_hit = hit;
 }
 
+//kigenのセッター関数
 void Can::setKIGEN(int k) {
 
 	kigen -= k;
+}
+
+//不正解の缶の生成数のゲッター関数
+int Can::getERRORCAN_COUNT() {
+	return errorcan_count;
+}
+
+//缶以外の生成合計数のゲッター関数
+int Can::getOTHERCAN_COUNT() {
+	return othercan_count;
+}
+
+void Can::setGRA_FLAG(bool gra) {
+	gravity_flag = gra;
 }
 
 
