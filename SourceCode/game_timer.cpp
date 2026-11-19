@@ -21,7 +21,7 @@ bool GameTimer::timerUpdate()
 
 void GameTimer::timerRender()
 {
-	if (timer < 2)
+	if (timer < 2 && timer != 0)
 	{
 		text_out(2, "FiNISH", SCREEN_HALF_W - 200, SCREEN_HALF_H - 100, 1, 1, 0, 0, 0);
 	}

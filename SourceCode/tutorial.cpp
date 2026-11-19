@@ -44,6 +44,7 @@ void tutorial_init()
 	tutorial_timer = 0;
 	skipbutton.Reset();
 	can.CAN_RESET(cans, obas, ojis, boms);  // 試験的に追加したやつ
+	back_init();
 	timer = 0;
 	tutorialTimer = 0;
 }
@@ -85,21 +86,20 @@ void tutorial_update()
 			if (inv >= 9.99f) inv = 1;
 		}
 		//缶の移動関数はずっと呼んでいて欲しい、正しい缶と不正解の缶のUPDATE関数は必要に応じて呼んでほしい
-		can.CAN_MOVE(cans, obas, ojis, boms, 1);//缶の移動関数
 		back_update(2.0f);
 		skipbutton.Update();
 		tutorialTimer++;
-		if (tutorialTimer > 5 * 60 && tt.GetProgress() == -1)
+		can.CAN_MOVE(cans, obas, ojis, boms, 1);//缶の移動関数
+		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
 			tt.SetProgress(0);
 		}
-		if (tutorialTimer > 9 * 60 && tt.GetProgress() == 0)
+		if (tutorialTimer > 6 * 60 && tt.GetProgress() == 0)
 		{
 			can.CAN_GENERATE(cans, obas, ojis, boms, 9); //缶の生成関数
 		}
 		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//缶と叩くエリアの当たり判定関数
 		{
-			
 				if (TRG(0) & PAD_TRG1)
 				{
 					player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数

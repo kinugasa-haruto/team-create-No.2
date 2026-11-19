@@ -122,7 +122,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							//‰¡Œü‚«‚É•ÏX
 							if (obas[i].getOBA_HIT() == false) {
 								obas[i].setOBA_HIT(true);
-								control_stop_timer = 180;
+								control_stop_timer = 120;
 							}
 						}
 					}
