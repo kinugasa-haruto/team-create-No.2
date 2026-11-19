@@ -11,14 +11,14 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔		生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 70.0f,		20,		5.0f,		0,			0,				0,				90,					100},	// 1日目
-	{ 40.0f,		1,		2.0f,		0,			0,				0,				20,					100},	// 1日目
+	{ 150.0f,		3,		2.0f,		0,			80,				0,				0,					100},	// 1日目
 	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
-	{ 100.0f,		50,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
+	{ 100.0f,		100,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
 	{ 1.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
 	{ 1.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 10チュートリアル2
 
@@ -99,7 +99,6 @@ void TUTORIAL_MISSCAN_UPDATE() {
 
 //コンストラクタ
 Can::Can() {
-	srand(unsigned int(NULL));
 
 	generate_num = 0;
 	generate_timer = 0;
@@ -553,9 +552,30 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 {
 	for (int i = 0; i < generate_num; i++)
 	{
-		if (can[i].can_alive == true)	can[i] = {};
-		if (oba[i].can_alive == true)	oba[i] = {};
-		if (oji[i].can_alive == true)	oji[i] = {};
-		if (bom[i].can_alive == true)	bom[i] = {};
+		if (can[i].can_alive == true)
+		{
+			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };;
+			can[i].can_alive = false;
+		}
+		if (oba[i].can_alive == true)
+		{
+			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };;
+			oba[i].can_alive = false;
+		}
+		if (oji[i].can_alive == true)
+		{
+			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };;
+			oji[i].can_alive = false;
+		}
+		if (bom[i].can_alive == true)
+		{
+			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };;
+			bom[i].can_alive = false;
+		}
 	}
+	generate_num = 0;
+	generate_timer = 0;
+	can_num = 0;
+	can_color = 0;
+
 }

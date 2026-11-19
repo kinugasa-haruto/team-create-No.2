@@ -9,7 +9,7 @@ void ObachanUpdate()
 
 	timer++;
 
-
+	hannyA.SetAnime(timer / 5 % 3);
 	// 般若アニメーション
 	static float animeTimer = 0;
 	static float scale = 1;
@@ -38,8 +38,8 @@ void ObachanUpdate()
 
 void ObachanRender()
 {
+	sprite_render(fire, 0, 0, 1, 1, SCREEN_W * hannyA.GetAnime(), 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
 	sprite_render(hannya, SCREEN_HALF_W, SCREEN_HALF_H, hannyA.GetScale(), hannyA.GetScale(), 0, 0, SCREEN_W, SCREEN_H, SCREEN_HALF_W, SCREEN_HALF_H);
-	sprite_render(fire, 0, 0, 1, 1, SCREEN_W, 0, SCREEN_W, SCREEN_H);
 }
 
 Binder resultBinder;
@@ -98,11 +98,11 @@ void NextDay::Update()
 {
 	if (!swap)
 	{
-		timer += 1 / 240.0f;
+		timer += 1 / 120.0f;
 	}
 	else
 	{
-		timer -= 1 / 240.0f;
+		timer -= 1 / 120.0f;
 	}
 	if (!swap)
 	{

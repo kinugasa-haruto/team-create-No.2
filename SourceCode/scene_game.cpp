@@ -16,7 +16,7 @@ Can ojis[500];
 Can boms[500];
 Can can;
 playerController player;
-
+ 
 extern int debug_flick;
 extern int debug_miss;
 
@@ -64,11 +64,13 @@ void game_update()
 			if (!nextDay)
 			{
 				// Ç±Ç±Ç…èâä˙âªèàóù
-				GAME_DAY(1);
+				can.CAN_RESET(cans, obas, ojis, boms);
+				back_init();
 				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
 				nextday.Reset();
 				gameTimer.reset();
 				resultBinder.reset();
+				GAME_DAY(1);
 				nextDay = true;
 			}
 			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
@@ -80,7 +82,7 @@ void game_update()
 				if (gameTimer.timerUpdate() == true) {}
 				else
 				{
-					if (resultBinder.GetNext() && TRG(0) & PAD_START)
+					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 					{
 						resultBinder.SetBinderType(1);
 					}
@@ -102,12 +104,15 @@ void game_update()
 			{
 				// Ç±Ç±Ç…èâä˙âªèàóù
 
+				can.CAN_RESET(cans, obas, ojis, boms);
+				back_init();
 				GAME_DAY(2);
 				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
 				nextday.Reset();
 				gameTimer.reset();
 				resultBinder.reset();
 				nextDay = true;
+				return;
 			}
 			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
 			{
@@ -118,7 +123,7 @@ void game_update()
 				if (gameTimer.timerUpdate() == true) {}
 				else
 				{
-					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_START)
+					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_TRG1)
 					{
 						resultBinder.SetBinderType(1);
 					}

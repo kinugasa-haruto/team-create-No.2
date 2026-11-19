@@ -18,6 +18,8 @@ void title_init()
 {
 	title_state = 0;
 	title_timer = 0;
+	can.CAN_RESET(cans, obas, ojis, boms);
+	back_init();
 }
 
 void title_deinit()
@@ -47,7 +49,7 @@ void title_update()
 
 	case 2:
 		//////// í èÌéû ////////
-		if (title.GetSelected() == 0 && TRG(0) & PAD_START && !title.GetSelect())
+		if (title.GetSelected() == 0 && TRG(0) & PAD_TRG1 && !title.GetSelect())
 		{
 			//nextScene = SCENE_TUTORIAL;
 			music::play(1, false);
@@ -121,7 +123,6 @@ void title_render()
 	//}
 
 	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1Ç¬ÇÃä ÇÃï`âÊä÷êî
-	judgearea_render();
 	icon.Render();
 
 	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
