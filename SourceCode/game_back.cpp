@@ -36,7 +36,7 @@ void back_update(float speed)
 			conveyor_2[1][i].SetPositionX(-SCREEN_W);
 		}
 	}
-	angle.SetAngle(angle.GetAngle() - ToRadian(360.0f / (90.0f * 60))); // ‚°‚«‚«‚àŒvŽZ
+	angle.SetAngle(angle.GetAngle() - ToRadian(360.0f / (180.0f * 60))); // ‚°‚«‚«‚àŒvŽZ
 }
 
 void back_render()
