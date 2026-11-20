@@ -352,7 +352,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 			if (bom[i].pos.y >= SCREEN_H * 0.75f) {
 				bom[i].pos.x += days[day - 1].speed;
 
-				if (bom[i].pos.x >= SCREEN_W+50) {
+				if (bom[i].pos.x >= SCREEN_W + 50) {
 					//bom[i].can_alive = false;
 					if (boms[i].getBOM_EFFECT() == false) {
 						boms[i].setEFC_TIMER(0);
@@ -448,13 +448,14 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 		if (bom[i].Bomeffect_flag == true) {
 			bom[i].efc_timer++;
 
-			if (bom[i].efc_timer > 200) {
-				bom[i].Bomeffect_flag = false;
-				bom[i].can_alive = false;
+			if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
+				if (bom[i].efc_timer > 200) {
+					bom[i].Bomeffect_flag = false;
+					bom[i].can_alive = false;
+					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
+
+				}
 			}
-		}
-		if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
-			
 		}
 	}
 }
@@ -497,7 +498,7 @@ void Can::BOM_EFFECT_RENDER(Can* bom) {
 		if (bom[i].bom_dropped == true) {
 			if (bom[i].efc_timer <= 200 && bom[i].efc_timer > 40) {
 				effect_scale = 3.5f + 3.0f * ((bom[i].efc_timer - 41) * 0.15) * 0.09f;
-				sprite_render(Bom_effect, SCREEN_W*0.9, SCREEN_H * 0.7, effect_scale, effect_scale,
+				sprite_render(Bom_effect, SCREEN_W * 0.9, SCREEN_H * 0.7, effect_scale, effect_scale,
 					8000, 0, bom[i].Beffect_textsize.x, bom[i].Beffect_textsize.y, 1000, 750, ToRadian(0));
 			}
 			if (bom[i].efc_timer <= 40 && bom[i].efc_timer > 30) {
@@ -525,12 +526,7 @@ void Can::BOM_EFFECT_RENDER(Can* bom) {
 				primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, d);
 			}
 		}
-
-		if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
-			text_out(1, "a", 0, 0, 3, 3);
-		}
 	}
-
 }
 
 //おじさんがコンベアよりも前の時の処理
@@ -596,7 +592,8 @@ void Can::GAUGE_UPDATE() {
 		kigen = 100;
 	}
 
-	if (kigen <= 0) {//機嫌ゲージが０になった時の処理
+	if (kigen <= 0) {
+		//機嫌ゲージが０になった時にゲームオーバーの処理
 
 	}
 
