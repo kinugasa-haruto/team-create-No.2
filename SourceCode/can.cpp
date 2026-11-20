@@ -11,7 +11,7 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔			生成個数	缶の速度		爆弾の確率		おばさんの確率		おじさんの確率		不正解の缶の確率		缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 200.0f,		20,		2.0f,		0,			0,				0,				10,					100},	// 1日目
+	{ 200.0f,		1,		9.0f,		0,			0,				0,				10,					100},	// 1日目
 	{ 150.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
@@ -453,7 +453,8 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 					bom[i].Bomeffect_flag = false;
 					bom[i].can_alive = false;
 					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
-
+					CAN_RESET(cans, obas, ojis, boms);
+					gameDay++;
 				}
 			}
 		}
@@ -799,31 +800,33 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 	{
 		if (can[i].can_alive == true)
 		{
-			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };;
+			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
+			can[i].can_color = 0;
 			can[i].setCAN_ALIVE(false);
 		}
 		if (oba[i].can_alive == true)
 		{
-			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };;
+			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
+			oba[i].can_color = 0;
 			oba[i].setCAN_ALIVE(false);
 		}
 		if (oji[i].can_alive == true)
 		{
-			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };;
+			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
+			oji[i].can_color = 0;
 			oji[i].setCAN_ALIVE(false);
 			oji[i].oji_back = false;
 		}
 		if (bom[i].can_alive == true)
 		{
-			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };;
+			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
+			bom[i].can_color = 0;
 			bom[i].setCAN_ALIVE(false);
 		}
 	}
 
 	generate_num = 0;
 	generate_timer = 0;
-	can_num = 0;
-	can_color = 0;
 
 }
 

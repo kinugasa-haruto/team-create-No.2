@@ -127,7 +127,7 @@ void tutorial_update()
 		}
 
 
-		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//缶と叩くエリアの当たり判定関数
+		if (player.HITCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//缶と叩くエリアの当たり判定関数
 		{
 				spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50});
 				if (TRG(0) & PAD_TRG1)
@@ -149,7 +149,7 @@ void tutorial_update()
 		// ここ！！！！！
 		// ここ！！！！！
 		// ここ！！！
-	    else if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 2) // ここがtrueにならない
+	    else if (player.HITCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 2) // ここがtrueにならない
 		{
 			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50 });
 			if (TRG(0) & PAD_TRG1 && player.GetMAIN_CONVEYOR())
@@ -161,7 +161,7 @@ void tutorial_update()
 			}
 			break;
 		}
-		else if (player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
+		else if (player.FLICKCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
 		{
 			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_H * 0.77f - 50 });
 			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
