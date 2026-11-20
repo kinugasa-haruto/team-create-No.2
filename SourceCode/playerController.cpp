@@ -26,6 +26,7 @@ playerController::playerController() {
 
 	hit_timer = 0;
 	flick_timer = 0;
+	obaeffect_timer = 0;
 }
 
 //デストラクタ
@@ -45,7 +46,7 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//右の時のデバック用の当たり判定
 			if (hit_timer == 0) {
 				sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 20,
-					1, 1, 0, 0, 150, 200,0,0, ToRadian(0));//右手の通常時
+					1, 1, 0, 0, 150, 200, 0, 0, ToRadian(0));//右手の通常時
 			}
 			if (hit_timer > 0) {
 				sprite_render(hand, hitarea_pos.x + 100, hitarea_pos.y - 40,
@@ -57,11 +58,11 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//左の時のデバック用の当たり判定
 			if (hit_timer == 0) {
 				sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 20,
-					1, 1, 0, 0, 150, 200,0,0, ToRadian(0));//左手の通常時
+					1, 1, 0, 0, 150, 200, 0, 0, ToRadian(0));//左手の通常時
 			}
 			if (hit_timer > 0) {
 				sprite_render(hand, hitarea_pos.x - 50, hitarea_pos.y - 40,
-					1, 0.85f, 0, 0, 150, 200,0,0, ToRadian(0));//左手の叩いた時
+					1, 0.85f, 0, 0, 150, 200, 0, 0, ToRadian(0));//左手の叩いた時
 			}
 		}
 	}
@@ -73,14 +74,14 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 	if (main_conveyor == false) {
 		if (flick_timer == 0) {
 			sprite_render(hand_hold, flickarea_pos.x + 50, flickarea_pos.y - 40,
-				1, 1, 0, 0, 200, 200,0,0, ToRadian(0));//弾くエリアの通常時の手
+				1, 1, 0, 0, 200, 200, 0, 0, ToRadian(0));//弾くエリアの通常時の手
 		}
 		if (flick_timer > 0) {
 			sprite_render(hand_hold, flickarea_pos.x - 50, flickarea_pos.y + 140,
-				1, 1, 0, 0, 200, 200, 0,0,ToRadian(-45));//弾くエリアの弾いた時の手
+				1, 1, 0, 0, 200, 200, 0, 0, ToRadian(-45));//弾くエリアの弾いた時の手
 		}
 	}
-	if (control_stop_timer > 0)
+	if (control_stop_timer > 0 && obaeffect_timer <= 0)
 	{
 		ObachanRender();
 	}
@@ -100,8 +101,12 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							}
 							if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//右手と赤ボタンの処理
 								//爆発
-								boms[i].setBOM_EFFECT(true);
-								boms[i].setCAN_ALIVE(false);
+								if (boms[i].getBOM_EFFECT()== false) {
+									boms[i].setEFC_TIMER(0);
+									boms[i].setBOM_EFFECT(true);
+								}
+								can.MINUSsetKIGEN(100);
+
 							}
 						}
 						if (right_hit_area == false) {
@@ -110,8 +115,11 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							}
 							if (HITCHECK_HUND_BUTTON(Lhund_pos, Lhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//左手と赤ボタンの処理
 								//爆発
-								boms[i].setBOM_EFFECT(true);
-								boms[i].setCAN_ALIVE(false);
+								if (boms[i].getBOM_EFFECT() == false) {
+									boms[i].setEFC_TIMER(0);
+									boms[i].setBOM_EFFECT(true);
+								}
+								can.MINUSsetKIGEN(100);
 							}
 						}
 					}
@@ -123,6 +131,10 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							if (obas[i].getOBA_HIT() == false) {
 								obas[i].setOBA_HIT(true);
 								control_stop_timer = 120;
+								obaeffect_timer = 30;
+								//obas[i].setCAN_ALIVE(false);
+
+								can.MINUSsetKIGEN(KIGEN_MINUS);
 							}
 						}
 					}
@@ -154,17 +166,26 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 					}
 				}
 			}
+			//叩いたおばさんが演出後に消える処理
+			if (obas[i].getOBA_HIT() == true && obaeffect_timer <= 0) {
+				obas[i].setCAN_ALIVE(false);
+			}
 		}
 		//おじさんが飛んでいく処理
 		if (ojis[i].getOJI_JUMP() == true) {
 			ojis->OJI_JUMP(&ojis[i]);
 		}
 	}
+
+	obaeffect_timer--;
+	if (obaeffect_timer <= 0)
+		obaeffect_timer = 0;
 	//プレイヤーが操作できないタイムの減少
-	if (control_stop_timer > 0) {
+	if (control_stop_timer > 0 && obaeffect_timer <= 0) {
 		ObachanUpdate();
 		control_stop_timer--;
 	}
+
 
 	hit_timer--;
 	if (hit_timer <= 0)
@@ -313,46 +334,58 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 				if (TRG(0) & PAD_TRG1) {
 					if (boms[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
-							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true) {
+							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true&& boms[i].getFLICK_FLAG() == false) {
 							//爆弾を弾く、消す
 							flick_other_count++;
+							can.PLUSsetKIGEN(KIGEN_PLUS);
 							boms[i].setGRA_FLAG(true);
+							boms[i].setFLICK_FLAG(true);
 						}
 					}
 
 					if (obas[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].bom_pro && cans[i].getCAN_COLOR() <= days[day - 1].oba_pro) {//おばさん
 						if (FLICKCHECK_THING(&obas[i], obas[i].getCAN_SCALE().x * obas[i].getCAN_TEXTSIZE().x,
-							obas[i].getCAN_SCALE().y * obas[i].getCAN_TEXTSIZE().y) == true) {
+							obas[i].getCAN_SCALE().y * obas[i].getCAN_TEXTSIZE().y) == true && obas[i].getFLICK_FLAG() == false) {
 							//おばさんを弾く、消す
 							flick_other_count++;
+							can.PLUSsetKIGEN(KIGEN_PLUS);
 							obas[i].setGRA_FLAG(true);
+							obas[i].setFLICK_FLAG(true);
+
 						}
 					}
 
 					if (ojis[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//おじさん
 						if (FLICKCHECK_THING(&ojis[i], ojis[i].getCAN_SCALE().x * ojis[i].getCAN_TEXTSIZE().x * 1.5f,
-							ojis[i].getCAN_SCALE().y * ojis[i].getCAN_TEXTSIZE().y) == true) {
+							ojis[i].getCAN_SCALE().y * ojis[i].getCAN_TEXTSIZE().y) == true && ojis[i].getFLICK_FLAG() == false) {
 							//おじさんを弾く、消す
 							flick_other_count++;
+							can.PLUSsetKIGEN(KIGEN_PLUS);
 							ojis[i].setGRA_FLAG(true);
+							ojis[i].setFLICK_FLAG(true);
+
 						}
 					}
 
 					if (cans[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].oji_pro && cans[i].getCAN_COLOR() <= days[day - 1].errorcan_pro) {//不正解の缶
 						if (FLICKCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
-							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
+							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true && cans[i].getFLICK_FLAG() == false) {
 							//缶を弾く、消す
 							flick_errorcan_count++;
+							can.PLUSsetKIGEN(KIGEN_PLUS);
 							cans[i].setGRA_FLAG(true);
+							cans[i].setFLICK_FLAG(true);
+
 						}
 					}
 
 					if (cans[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() > days[day - 1].errorcan_pro && cans[i].getCAN_COLOR() <= days[day - 1].can_pro) {//缶
 						if (FLICKCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
-							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
+							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true && cans[i].getFLICK_FLAG() == false) {
 							//缶を弾く、消す
-							can.setKIGEN(10);
+							can.MINUSsetKIGEN(KIGEN_MINUS);
 							cans[i].setGRA_FLAG(true);
+							cans[i].setFLICK_FLAG(true);
 
 						}
 					}

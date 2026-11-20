@@ -16,7 +16,7 @@ Can ojis[500];
 Can boms[500];
 Can can;
 playerController player;
- 
+
 extern int debug_flick;
 extern int debug_miss;
 
