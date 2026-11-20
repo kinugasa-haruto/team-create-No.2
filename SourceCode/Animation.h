@@ -225,6 +225,7 @@ public:
 	{
 		timer = 0;
 		count = 3;
+		countTimer = 0;
 		inv = 0;
 	}
 private:
@@ -232,6 +233,7 @@ private:
 	{
 		timer = 0;
 		count = 3;
+		countTimer = 0;
 		inv = 0;
 	}
 	int count;

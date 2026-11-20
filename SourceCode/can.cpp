@@ -9,18 +9,18 @@ extern GameTimer gameTimer;
 
 //日にち事の設定
 Day days[] = {
-	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
+	//生成間隔			生成個数	缶の速度		爆弾の確率		おばさんの確率		おじさんの確率		不正解の缶の確率		缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 200.0f,		20,		2.0f,		20,			40,				60,				80,					100},	// 1日目
-	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
+	{ 200.0f,		20,		2.0f,		0,			40,				50,				60,					100},	// 1日目
+	{ 150.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
-	{ 100.0f,		100,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
-	{ 0.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
-	{ 0.0f,		2,		2.0f,		0,			0,				0,				100,				101},		// 10チュートリアル2
+	{ 100.0f,		100,	2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
+	{ 0.0f,			2,		4.0f,		0,			0,				0,				50,					100},	// チュートリアル
+	//{ 0.0f,			1,		2.0f,		0,			0,				0,				100,					0},		// 10チュートリアル2
 
 };
 
@@ -103,7 +103,7 @@ void TUTORIAL_MISSCAN_UPDATE() {
 
 //コンストラクタ
 Can::Can() {
-
+	srand((unsigned int)time(NULL));
 	generate_num = 0;
 	generate_timer = 0;
 	can_num = 0;
@@ -352,7 +352,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 			if (bom[i].pos.y >= SCREEN_H * 0.75f) {
 				bom[i].pos.x += days[day - 1].speed;
 
-				if (bom[i].pos.x >= SCREEN_W+50) {
+				if (bom[i].pos.x >= SCREEN_W + 50) {
 					//bom[i].can_alive = false;
 					if (boms[i].getBOM_EFFECT() == false) {
 						boms[i].setEFC_TIMER(0);
@@ -431,10 +431,10 @@ void Can::OJI_BACK_RENDER(Can* can, Can* oji, int day) {
 	for (int i = 0; i < generate_num; i++) {
 		if (oji[i].can_alive == true) {
 			if (oji[i].oji_back == true) {
-				if (can[i].can_color < days[day - 1].oji_pro) {
+				if (cans[i].can_color < days[day - 1].oji_pro) {
 					sprite_render(ojisan_push, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 						0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
-					sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 150, oji[i].scale.x, oji[i].scale.y,
+					sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 						0, 0, 60, 65, 0, 0, ToRadian(0));//ネクタイ
 				}
 			}
@@ -448,13 +448,15 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 		if (bom[i].Bomeffect_flag == true) {
 			bom[i].efc_timer++;
 
-			if (bom[i].efc_timer > 200) {
-				bom[i].Bomeffect_flag = false;
-				bom[i].can_alive = false;
+			if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
+				if (bom[i].efc_timer > 200) {
+					bom[i].Bomeffect_flag = false;
+					bom[i].can_alive = false;
+					//爆発後の処理（リザルトシーンにいって。日にちを１日スキップする処理）
+
+
+				}
 			}
-		}
-		if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
-			
 		}
 	}
 }
@@ -497,7 +499,7 @@ void Can::BOM_EFFECT_RENDER(Can* bom) {
 		if (bom[i].bom_dropped == true) {
 			if (bom[i].efc_timer <= 200 && bom[i].efc_timer > 40) {
 				effect_scale = 3.5f + 3.0f * ((bom[i].efc_timer - 41) * 0.15) * 0.09f;
-				sprite_render(Bom_effect, SCREEN_W*0.9, SCREEN_H * 0.7, effect_scale, effect_scale,
+				sprite_render(Bom_effect, SCREEN_W * 0.9, SCREEN_H * 0.7, effect_scale, effect_scale,
 					8000, 0, bom[i].Beffect_textsize.x, bom[i].Beffect_textsize.y, 1000, 750, ToRadian(0));
 			}
 			if (bom[i].efc_timer <= 40 && bom[i].efc_timer > 30) {
@@ -525,12 +527,7 @@ void Can::BOM_EFFECT_RENDER(Can* bom) {
 				primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, d);
 			}
 		}
-
-		if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
-			text_out(1, "a", 0, 0, 3, 3);
-		}
 	}
-
 }
 
 //おじさんがコンベアよりも前の時の処理
@@ -596,7 +593,8 @@ void Can::GAUGE_UPDATE() {
 		kigen = 100;
 	}
 
-	if (kigen <= 0) {//機嫌ゲージが０になった時の処理
+	if (kigen <= 0) {
+		//機嫌ゲージが０になった時にゲームオーバーの処理
 
 	}
 
@@ -803,23 +801,23 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 		if (can[i].can_alive == true)
 		{
 			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };;
-			can[i].can_alive = false;
+			can[i].setCAN_ALIVE(false);
 		}
 		if (oba[i].can_alive == true)
 		{
 			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };;
-			oba[i].can_alive = false;
+			oba[i].setCAN_ALIVE(false);
 		}
 		if (oji[i].can_alive == true)
 		{
 			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };;
-			oji[i].can_alive = false;
+			oji[i].setCAN_ALIVE(false);
 			oji[i].oji_back = false;
 		}
 		if (bom[i].can_alive == true)
 		{
 			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };;
-			bom[i].can_alive = false;
+			bom[i].setCAN_ALIVE(false);
 		}
 	}
 
@@ -829,4 +827,43 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 	can_color = 0;
 
 }
+
+void Can::TUTORIAL_RESET()
+{
+	generate_num = 0;
+}
+
+void Can::TUTORIAL_GENERATE(bool impure, int day, Can* cans)
+{
+	generate_timer--;
+	if (generate_timer < 0 && generate_num < days[day - 1].CAN_NUM) {
+
+
+		int i = generate_num;
+		if (impure)
+		{
+			cans[i].can_color = 20;
+			cans[i].setCAN_ALIVE(true);//缶
+			errorcan_count++;
+		}
+		else
+		{
+			cans[i].can_color = 80;
+			cans[i].setCAN_ALIVE(true);//缶
+
+		}
+
+		cans[i].setOJI_HIT(false);
+
+
+		generate_timer = days[day - 1].timer;
+
+		generate_num++;
+	}
+	if (generate_num > days[day - 1].CAN_NUM) {
+		generate_num = days[day - 1].CAN_NUM;
+	}
+}
+
+
 
