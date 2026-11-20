@@ -27,7 +27,9 @@ public:
 		rect = { 0, 0, 150, 50 };
 		timer = 0;
 		inv = 0;
+		invTimer = 0;
 		progress = 0;
+		skipnow = false;
 	}
 
 	void Update();
@@ -37,8 +39,9 @@ public:
 		primitive::rect(pos.x, pos.y, rect.z * progress, rect.w, 0, 0, ToRadian(0), 1, 1, 0, 0.5f);
 		
 		sprite_render(skip, pos.x + 4, pos.y + 4, 0.4f, 0.4f, 0, 0, 420, 100, 0, 0, ToRadian(0));
+		sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 		//text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
-		primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
+		//primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
 		debug::setString("timerRender:%d", timer);
 	}
 
@@ -48,14 +51,18 @@ private:
 		pos = { SCREEN_W - 300, SCREEN_H - 150 };
 		rect = { 0, 0, 150, 50 };
 		timer = 0;
+		invTimer = 0;
 		inv = 0;
 		progress = 0;
+		skipnow = false;
 	}
+	bool skipnow;
+	int timer;
+	float invTimer;
+	float inv;
+	float progress;
 	VECTOR2 pos;
 	VECTOR4 rect;
-	float progress;
-	float inv;
-	int timer;
 };
 
 class TutorialText

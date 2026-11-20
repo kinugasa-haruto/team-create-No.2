@@ -114,6 +114,7 @@ public:
 
 
 	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // ŠÊ‚ÌƒŠƒZƒbƒg
+	void TUTORIAL_RESET();
 };
 
 //“ú‚É‚¿–‚Ìİ’è

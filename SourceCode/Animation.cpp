@@ -1,6 +1,7 @@
 #include "all.h"
 
 extern Can can;
+extern playerController player;
 
 Hannya hannyA;
 
@@ -55,6 +56,7 @@ void Binder::Up()
 	{
 		scale = 1;
 		NumberUpdate();
+		spacebar.Update({ SCREEN_W - 300, SCREEN_H - 200 });
 	}
 	if (timer >= 1) timer = 1;
 }
@@ -80,10 +82,10 @@ void Binder::NumberUpdate()
 {
 	//collectCan += Easing::easeOut3(collectCan / );// ここにゲッター；
 	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
-	maxOther.Update({ 934 , 847 }, can.getOTHERCAN_COUNT(), 1, 0.6f);
-	collectOther.Update({ 720 , 847 }, 44, 1, 0.6f);
-	maxCan.Update({ 934 , 497 }, can.getERRORCAN_COUNT(),  1, 0.6f);
-	collectCan.Update({ 720 , 497 }, 11, 1, 0.6f);
+	maxOther.Update({ 934 , 850 }, can.getOTHERCAN_COUNT(), 1, 0.6f);
+	collectOther.Update({ 760 , 850 }, player.getFLICK_OTHERCAN_COUNT(), 1, 0.6f);
+	maxCan.Update({ 934 , 510 }, can.getERRORCAN_COUNT(),  1, 0.6f);
+	collectCan.Update({ 760 , 510 }, player.getFLICK_ERRORCAN_COUNT(), 1, 0.6f);
 	goNext = true;
 }
 
@@ -93,6 +95,7 @@ void Binder::Render()
 
 	if (scale == 1.0f)
 	{
+		spacebar.Render();
 		sprite_render(leavework, SCREEN_W - 300, SCREEN_H - 175, 1, 1, 0, 0, 200, 100, 0, 0);
 		//text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
 		maxCan.Render();
@@ -135,8 +138,8 @@ void NextDay::Update()
 
 void NextDay::Render()
 {
-	sprite_render(nowday, SCREEN_HALF_W - 250, SCREEN_HALF_H - 50, 1, 1, 0, gameDay * (1300 / 7.0f), 150, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
-	sprite_render(nowday, SCREEN_HALF_W - 50, SCREEN_HALF_H - 50, 1, 1, 150, 0, 400, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	sprite_render(nowday, SCREEN_HALF_W - 300, SCREEN_HALF_H - 50, 1, 1, 0, gameDay * (1300 / 7.0f), 150, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
+	sprite_render(nowday, SCREEN_HALF_W - 100, SCREEN_HALF_H - 50, 1, 1, 150, 0, 400, 1300 / 7.0f, 0, 0, ToRadian(0), 1, 1, 1, inv);
 	//primitive::rect(SCREEN_HALF_W - 200, SCREEN_HALF_H - 50, 400, 100, 0, 0, ToRadian(0), 1, 1, 1, inv);
 }
 

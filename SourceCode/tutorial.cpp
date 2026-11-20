@@ -24,7 +24,6 @@ void SkipButton::Update()
 	if (STATE(0) & PAD_TRG1)
 	{
 		timer++;
-
 	}
 	else timer = 0;
 
@@ -32,8 +31,18 @@ void SkipButton::Update()
 
 	if (progress >= 1)
 	{
-		inv += 0.5f / 4;
-		if (inv >= 0.5f) nextScene = SCENE_GAME;
+		skipnow = true;
+	}
+	if (skipnow)
+	{
+		invTimer += 0.01f;
+		inv = Easing::easeIn3(invTimer);
+		if (inv >= 0.99f)
+		{
+			inv = 1;
+			invTimer = 0;
+			nextScene = SCENE_GAME;
+		}
 	}
 	debug::setString("timer:%d", timer);
 }
@@ -80,7 +89,7 @@ void tutorial_update()
 	
 		timer += 0.01f;
 		inv = Easing::easeIn3(timer);
-		if (inv >= 9.98f)
+		if (inv >= 0.99f)
 		{
 			inv = 1;
 			timer = 0;
@@ -100,7 +109,7 @@ void tutorial_update()
 
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
-			tt.SetProgress(1);
+			tt.SetProgress(0);
 		}
 		if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
 		{
