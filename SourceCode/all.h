@@ -14,6 +14,7 @@
 
 // 共通で使われるようなヘッダー
 #include "common.h"
+#include <ctime>
 
 // 個々のヘッダーファイルは下の方へ
 #include "audio.h"
