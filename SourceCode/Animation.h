@@ -168,3 +168,43 @@ private:
 	float scale;
 	VECTOR2 pos;
 };
+
+class SpaceBar
+{
+public:
+	static SpaceBar Instance()
+	{
+		SpaceBar instance;
+		return instance;
+	}
+
+
+	void Update(VECTOR2 pos);
+
+	void Render();
+
+	void Reset()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+	}
+private:
+	SpaceBar()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+	}
+	bool exist;
+	bool push;
+	VECTOR2 pos;
+	int timer;
+
+
+};
+
+extern SpaceBar spacebar;
+

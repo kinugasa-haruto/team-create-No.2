@@ -153,3 +153,22 @@ void TitleIcon::Render()
 {
 	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
 }
+
+SpaceBar spacebar = SpaceBar::Instance();
+
+void SpaceBar::Update(VECTOR2 pos) 
+{
+	exist = true;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void SpaceBar::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 450, 0, 450, 200, 0, 0);
+	else sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 0, 0, 450, 200, 0, 0);
+}

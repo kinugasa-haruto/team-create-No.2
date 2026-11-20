@@ -33,6 +33,7 @@ extern Sprite* shutter; // シャッター
 extern Sprite* nowday; // 今日が何日目か
 
 extern Sprite* number; // 数字
+extern Sprite* space; // スペースキー
 extern Sprite* endwork; // 業務終了
 extern Sprite* leavework; // 退勤
 extern Sprite* skip; // スキップ

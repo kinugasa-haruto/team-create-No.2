@@ -30,7 +30,7 @@ public:
 	~playerController();				//デストラクタ
 	void HITAREA_FLICKAREA_RENDER();	//叩くエリアと弾くエリアの描画関数
 	void PLAYER_HIT_CAN(Can* can, Can* oba, Can* oji, Can* bom, int day);	//playerの缶を叩く動作関数
-
+	
 	//bool HITCHECK_CAN(Can* can);	//缶と叩くエリアの当たり判定関数
 	//bool HITCHECK_OBA(Can* oba);	//おばさんと叩くエリアの当たり判定関数
 	//bool HITCHECK_OJI(Can* oji);	//おじさんと叩くエリアの当たり判定関数
@@ -55,6 +55,9 @@ public:
 	int getFLICK_ERRORCAN_COUNT();		//不正解の缶の回収数のゲッター関数
 	int getFLICK_OTHERCAN_COUNT();		//缶以外の物の回収した合計数のゲッター関数
 
+
+	void TUTORIAL_HITAREA_CHANGE(); // 左右のみの切替
+	bool GetMAIN_CONVEYOR() { return main_conveyor; } // メインコンベアゲッター関数
 };
 
 #define HIT_HUND_RENDER_TIMER (5)	//叩いた時に手の画像位置を変える時間
