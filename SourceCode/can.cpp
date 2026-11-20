@@ -20,7 +20,7 @@ Day days[] = {
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
 	{ 100.0f,		100,		2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
 	{ 0.0f,		1,		2.0f,		0,			0,				0,				0,					100},	// 9チュートリアル
-	{ 0.0f,		1,		2.0f,		0,			0,				0,				100,				0},		// 10チュートリアル2
+	{ 0.0f,		2,		2.0f,		0,			0,				0,				100,				101},		// 10チュートリアル2
 
 };
 
@@ -194,7 +194,7 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 			errorcan_count++;
 		}
 
-		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
+ 		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
 			cans[i].setCAN_ALIVE(true);//缶
 		}
 
@@ -823,6 +823,7 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 			bom[i].can_alive = false;
 		}
 	}
+
 	generate_num = 0;
 	generate_timer = 0;
 	can_num = 0;
