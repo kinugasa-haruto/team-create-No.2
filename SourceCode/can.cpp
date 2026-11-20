@@ -452,8 +452,8 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 				if (bom[i].efc_timer > 200) {
 					bom[i].Bomeffect_flag = false;
 					bom[i].can_alive = false;
-					//爆発時のゲームオーバーの処理
-					nextScene = SCENE_TITLE;
+					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
+
 				}
 			}
 		}
@@ -526,12 +526,7 @@ void Can::BOM_EFFECT_RENDER(Can* bom) {
 				primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, d);
 			}
 		}
-
-		if (bom[i].Bomeffect_flag == true || bom[i].bom_dropped == true) {
-			text_out(1, "a", 0, 0, 3, 3);
-		}
 	}
-
 }
 
 //おじさんがコンベアよりも前の時の処理
@@ -597,7 +592,8 @@ void Can::GAUGE_UPDATE() {
 		kigen = 100;
 	}
 
-	if (kigen <= 0) {//機嫌ゲージが０になった時の処理
+	if (kigen <= 0) {
+		//機嫌ゲージが０になった時にゲームオーバーの処理
 
 	}
 
