@@ -101,7 +101,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							}
 							if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//‰EŽè‚ÆÔƒ{ƒ^ƒ“‚Ìˆ—
 								//”š”­
-								if (boms[i].getBOM_EFFECT()== false) {
+								if (boms[i].getBOM_EFFECT() == false) {
 									boms[i].setEFC_TIMER(0);
 									boms[i].setBOM_EFFECT(true);
 								}
@@ -140,7 +140,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 					}
 
 					if (cans[i].getCAN_COLOR() > days[day - 1].oba_pro && cans[i].getCAN_COLOR() <= days[day - 1].oji_pro) {//‚¨‚¶‚³‚ñ‚Á”ò‚Ñ
-						if (HITCHECK_THING(&ojis[i], ojis[i].getCAN_SCALE().x * ojis[i].getCAN_TEXTSIZE().x,
+						if (HITCHECK_THING(&ojis[i], ojis[i].getCAN_SCALE().x * ojis[i].getCAN_TEXTSIZE().x * 1.5f,
 							ojis[i].getCAN_SCALE().y * ojis[i].getCAN_TEXTSIZE().y) == true) {
 							if (ojis[i].getOJI_HIT() == false) {
 								ojis[i].setOJI_HIT(true);
@@ -334,7 +334,7 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 				if (TRG(0) & PAD_TRG1) {
 					if (boms[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//”š’e
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
-							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true&& boms[i].getFLICK_FLAG() == false) {
+							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true && boms[i].getFLICK_FLAG() == false) {
 							//”š’e‚ð’e‚­AÁ‚·
 							flick_other_count++;
 							can.PLUSsetKIGEN(KIGEN_PLUS);
