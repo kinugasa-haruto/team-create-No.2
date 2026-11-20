@@ -431,10 +431,10 @@ void Can::OJI_BACK_RENDER(Can* can, Can* oji, int day) {
 	for (int i = 0; i < generate_num; i++) {
 		if (oji[i].can_alive == true) {
 			if (oji[i].oji_back == true) {
-				if (can[i].can_color < days[day - 1].oji_pro) {
+				if (cans[i].can_color < days[day - 1].oji_pro) {
 					sprite_render(ojisan_push, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 						0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
-					sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 150, oji[i].scale.x, oji[i].scale.y,
+					sprite_render(tie, oji[i].pos.x - 50, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 						0, 0, 60, 65, 0, 0, ToRadian(0));//ネクタイ
 				}
 			}
