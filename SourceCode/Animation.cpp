@@ -1,5 +1,7 @@
 #include "all.h"
 
+extern Can can;
+
 Hannya hannyA;
 
 void ObachanUpdate()
@@ -78,8 +80,10 @@ void Binder::NumberUpdate()
 {
 	//collectCan += Easing::easeOut3(collectCan / );// ここにゲッター；
 	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
-
-	collectCan.Update({ 727, 500 }, 11, 1, 1);
+	maxOther.Update({ 934 , 847 }, can.getOTHERCAN_COUNT(), 1, 0.6f);
+	collectOther.Update({ 720 , 847 }, 44, 1, 0.6f);
+	maxCan.Update({ 934 , 497 }, can.getERRORCAN_COUNT(),  1, 0.6f);
+	collectCan.Update({ 720 , 497 }, 11, 1, 0.6f);
 	goNext = true;
 }
 
@@ -89,8 +93,12 @@ void Binder::Render()
 
 	if (scale == 1.0f)
 	{
-		text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
+		sprite_render(leavework, SCREEN_W - 300, SCREEN_H - 175, 1, 1, 0, 0, 200, 100, 0, 0);
+		//text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
+		maxCan.Render();
 		collectCan.Render();
+		maxOther.Render();
+		collectOther.Render();
 	}
 }
 
@@ -150,5 +158,59 @@ void TitleIcon::Update()
 
 void TitleIcon::Render()
 {
-	sprite_render(titleIcon, pos.x, pos.y, scale, scale, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
+	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
+}
+
+SpaceBar spacebar = SpaceBar::Instance();
+
+void SpaceBar::Update(VECTOR2 pos) 
+{
+	exist = true;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void SpaceBar::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 450, 0, 450, 200, 0, 0);
+	else sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 0, 0, 450, 200, 0, 0);
+}
+
+gameNumber starttimer;
+
+bool StartTimer::Update()
+{
+	if (inv < 1)
+	{
+		timer += 0.01f;
+		inv = Easing::easeIn3(timer);
+		if (inv >= 9.99f)
+		{
+			inv = 1;
+			timer = 0;
+		}
+	}
+	else
+	{
+		countTimer++;
+		if (countTimer % 60 == 0)
+		{
+			count--;
+			countTimer = 0;
+		}
+		if (count > 0) starttimer.Update({ SCREEN_HALF_W - 20, SCREEN_HALF_H - 20 }, count, 1, 1);
+		else starttimer.Update({ SCREEN_HALF_W - 20, SCREEN_HALF_H - 20 }, count, 0, 1);
+	}
+	return count > 0;
+	
+}
+
+void StartTimer::Render()
+{
+	sprite_render(shutter, 0, 0 - SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+	starttimer.Render();
 }

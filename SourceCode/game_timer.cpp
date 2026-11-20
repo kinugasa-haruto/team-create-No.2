@@ -23,7 +23,8 @@ void GameTimer::timerRender()
 {
 	if (timer < 2 && timer != 0)
 	{
-		text_out(2, "FiNISH", SCREEN_HALF_W - 200, SCREEN_HALF_H - 100, 1, 1, 0, 0, 0);
+		sprite_render(endwork, SCREEN_HALF_W - 205, SCREEN_HALF_H - 50, 1, 1, 0, 0, 410, 100, 0, 0);
+		//text_out(2, "FiNISH", SCREEN_HALF_W - 200, SCREEN_HALF_H - 100, 1, 1, 0, 0, 0);
 	}
 	if (timer > 2)
 	{

@@ -560,3 +560,18 @@ int playerController::getFLICK_ERRORCAN_COUNT() {
 int playerController::getFLICK_OTHERCAN_COUNT() {
 	return flick_other_count;
 }
+
+// ç∂âEÇÃÇ›ÇÃêÿë÷
+void playerController::TUTORIAL_HITAREA_CHANGE()
+{
+	//ç∂âE
+	if (main_conveyor == true) {
+
+		if (TRG(0) & PAD_RIGHT) {
+			right_hit_area = true;
+		}
+		if (TRG(0) & PAD_LEFT) {
+			right_hit_area = false;
+		}
+	}
+}

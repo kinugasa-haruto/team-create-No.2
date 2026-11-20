@@ -76,52 +76,96 @@ void tutorial_update()
 
 		tutorial_state++;
 		/*fallthrough*/
-
 	case 2:
-		//////// 通常時 ////////
-		if (inv < 1)
+	
+		timer += 0.01f;
+		inv = Easing::easeIn3(timer);
+		if (inv >= 9.99f)
 		{
-			timer += 0.01f;
-			inv = Easing::easeIn3(timer);
-			if (inv >= 9.99f) inv = 1;
+			inv = 1;
+			timer = 0;
+			tutorial_state++;
 		}
+		back_update(2.0f);
+		skipbutton.Update();
+		break;
+	case 3:
+		//////// 通常時 ////////
 		//缶の移動関数はずっと呼んでいて欲しい、正しい缶と不正解の缶のUPDATE関数は必要に応じて呼んでほしい
 		back_update(2.0f);
 		skipbutton.Update();
 		tutorialTimer++;
-		can.CAN_MOVE(cans, obas, ojis, boms, 1);//缶の移動関数
+		if (tt.GetProgress() < 3) player.TUTORIAL_HITAREA_CHANGE();
+		if (tt.GetProgress() >= 3) player.BELTCONVEYOR_HITAREA_CHANGE();
+
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
 			tt.SetProgress(0);
 		}
-		if (tutorialTimer > 6 * 60 && tt.GetProgress() == 0)
+		if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
 		{
 			can.CAN_GENERATE(cans, obas, ojis, boms, 9); //缶の生成関数
 		}
 		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//缶と叩くエリアの当たり判定関数
 		{
+				spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50});
 				if (TRG(0) & PAD_TRG1)
 				{
 					player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
 					tt.SetProgress(1);
 					tutorialTimer = 0;
+					spacebar.Reset();
 				}
-				return;
+				break;
 			
 		}									
-		if (tutorialTimer > 9 && tt.GetProgress() == 1)
+		if (tutorialTimer == 4 * 60 && tt.GetProgress() == 1)
 		{
-
+			can.CAN_GENERATE(cans, obas, ojis, boms, 10); //缶の生成関数
+			tt.SetProgress(2);
 		}
-		//player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//缶と弾くエリアの当たり判定関数
-		//player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 8);
-
-
+		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 2)
+		{
+			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50 });
+			if (TRG(0) & PAD_TRG1 && player.GetMAIN_CONVEYOR())
+			{
+				player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 10); //playerの缶を叩く動作関数
+				tt.SetProgress(3);
+				tutorialTimer = 0;
+				spacebar.Reset();
+			}
+			break;
+		}
+		if (player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
+		{
+			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_H * 0.77f - 50 });
+			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
+			{
+				player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 10); //playerの缶を叩く動作関数
+				tt.SetProgress(4);
+				tutorialTimer = 0;
+				spacebar.Reset();
+			}
+			break;
+		}
+		if (tt.GetProgress() == 4 && tutorialTimer >= 3 * 60)
+		{
+			timer += 0.01f;
+			inv = 1 - Easing::easeIn3(timer);
+			if (inv <= 0.01f)
+			{
+				inv = 0;
+				timer = 0;
+				nextScene = SCENE_GAME;
+			}
+		}
 
 		//TUTORIAL_CAN_UPDATE();		//正しい缶の生成と缶を叩く、弾く動作を入れた関数
 		//TUTORIAL_MISSCAN_UPDATE();//不正解の缶の生成と缶を叩く、弾く動作を入れた関数
-		
-		player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
+		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
+		player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 10); //playerの缶を叩く動作関数
+		can.CAN_MOVE(cans, obas, ojis, boms, 1);//缶の移動関数
+		//player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 		can.getCAN_POS();					//缶のposのゲッター関数
 
 		break;
@@ -144,7 +188,8 @@ void tutorial_render()
 	//can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数
 	judgearea_render();
 	player.HITAREA_FLICKAREA_RENDER();			//手の描画
-	
+
+	spacebar.Render();
 	skipbutton.Render();
 	
 	sprite_render(shutter, 0, 0 - SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);

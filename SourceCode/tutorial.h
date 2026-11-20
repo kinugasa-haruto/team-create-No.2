@@ -36,7 +36,8 @@ public:
 	{
 		primitive::rect(pos.x, pos.y, rect.z * progress, rect.w, 0, 0, ToRadian(0), 1, 1, 0, 0.5f);
 		
-		text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
+		sprite_render(skip, pos.x + 4, pos.y + 4, 0.4f, 0.4f, 0, 0, 420, 100, 0, 0, ToRadian(0));
+		//text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
 		primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
 		debug::setString("timerRender:%d", timer);
 	}
@@ -90,16 +91,20 @@ public:
 			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
 			break;
 		case 3:
-
+			sprite_render(tutorialBubble, 0, 0, 1.15f, 0.7f, 0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
 			break;
 		case 4:
-
+			sprite_render(tutorialBubble, 0, 0, 1.15f, 0.7f, 0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
 			break;
 		case 5:
-
+			sprite_render(tutorialBubble, 0, 0, 1.15f, 0.7f, 0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
 			break;
 		case 6:
-
+			sprite_render(tutorialBubble, 0, 0, 1.15f, 0.7f, 0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
+			sprite_render(tutorialText, 160, 60, 1, 1, 0, TEXT_LINE * 6, SCREEN_W, TEXT_LINE * 2, 0, 0);
 			break;
 		}
 	}

@@ -33,6 +33,10 @@ Sprite* shutter; // シャッター
 Sprite* nowday; // 何日目か表示
 
 Sprite* number; // 数字
+Sprite* space; // スペースキー
+Sprite* endwork; // 業務終了
+Sprite* leavework; // 退勤
+Sprite* skip; // スキップ
 
 Sprite* startCan; // スタートボタン
 Sprite* titleIcon; // タイトルアイコン
@@ -75,9 +79,13 @@ void spriteload_init()
 	nowday = sprite_load(L"./Data/Images/day.png");
 
 	number = sprite_load(L"./Data/Images/number.png");
+	space = sprite_load(L"./Data/Images/space_key.png");
+	endwork = sprite_load(L"./Data/Images/end_of_work.png");
+	leavework = sprite_load(L"./Data/Images/leave_work.png");
+	skip = sprite_load(L"./Data/Images/skip.png");
 
 	startCan = sprite_load(L"./Data/Images/start.png");
-	titleIcon = sprite_load(L"./Data/Images/logo.png");
+	titleIcon = sprite_load(L"./Data/Images/logo_2.png");
 
 	tutorialBubble = sprite_load(L"./Data/Images/text_bublle.png");
 	tutorialText = sprite_load(L"./Data/Images/tutorial_text.png");
@@ -117,6 +125,10 @@ void spriteload_deinit()
 	safe_delete(nowday);
 
 	safe_delete(number);
+	safe_delete(space);
+	safe_delete(endwork);
+	safe_delete(leavework);
+	safe_delete(skip);
 
 	safe_delete(startCan);
 	safe_delete(titleIcon);
