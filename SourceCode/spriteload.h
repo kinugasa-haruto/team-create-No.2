@@ -33,6 +33,9 @@ extern Sprite* shutter; // シャッター
 extern Sprite* nowday; // 今日が何日目か
 
 extern Sprite* number; // 数字
+extern Sprite* endwork; // 業務終了
+extern Sprite* leavework; // 退勤
+extern Sprite* skip; // スキップ
 
 extern Sprite* startCan; // スタート 鯖缶
 extern Sprite* titleIcon; // タイトルアイコン

@@ -36,7 +36,8 @@ public:
 	{
 		primitive::rect(pos.x, pos.y, rect.z * progress, rect.w, 0, 0, ToRadian(0), 1, 1, 0, 0.5f);
 		
-		text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
+		sprite_render(skip, pos.x + 4, pos.y + 4, 0.4f, 0.4f, 0, 0, 420, 100, 0, 0, ToRadian(0));
+		//text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
 		primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
 		debug::setString("timerRender:%d", timer);
 	}

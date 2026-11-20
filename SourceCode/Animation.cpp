@@ -89,7 +89,8 @@ void Binder::Render()
 
 	if (scale == 1.0f)
 	{
-		text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
+		sprite_render(leavework, SCREEN_W - 300, SCREEN_H - 175, 1, 1, 0, 0, 200, 100, 0, 0);
+		//text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
 		collectCan.Render();
 	}
 }
@@ -150,5 +151,5 @@ void TitleIcon::Update()
 
 void TitleIcon::Render()
 {
-	sprite_render(titleIcon, pos.x, pos.y, scale, scale, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
+	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
 }
