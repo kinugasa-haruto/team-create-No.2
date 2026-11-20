@@ -63,6 +63,6 @@ public:
 
 #define HIT_HUND_RENDER_TIMER (5)	//叩いた時に手の画像位置を変える時間
 #define FLICK_HUND_RENDER_TIMER (5)	//弾いた時に手の画像位置を変える時間
-#define KIGEN_PLUS (5)	//機嫌が増える量
-#define KIGEN_MINUS (10)//機嫌が減る量
+#define KIGEN_PLUS	(5)				//機嫌が増える量
+#define KIGEN_MINUS (10)			//機嫌が減る量
 
