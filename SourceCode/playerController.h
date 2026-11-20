@@ -25,6 +25,8 @@ private:
 	float hit_timer;			//叩いた時に手の画像位置を変える時間
 	float flick_timer;			//弾いた時に手の画像位置を変える時間
 
+	float obaeffect_timer;
+
 public:
 	playerController();					//コンストラクタ
 	~playerController();				//デストラクタ
@@ -38,7 +40,6 @@ public:
 
 	bool HITCHECK_THING(Can* thing, float textX, float textY);	//流れている物と叩くエリアの当たり判定関数
 	bool HITCHECK_HUND_BUTTON(VECTOR2 hund_pos, VECTOR2 hund_size, VECTOR2 button_pos, VECTOR2 button_size);//左右の手と爆弾の左右のボタンの当たり判定関数
-
 
 	void PLAYER_FLICK_CAN(Can* can, Can* oba, Can* oji, Can* bom, int day);//playerの弾く動作関数
 	bool FLICKCHECK_THING(Can* thing, float textX, float textY);	//流れている物と弾くエリアの当たり判定関数
@@ -62,4 +63,6 @@ public:
 
 #define HIT_HUND_RENDER_TIMER (5)	//叩いた時に手の画像位置を変える時間
 #define FLICK_HUND_RENDER_TIMER (5)	//弾いた時に手の画像位置を変える時間
+#define KIGEN_PLUS (5)	//機嫌が増える量
+#define KIGEN_MINUS (10)//機嫌が減る量
 

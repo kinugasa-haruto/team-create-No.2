@@ -14,6 +14,7 @@ Sprite* hand;		//è
 Sprite* hand_hold;	//‰ñû—p‚Ìè
 Sprite* obasan;		//‚¨‚Î‚³‚ñ
 Sprite* Bom;		//”š’e
+Sprite* Bom_effect;	//”š’e
 
 Sprite* sub_gauge;	//ƒQ[ƒW‚Ì˜g
 Sprite* main_gauge;	//ƒQ[ƒW‚Ì–{‘Ì
@@ -59,6 +60,7 @@ void spriteload_init()
 	hand_hold = sprite_load(L"./Data/Images/player_hold.png");
 	obasan = sprite_load(L"./Data/Images/obasan.png");
 	Bom = sprite_load(L"./Data/Images/bom.png");
+	Bom_effect = sprite_load(L"./Data/Images/boom.png");
 
 	sub_gauge= sprite_load(L"./Data/Images/gauge_1.png");
 	main_gauge= sprite_load(L"./Data/Images/gauge_2.png");

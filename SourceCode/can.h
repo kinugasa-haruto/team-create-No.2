@@ -20,7 +20,9 @@ private:
 	VECTOR2 Bbom_scale;//爆弾の青ボタンのscale
 	VECTOR2 Rbom_scale;//爆弾の赤ボタンのscale
 
-	int generate_timer;	//缶の生成間隔
+	float effect_scale;//爆弾エフェクトのscale
+
+	float generate_timer;	//缶の生成間隔
 	int generate_num;	//生成した缶の数
 
 	int can_num;		//乱数を入れる変数
@@ -49,6 +51,13 @@ private:
 	VECTOR2 gauge_scale;
 	float gaugeW;
 
+	VECTOR2 Beffect_textsize;//爆弾エフェクトの画像サイズ
+	bool Bomeffect_flag;//爆弾のエフェクト開始時のflag
+	int efc_timer ;//エフェクトのタイマー
+
+	bool flick_flag;//回収したかの判断
+	bool bom_dropped;//爆弾を流したかの判断
+
 
 public:
 	Can();//コンストラクタ
@@ -60,6 +69,8 @@ public:
 
 	void CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day);		//缶の移動関数
 	void OJI_JUMP(Can* oji);		//おじさんが飛んでいく処理
+	void BOM_EFFECT_UPDATE(Can*bom);
+	void BOM_EFFECT_RENDER(Can*bom);
 	bool CHECK_IMPURITY_FLOW();		//間違った物がレーンを流れ切った時の処理
 
 	bool CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom);//１日に流れるものが全部消えたかの処理
@@ -75,6 +86,8 @@ public:
 	bool getOJI_HIT();				//oji_hitのゲッター関数
 	bool getOBA_HIT();				//oba_hitのゲッター関数
 	void setOBA_HIT(bool hit);		//oba_hitのセッター関数
+	void setFLICK_FLAG(bool flick);//flick_flagのセッター関数
+	bool getFLICK_FLAG();//flick_flagのセッター関数
 	int getCAN_COLOR();				//缶のcolorのゲッター関数
 	int getERRORCAN_COUNT();		//不正解の缶の生成数のゲッター関数
 	int getOTHERCAN_COUNT();		//缶以外の生成合計数のゲッター関数
@@ -91,9 +104,13 @@ public:
 	VECTOR2 getOBA_TEXTSIZE();		//おばさんの画像の大きさのゲッター関数
 	VECTOR2 getOJI_TEXTSIZE();		//おじさんの大きさのゲッター関数
 
-	void setKIGEN(int k);//kigenのセッター関数
+	void MINUSsetKIGEN(int k);//kigenのーセッター関数
+	void PLUSsetKIGEN(int k);//kigenの＋セッター関数
 
 	void setGRA_FLAG(bool gra);
+	void setBOM_EFFECT(bool effect);
+	bool getBOM_EFFECT();
+	void setEFC_TIMER(int timer);
 
 
 	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // 缶のリセット
@@ -116,8 +133,8 @@ void GAME_DAY(int num);
 void GAME_DAY_RENDER(int num);
 //void TUTORIAL_RENDER();
 //void TUTORIAL_UPDATE();
-void TITLE_CAN_UPDATE();
-void TITLE_CAN_RENDER();
+//void TITLE_CAN_UPDATE();
+//void TITLE_CAN_RENDER();
 void TUTORIAL_CAN_UPDATE();
 //void TUTORIAL_CAN_RENDER();
 void TUTORIAL_MISSCAN_UPDATE();
