@@ -80,7 +80,7 @@ void tutorial_update()
 	
 		timer += 0.01f;
 		inv = Easing::easeIn3(timer);
-		if (inv >= 9.99f)
+		if (inv >= 9.98f)
 		{
 			inv = 1;
 			timer = 0;
@@ -92,7 +92,7 @@ void tutorial_update()
 	case 3:
 		//////// 通常時 ////////
 		//缶の移動関数はずっと呼んでいて欲しい、正しい缶と不正解の缶のUPDATE関数は必要に応じて呼んでほしい
-		back_update(2.0f);
+		
 		skipbutton.Update();
 		tutorialTimer++;
 		if (tt.GetProgress() < 3) player.TUTORIAL_HITAREA_CHANGE();
@@ -100,7 +100,7 @@ void tutorial_update()
 
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
-			tt.SetProgress(0);
+			tt.SetProgress(1);
 		}
 		if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
 		{
@@ -121,7 +121,7 @@ void tutorial_update()
 		}									
 		if (tutorialTimer == 4 * 60 && tt.GetProgress() == 1)
 		{
-			can.CAN_GENERATE(cans, obas, ojis, boms, 10); //缶の生成関数
+			can.CAN_GENERATE(cans, obas, ojis, boms, 10);										//不正解の缶の生成関数
 			tt.SetProgress(2);
 		}
 		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 2)
@@ -165,6 +165,7 @@ void tutorial_update()
 		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
 		player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 10); //playerの缶を叩く動作関数
 		can.CAN_MOVE(cans, obas, ojis, boms, 1);//缶の移動関数
+		back_update(2.0f);
 		//player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 		can.getCAN_POS();					//缶のposのゲッター関数
 
