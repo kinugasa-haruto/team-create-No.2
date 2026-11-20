@@ -41,6 +41,9 @@ Sprite* skip; // スキップ
 Sprite* startCan; // スタートボタン
 Sprite* titleIcon; // タイトルアイコン
 
+Sprite* gameclear; // ゲームクリア画面
+Sprite* gameover; // ゲームオーバー画面
+
 Sprite* tutorialBubble; // チュートリアル吹き出し
 Sprite* tutorialText; // チュートリアル文言
 
@@ -87,6 +90,9 @@ void spriteload_init()
 	startCan = sprite_load(L"./Data/Images/start.png");
 	titleIcon = sprite_load(L"./Data/Images/logo_2.png");
 
+	gameclear = sprite_load(L"./Data/Images/gameclear.png");
+	gameover = sprite_load(L"./Data/Images/gameover.png");
+
 	tutorialBubble = sprite_load(L"./Data/Images/text_bublle.png");
 	tutorialText = sprite_load(L"./Data/Images/tutorial_text.png");
 }
@@ -132,6 +138,9 @@ void spriteload_deinit()
 
 	safe_delete(startCan);
 	safe_delete(titleIcon);
+
+	safe_delete(gameclear);
+	safe_delete(gameover);
 
 	safe_delete(tutorialBubble);
 	safe_delete(tutorialText);

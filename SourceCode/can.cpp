@@ -154,6 +154,9 @@ Can::Can() {
 
 	flick_flag = false;
 	bom_dropped = false;
+
+	gameOver = false;
+	gameClear = false;
 }
 
 //デストラクタ
@@ -583,6 +586,8 @@ bool Can::CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom) {
 //	//}
 //}
 
+
+
 //ゲージの処理関数
 void Can::GAUGE_UPDATE() {
 	debug::setString("KIGEN:%f", kigen);
@@ -595,6 +600,7 @@ void Can::GAUGE_UPDATE() {
 
 	if (kigen <= 0) {
 		//機嫌ゲージが０になった時にゲームオーバーの処理
+		gameOver = true;
 
 	}
 
@@ -634,6 +640,7 @@ void Can::GAUGE_RENDER() {
 			0, 0, 1000, 300, 0, 0, ToRadian(0));
 	}
 
+	
 }
 
 
@@ -827,6 +834,8 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 
 	generate_num = 0;
 	generate_timer = 0;
+	gameOver = false;
+	gameClear = false;
 
 }
 
