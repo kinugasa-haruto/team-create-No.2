@@ -18,7 +18,7 @@ int nextScene   = SCENE_TITLE;
 //------------------------------------------------------------------------------
 int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 {
-	GameLib::init(L"ゲームプログラミングⅠ", SCREEN_W, SCREEN_H, FULLSCREEN);
+	GameLib::init(L"カンカン缶", SCREEN_W, SCREEN_H, FULLSCREEN);
 
 	// オーディオの初期設定
 	audio_init();

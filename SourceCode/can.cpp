@@ -11,16 +11,16 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔			生成個数	缶の速度		爆弾の確率		おばさんの確率		おじさんの確率		不正解の缶の確率		缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 200.0f,		1,		5.0f,		20,			40,				60,				80,					100},	// 1日目
-	{ 150.0f,		20,		2.0f,		10,			20,				80,				90,					100},	// 2日目
+	{ 200.0f,		20,		2.0f,		0,			0,				0,				10,					100},	// 1日目
+	{ 150.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		20,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 5日目
 	{ 80.0f,		20,		4.0f,		10,			20,				80,				90,					100},	// 6日目
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 7日目
 	{ 100.0f,		100,	2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
-	{ 0.0f,			1,		2.0f,		0,			0,				0,				0,						100},	// 9チュートリアル
-	{ 0.0f,			1,		2.0f,		0,			0,				0,				100,					0},		// 10チュートリアル2
+	{ 0.0f,			2,		4.0f,		0,			0,				0,				50,					100},	// チュートリアル
+	//{ 0.0f,			1,		2.0f,		0,			0,				0,				100,					0},		// 10チュートリアル2
 
 };
 
@@ -831,3 +831,38 @@ void Can::TUTORIAL_RESET()
 {
 	generate_num = 0;
 }
+
+void Can::TUTORIAL_GENERATE(bool impure, int day, Can* cans)
+{
+	generate_timer--;
+	if (generate_timer < 0 && generate_num < days[day - 1].CAN_NUM) {
+
+
+		int i = generate_num;
+		if (impure)
+		{
+			cans[i].can_color = 20;
+			cans[i].setCAN_ALIVE(true);//缶
+			errorcan_count++;
+		}
+		else
+		{
+			cans[i].can_color = 80;
+			cans[i].setCAN_ALIVE(true);//缶
+
+		}
+
+		cans[i].setOJI_HIT(false);
+
+
+		generate_timer = days[day - 1].timer;
+
+		generate_num++;
+	}
+	if (generate_num > days[day - 1].CAN_NUM) {
+		generate_num = days[day - 1].CAN_NUM;
+	}
+}
+
+
+

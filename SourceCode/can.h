@@ -115,6 +115,7 @@ public:
 
 	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // ŠÊ‚ÌƒŠƒZƒbƒg
 	void TUTORIAL_RESET();
+	void TUTORIAL_GENERATE(bool impure, int day, Can* cans);
 };
 
 //“ú‚É‚¿–‚Ìİ’è
