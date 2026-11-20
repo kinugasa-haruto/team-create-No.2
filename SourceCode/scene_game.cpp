@@ -58,88 +58,42 @@ void game_update()
 
 	case 2:
 		//////// 通常時 ////////
-		switch (gameDay)
+		if (!nextDay)
 		{
-		case 1:
-			if (!nextDay)
-			{
-				// ここに初期化処理
-				can.CAN_RESET(cans, obas, ojis, boms);
-				back_init();
-				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
-				nextday.Reset();
-				gameTimer.reset();
-				resultBinder.reset();
-				GAME_DAY(1);
-				nextDay = true;
-			}
-			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
-			{
-         		GAME_DAY(1);
-			}
+			// ここに初期化処理
+			can.CAN_RESET(cans, obas, ojis, boms);
+			back_init();
+			gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
+			nextday.Reset();
+			gameTimer.reset();
+			resultBinder.reset();
+			GAME_DAY(gameDay);
+			nextDay = true;
+		}
+		if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
+		{
+         	GAME_DAY(gameDay);
+		}
+		else
+		{
+			if (gameTimer.timerUpdate() == true) {}
 			else
 			{
-				if (gameTimer.timerUpdate() == true) {}
-				else
+				if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 				{
-					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
-					{
-						resultBinder.SetBinderType(1);
-					}
-
-					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
-					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
-
-					
-					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
-					{
-						nextday.Update();
-					}
-					
+					resultBinder.SetBinderType(1);
 				}
-			}
-			break;
-		case 2:
-			if (!nextDay)
-			{
-				// ここに初期化処理
 
-				can.CAN_RESET(cans, obas, ojis, boms);
-				back_init();
-				GAME_DAY(2);
-				gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
-				nextday.Reset();
-				gameTimer.reset();
-				resultBinder.reset();
-				nextDay = true;
-				return;
-			}
-			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
-			{
-				GAME_DAY(2);
-			}
-			else
-			{
-				if (gameTimer.timerUpdate() == true) {}
-				else
+				if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+				if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+
+				
+				if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
 				{
-					if (resultBinder.GetScale() == 1.0f && TRG(0) & PAD_TRG1)
-					{
-						resultBinder.SetBinderType(1);
-					}
-
-					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
-					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
-
-
-					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
-					{
-						nextday.Update();
-					}
-
+					nextday.Update();
 				}
+				
 			}
-			break;
 		}
 
 		can.getERRORCAN_COUNT();//不正解の缶の生成数のゲッター関数

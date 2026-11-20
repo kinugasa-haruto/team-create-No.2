@@ -76,25 +76,31 @@ void tutorial_update()
 
 		tutorial_state++;
 		/*fallthrough*/
-
 	case 2:
-		//////// 通常時 ////////
-		if (inv < 1)
+	
+		timer += 0.01f;
+		inv = Easing::easeIn3(timer);
+		if (inv >= 9.99f)
 		{
-			timer += 0.01f;
-			inv = Easing::easeIn3(timer);
-			if (inv >= 9.99f) inv = 1;
+			inv = 1;
+			timer = 0;
+			tutorial_state++;
 		}
+		back_update(2.0f);
+		skipbutton.Update();
+		break;
+	case 3:
+		//////// 通常時 ////////
 		//缶の移動関数はずっと呼んでいて欲しい、正しい缶と不正解の缶のUPDATE関数は必要に応じて呼んでほしい
 		back_update(2.0f);
 		skipbutton.Update();
 		tutorialTimer++;
-		if (tt.GetProgress() < 2) player.TUTORIAL_HITAREA_CHANGE();
-		if (tt.GetProgress() >= 2) player.BELTCONVEYOR_HITAREA_CHANGE();
+		if (tt.GetProgress() < 3) player.TUTORIAL_HITAREA_CHANGE();
+		if (tt.GetProgress() >= 3) player.BELTCONVEYOR_HITAREA_CHANGE();
 
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
-			tt.SetProgress(1);
+			tt.SetProgress(0);
 		}
 		if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
 		{
@@ -113,13 +119,11 @@ void tutorial_update()
 				break;
 			
 		}									
-		if (tutorialTimer > 4 * 60 && tt.GetProgress() == 1)
+		if (tutorialTimer == 4 * 60 && tt.GetProgress() == 1)
 		{
 			can.CAN_GENERATE(cans, obas, ojis, boms, 10); //缶の生成関数
 			tt.SetProgress(2);
 		}
-		//player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y);//缶と弾くエリアの当たり判定関数
-		//player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 8);
 		if (player.HITCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 2)
 		{
 			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50 });
@@ -134,7 +138,7 @@ void tutorial_update()
 		}
 		if (player.FLICKCHECK_THING(cans, cans->getCAN_TEXTSIZE().x, cans->getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
 		{
-			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H * 0.77f - 50 });
+			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_H * 0.77f - 50 });
 			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
 			{
 				player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 10); //playerの缶を叩く動作関数
@@ -146,7 +150,14 @@ void tutorial_update()
 		}
 		if (tt.GetProgress() == 4 && tutorialTimer >= 3 * 60)
 		{
-
+			timer += 0.01f;
+			inv = 1 - Easing::easeIn3(timer);
+			if (inv <= 0.01f)
+			{
+				inv = 0;
+				timer = 0;
+				nextScene = SCENE_GAME;
+			}
 		}
 
 		//TUTORIAL_CAN_UPDATE();		//正しい缶の生成と缶を叩く、弾く動作を入れた関数
