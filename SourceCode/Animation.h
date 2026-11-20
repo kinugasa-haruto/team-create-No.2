@@ -208,3 +208,34 @@ private:
 
 extern SpaceBar spacebar;
 
+class StartTimer
+{
+public:
+	static StartTimer Instance()
+	{
+		StartTimer instance;
+		return instance;
+	}
+
+	bool Update();
+
+	void Render();
+
+	void Reset()
+	{
+		timer = 0;
+		count = 3;
+		inv = 0;
+	}
+private:
+	StartTimer()
+	{
+		timer = 0;
+		count = 3;
+		inv = 0;
+	}
+	int count;
+	int countTimer;
+	float timer;
+	float inv;
+};

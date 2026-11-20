@@ -9,6 +9,7 @@ int game_timer;
 #define GAME_LENGTH 90
 GameTimer gameTimer = GameTimer::Instance();
 NextDay nextday = NextDay::Instance();
+StartTimer starttimer = StartTimer::Instance();
 
 Can cans[500];
 Can obas[500];
@@ -63,6 +64,7 @@ void game_update()
 			// ここに初期化処理
 			can.CAN_RESET(cans, obas, ojis, boms);
 			back_init();
+			starttimer.Reset();
 			gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
 			nextday.Reset();
 			gameTimer.reset();
@@ -70,39 +72,45 @@ void game_update()
 			GAME_DAY(gameDay);
 			nextDay = true;
 		}
-		if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
-		{
-         	GAME_DAY(gameDay);
-		}
+		if (starttimer.Update()) {}
 		else
 		{
-			if (gameTimer.timerUpdate() == true) {}
+
+			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
+			{
+			 	GAME_DAY(gameDay);
+			}
 			else
 			{
-				if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
+				if (gameTimer.timerUpdate() == true) {}
+				else
 				{
-					resultBinder.SetBinderType(1);
-				}
+					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
+					{
+						resultBinder.SetBinderType(1);
+					}
 
-				if (resultBinder.GetBinderType() == 0) resultBinder.Up();
-				if (resultBinder.GetBinderType() == 1) resultBinder.Down();
+					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
+					if (resultBinder.GetBinderType() == 1) resultBinder.Down();
 
-				
-				if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
-				{
-					nextday.Update();
+					
+					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
+					{
+						nextday.Update();
+					}
+					
 				}
-				
 			}
+
+			can.getERRORCAN_COUNT();//不正解の缶の生成数のゲッター関数
+			can.getOTHERCAN_COUNT();//缶以外の生成合計数のゲッター関数
+			player.getFLICK_ERRORCAN_COUNT();//不正解の缶の回収数のゲッター関数
+			player.getFLICK_OTHERCAN_COUNT();//缶以外の物の回収した合計数のゲッター関数
+
+
+			break;
 		}
 
-		can.getERRORCAN_COUNT();//不正解の缶の生成数のゲッター関数
-		can.getOTHERCAN_COUNT();//缶以外の生成合計数のゲッター関数
-		player.getFLICK_ERRORCAN_COUNT();//不正解の缶の回収数のゲッター関数
-		player.getFLICK_OTHERCAN_COUNT();//缶以外の物の回収した合計数のゲッター関数
-
-
-		break;
 	}
 
 	game_timer++;
@@ -116,5 +124,6 @@ void game_render()
 	GAME_DAY_RENDER(gameDay);
 	gameTimer.timerRender();
 	resultBinder.Render();
+	starttimer.Render();
 	nextday.Render();
 }
