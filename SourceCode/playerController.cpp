@@ -618,3 +618,15 @@ void playerController::TUTORIAL_HITAREA_CHANGE()
 		}
 	}
 }
+
+void playerController::PLAYER_RESET()
+{
+	control_stop_timer = 0;
+	control_stop_timer2 = 0;
+	flick_errorcan_count = 0;
+	flick_other_count = 0;
+
+	hit_timer = 0;
+	flick_timer = 0;
+	obaeffect_timer = 0;
+}

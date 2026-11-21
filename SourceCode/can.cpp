@@ -810,42 +810,35 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 {
 	for (int i = 0; i < 500; i++)
 	{
-		if (can[i].can_alive == true)
-		{
-			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
-			can[i].can_color = 0;
-			can[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
-			can[i].setCAN_ALIVE(false);
-		}
-		if (oba[i].can_alive == true)
-		{
-			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
-			oba[i].oba_hit = false;
-			oba[i].can_color = 0;
-			oba[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
-			oba[i].setCAN_ALIVE(false);
-		}
-		if (oji[i].can_alive == true)
-		{
-			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
-			oji[i].can_color = 0;
-			oji[i].setCAN_ALIVE(false);
-			oji[i].oji_back = false;
-			oji[i].oji_hit = false;
-			oji[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
-
 	
-		}
-		if (bom[i].can_alive == true)
-		{
-			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
-			bom[i].can_color = 0;
-			bom[i].setCAN_ALIVE(false);
-			bom[i].flick_flag = false;
-			bom[i].bom_dropped = false;
-			bom[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
-			bom[i].Bomeffect_flag = false;
-		}
+		can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
+		can[i].can_color = 0;
+		can[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
+		can[i].setCAN_ALIVE(false);
+	
+		oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
+		oba[i].can_color = 0;
+		oba[i].oba_hit = false;
+		oba[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
+		oba[i].setCAN_ALIVE(false);
+	
+		oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
+		oji[i].can_color = 0;
+		oji[i].oji_back = false;
+		oji[i].oji_hit = false;
+		oji[i].oji_jump = false;
+		oji[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
+		oji[i].setCAN_ALIVE(false);
+	
+		bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
+		bom[i].can_color = 0;
+		bom[i].flick_flag = false;
+		bom[i].bom_dropped = false;
+		bom[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
+		bom[i].Bomeffect_flag = false;
+		bom[i].efc_timer = 0;
+		bom[i].setCAN_ALIVE(false);
+	
 	}
 
 	generate_num = 0;

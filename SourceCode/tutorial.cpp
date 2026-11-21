@@ -192,7 +192,7 @@ void tutorial_update()
 
 		//TUTORIAL_CAN_UPDATE();		//³‚µ‚¢ŠÊ‚Ì¶¬‚ÆŠÊ‚ğ’@‚­A’e‚­“®ì‚ğ“ü‚ê‚½ŠÖ”
 		//TUTORIAL_MISSCAN_UPDATE();//•s³‰ğ‚ÌŠÊ‚Ì¶¬‚ÆŠÊ‚ğ’@‚­A’e‚­“®ì‚ğ“ü‚ê‚½ŠÖ”
-		player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //player‚ÌŠÊ‚ğ’@‚­“®ìŠÖ”
+		if (!player.FLICKCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y)) player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //player‚ÌŠÊ‚ğ’@‚­“®ìŠÖ”
 		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //player‚ÌŠÊ‚ğ’@‚­“®ìŠÖ”
 		can.CAN_MOVE(cans, obas, ojis, boms, 9);//ŠÊ‚ÌˆÚ“®ŠÖ”
 		back_update(5.0f);

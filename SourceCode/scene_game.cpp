@@ -75,6 +75,7 @@ void game_update()
 		{
 			// ‚±‚±‚É‰Šú‰»ˆ—
 			can.CAN_RESET(cans, obas, ojis, boms);
+			player.PLAYER_RESET();
 			back_init();
 			starttimer.Reset();
 			gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
