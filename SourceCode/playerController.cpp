@@ -92,8 +92,6 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 //player‚Ì’@‚­“®ìŠÖ”
 void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
-		debug::setString("OJI ALIVE:%d", ojis[i].getCAN_ALIVE());
-		debug::setString("OJI HIT:%d", ojis[i].getOJI_HIT());
 		if (control_stop_timer <= 0 && control_stop_timer2 <= 0) {
 			if (main_conveyor == true) {
 				if (TRG(0) & PAD_TRG1) {
