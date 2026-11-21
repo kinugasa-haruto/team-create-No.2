@@ -37,7 +37,17 @@ public:
 	{
 		if (Clear)
 		{
-
+			animeTimer++;
+			if (animeTimer >= 1 * 60 && animeTimer < 2.5f * 60)
+			{
+				rect = { SCREEN_HALF_W - 100, 400 };
+			}
+			else if (animeTimer >= 2.5f * 60)
+			{
+				rect = { SCREEN_W, SCREEN_H };
+				spacebar.Update({ SCREEN_W - 300, SCREEN_H - 150 }, 0.6f);
+				return true;
+			}
 		}
 		else
 		{
@@ -49,6 +59,7 @@ public:
 			else if (animeTimer >= 2.5f * 60)
 			{
 				rect = { SCREEN_W, SCREEN_H };
+				spacebar.Update({SCREEN_W - 300, SCREEN_H - 150}, 0.6f);
 				return true;
 			}
 
@@ -61,7 +72,7 @@ public:
 	{
 		if (Clear) sprite_render(gameclear, 0, 0, 1, 1, 0, 0, rect.x, rect.y, 0, 0);
 		else sprite_render(gameover, 0, 0, 1, 1, 0, 0, rect.x, rect.y, 0, 0);
-
+		spacebar.Render();
 		sprite_render(shutter, 0, 0 - SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 
 
