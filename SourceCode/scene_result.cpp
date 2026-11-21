@@ -10,6 +10,7 @@ extern Can boms[500];
 extern Can can;
 
 bool Clear;
+bool click;
 
 Result result = Result::Instance();
 
@@ -21,6 +22,7 @@ void result_init()
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 	result.Reset();
+	click = false;
 }
 
 void result_deinit()
@@ -57,8 +59,11 @@ void result_update()
 		{
 			if (TRG(0) & PAD_TRG1)
 			{
-				music::play(CLICK);
-
+				if (!click)
+				{
+					music::play(CLICK);
+					click = true;
+				}
 				spacebar.Reset();
 				nextScene = SCENE_TITLE;
 			}
