@@ -68,16 +68,18 @@ public:
 		binderType = 0;
 		anime = 0;
 		goNext = false;
+		music = false;
 	}
 
 private:
-	VECTOR2 pos;
-	VECTOR4 rect;
+	bool goNext;
+	bool music;
 	int binderType;
+	int anime;
 	float timer;
 	float scale;
-	int anime;
-	bool goNext;
+	VECTOR4 rect;
+	VECTOR2 pos;
 };
 
 extern Binder resultBinder;

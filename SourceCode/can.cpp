@@ -462,6 +462,7 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
 					CAN_RESET(cans, obas, ojis, boms);
 					gameDay++;
+					music::stop(GAME_BGM);//BGMストップ
 				}
 			}
 		}
@@ -605,7 +606,7 @@ void Can::GAUGE_UPDATE() {
 	if (kigen <= 0) {
 		//機嫌ゲージが０になった時にゲームオーバーの処理
 		gameOver = true;
-
+		music::stop(GAME_BGM);//BGMストップ
 	}
 
 	float g = kigen * 0.01f;
@@ -807,7 +808,7 @@ bool Can::getFLICK_FLAG() {
 
 void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 {
-	for (int i = 0; i < generate_num; i++)
+	for (int i = 0; i < 500; i++)
 	{
 		if (can[i].can_alive == true)
 		{

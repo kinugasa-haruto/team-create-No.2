@@ -165,7 +165,7 @@ void tutorial_update()
 		else if (player.FLICKCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
 		{
 			spacebar.Update({ SCREEN_W * 0.515f , SCREEN_H * 0.77f - 50 });
-			sKey.Update({ SCREEN_W * 0.485f - 55 , SCREEN_H * 0.77f - 50 }, 0.5f);
+			sKey.Update({ SCREEN_W * 0.485f , SCREEN_HALF_H - 50 }, 0.5f);
 			wKey.Update({ SCREEN_W * 0.485f , SCREEN_H * 0.77f - 50 }, 0.5f);
 			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
 			{
