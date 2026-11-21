@@ -473,6 +473,7 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
 					CAN_RESET(cans, obas, ojis, boms);
 					gameDay++;
+					music::stop(GAME_BGM);//BGMストップ
 				}
 			}
 		}
@@ -616,7 +617,7 @@ void Can::GAUGE_UPDATE() {
 	if (kigen <= 0) {
 		//機嫌ゲージが０になった時にゲームオーバーの処理
 		gameOver = true;
-
+		music::stop(GAME_BGM);//BGMストップ
 	}
 
 	float g = kigen * 0.01f;
@@ -834,18 +835,21 @@ bool Can::getBOMR_HIT() {
 
 void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 {
-	for (int i = 0; i < generate_num; i++)
+	for (int i = 0; i < 500; i++)
 	{
 		if (can[i].can_alive == true)
 		{
 			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
 			can[i].can_color = 0;
+			can[i].gravity_flag = false;//重力をかけ始める判断
 			can[i].setCAN_ALIVE(false);
 		}
 		if (oba[i].can_alive == true)
 		{
 			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
+			oba[i].oba_hit = false;
 			oba[i].can_color = 0;
+			oba[i].gravity_flag = false;//重力をかけ始める判断
 			oba[i].setCAN_ALIVE(false);
 		}
 		if (oji[i].can_alive == true)
@@ -854,12 +858,20 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 			oji[i].can_color = 0;
 			oji[i].setCAN_ALIVE(false);
 			oji[i].oji_back = false;
+			oji[i].oji_hit = false;
+			oji[i].gravity_flag = false;//重力をかけ始める判断
+
+	
 		}
 		if (bom[i].can_alive == true)
 		{
 			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
 			bom[i].can_color = 0;
 			bom[i].setCAN_ALIVE(false);
+			bom[i].flick_flag = false;
+			bom[i].bom_dropped = false;
+			bom[i].gravity_flag = false;//重力をかけ始める判断
+			bom[i].Bomeffect_flag = false;
 		}
 	}
 

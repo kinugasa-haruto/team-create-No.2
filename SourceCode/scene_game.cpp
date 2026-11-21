@@ -91,10 +91,6 @@ void game_update()
 			if (!musicExist)
 			{
 				music::play(GAME_BGM);//BGM再生
-				music::stop(GAME_BGM);//BGMストップ
-				music::play(PAPER);//バインダーが出てくるときの音
-
-
 				// この上にmusic::play
 				musicExist = true;
 			}
@@ -121,7 +117,8 @@ void game_update()
 					{
 						music::play(CLICK);
 						spacebar.Reset();
-						resultBinder.SetBinderType(1);
+						resultBinder.SetBinderType(1);			
+
 					}
 
 					if (resultBinder.GetBinderType() == 0) resultBinder.Up();

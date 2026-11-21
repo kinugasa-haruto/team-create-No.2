@@ -129,7 +129,7 @@ void tutorial_update()
 
 		if (player.HITCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//ä Ç∆í@Ç≠ÉGÉäÉAÇÃìñÇΩÇËîªíËä÷êî
 		{
-				spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50});
+				spacebar.Update({ SCREEN_W * 0.515f , SCREEN_HALF_H - 50});
 				if (TRG(0) & PAD_TRG1)
 				{
 					player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerÇÃä Çí@Ç≠ìÆçÏä÷êî
@@ -151,7 +151,8 @@ void tutorial_update()
 		// Ç±Ç±ÅIÅIÅI
 	    else if (player.HITCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 2) // Ç±Ç±Ç™trueÇ…Ç»ÇÁÇ»Ç¢
 		{
-			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50 });
+			spacebar.Update({ SCREEN_W * 0.51f , SCREEN_HALF_H - 50 });
+			
 			if (TRG(0) & PAD_TRG1 && player.GetMAIN_CONVEYOR())
 			{
 				player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerÇÃä Çí@Ç≠ìÆçÏä÷êî
@@ -163,13 +164,17 @@ void tutorial_update()
 		}
 		else if (player.FLICKCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
 		{
-			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_H * 0.77f - 50 });
+			spacebar.Update({ SCREEN_W * 0.515f , SCREEN_H * 0.77f - 50 });
+			sKey.Update({ SCREEN_W * 0.485f , SCREEN_HALF_H - 50 }, 0.5f);
+			wKey.Update({ SCREEN_W * 0.485f , SCREEN_H * 0.77f - 50 }, 0.5f);
 			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
 			{
 				player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //playerÇÃä Çí@Ç≠ìÆçÏä÷êî
 				tt.SetProgress(4);
 				tutorialTimer = 0;
 				spacebar.Reset();
+				wKey.Reset();
+				sKey.Reset();
 			}
 			break;
 		}
@@ -217,6 +222,8 @@ void tutorial_render()
 	player.HITAREA_FLICKAREA_RENDER();			//éËÇÃï`âÊ
 
 	spacebar.Render();
+	sKey.Render();
+	wKey.Render();
 	skipbutton.Render();
 	
 	sprite_render(shutter, 0, 0 - SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);

@@ -50,6 +50,12 @@ Binder resultBinder;
 
 void Binder::Up()
 {
+	if (!music && scale <= 0.1f)
+	{
+		music::play(PAPER);//バインダーが出てくるときの音
+		music = true;
+	}
+
 	timer += 1.0f / (60 * 2);
 
 	scale = Easing::easeOut3(timer);
@@ -58,6 +64,12 @@ void Binder::Up()
 		scale = 1;
 		NumberUpdate();
 		spacebar.Update({ SCREEN_W - 225, SCREEN_H - 250 });
+		if (music)
+		{
+			music::stop(PAPER);//バインダーが出てくるときの音
+			music = false;
+		}
+
 	}
 	if (timer >= 1) timer = 1;
 }
@@ -65,11 +77,24 @@ void Binder::Up()
 void Binder::Down()
 {
 
+	if (!music && scale >= 0.9f)
+	{
+		music::play(PAPER);//バインダーが出てくるときの音
+		music = true;
+	}
 	if (scale >= 0.999f) scale = 1;
 	timer -= 1.0f / (60 * 2);
 
 	scale = 1 - Easing::easeOut3(1 - timer);
-	if (scale <= 0.001f) scale = 0;
+	if (scale <= 0.001f)
+	{
+		scale = 0;
+		if (music)
+		{
+			music::stop(PAPER);//バインダーが出てくるときの音
+			music = false;
+		}
+	}
 	debug::setString("scale:%f", GetScale());
 }
 
@@ -96,7 +121,6 @@ void Binder::Render()
 
 	if (scale == 1.0f)
 	{
-		music::play(PAPER);
 		spacebar.Render();
 		sprite_render(leavework, SCREEN_W - 300, SCREEN_H - 175, 1, 1, 0, 0, 200, 100, 0, 0);
 		//text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
@@ -185,6 +209,47 @@ void SpaceBar::Render()
 	if (push) sprite_render(space, pos.x, pos.y, scale, scale, 450, 0, 450, 200, 0, 0);
 	else sprite_render(space, pos.x, pos.y, scale, scale, 0, 0, 450, 200, 0, 0);
 }
+
+Wkey wKey = Wkey::Instance();
+
+void Wkey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void Wkey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(wkey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(wkey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
+Skey sKey = Skey::Instance();
+
+void Skey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void Skey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(skey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(skey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
 
 gameNumber starttimer;
 
