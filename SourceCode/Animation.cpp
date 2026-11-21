@@ -184,6 +184,47 @@ void SpaceBar::Render()
 	else sprite_render(space, pos.x, pos.y, scale, scale, 0, 0, 450, 200, 0, 0);
 }
 
+Wkey wKey = Wkey::Instance();
+
+void Wkey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void Wkey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(wkey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(wkey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
+Skey sKey = Skey::Instance();
+
+void Skey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	debug::setString("push:%d", push);
+}
+
+void Skey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(skey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(skey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
+
 gameNumber starttimer;
 
 bool StartTimer::Update()

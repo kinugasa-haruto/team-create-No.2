@@ -179,7 +179,7 @@ public:
 	}
 
 
-	void Update(VECTOR2 pos, float scale = 0.2f);
+	void Update(VECTOR2 pos, float scale = 0.3f);
 
 	void Render();
 
@@ -209,6 +209,88 @@ private:
 };
 
 extern SpaceBar spacebar;
+
+class Wkey
+{
+public:
+	static Wkey Instance()
+	{
+		Wkey instance;
+		return instance;
+	}
+
+
+	void Update(VECTOR2 pos, float scale = 0.3f);
+
+	void Render();
+
+	void Reset()
+	{
+		push = false;
+		pos = {};
+		scale = 0.2f;
+		timer = 0;
+		exist = false;
+	}
+private:
+	Wkey()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+		scale = 0.2f;
+	}
+	bool exist;
+	bool push;
+	int timer;
+	float scale;
+	VECTOR2 pos;
+
+};
+
+extern Wkey wKey;
+
+class Skey
+{
+public:
+	static Skey Instance()
+	{
+		Skey instance;
+		return instance;
+	}
+
+
+	void Update(VECTOR2 pos, float scale = 0.2f);
+
+	void Render();
+
+	void Reset()
+	{
+		push = false;
+		pos = {};
+		scale = 0.2f;
+		timer = 0;
+		exist = false;
+	}
+private:
+	Skey()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+		scale = 0.2f;
+	}
+	bool exist;
+	bool push;
+	int timer;
+	float scale;
+	VECTOR2 pos;
+
+};
+
+extern Skey sKey;
 
 class StartTimer
 {
