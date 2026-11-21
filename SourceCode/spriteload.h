@@ -42,6 +42,9 @@ extern Sprite* skip; // スキップ
 extern Sprite* startCan; // スタート 鯖缶
 extern Sprite* titleIcon; // タイトルアイコン
 
+extern Sprite* gameclear; // クリア画面
+extern Sprite* gameover; // 阿寒画面
+
 extern Sprite* tutorialBubble; // 吹き出しチュートリアル
 extern Sprite* tutorialText; // チュートリアル言葉
 

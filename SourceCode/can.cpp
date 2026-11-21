@@ -154,6 +154,9 @@ Can::Can() {
 
 	flick_flag = false;
 	bom_dropped = false;
+
+	gameOver = false;
+	gameClear = false;
 }
 
 //デストラクタ
@@ -452,9 +455,9 @@ void Can::BOM_EFFECT_UPDATE(Can* bom) {
 				if (bom[i].efc_timer > 200) {
 					bom[i].Bomeffect_flag = false;
 					bom[i].can_alive = false;
-					//爆発後の処理（リザルトシーンにいって。日にちを１日スキップする処理）
-
-
+					//爆発時の処理（リザルトシーンにいって。日にちを１日スキップする処理）
+					CAN_RESET(cans, obas, ojis, boms);
+					gameDay++;
 				}
 			}
 		}
@@ -583,6 +586,8 @@ bool Can::CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom) {
 //	//}
 //}
 
+
+
 //ゲージの処理関数
 void Can::GAUGE_UPDATE() {
 	debug::setString("KIGEN:%f", kigen);
@@ -595,6 +600,7 @@ void Can::GAUGE_UPDATE() {
 
 	if (kigen <= 0) {
 		//機嫌ゲージが０になった時にゲームオーバーの処理
+		gameOver = true;
 
 	}
 
@@ -634,6 +640,7 @@ void Can::GAUGE_RENDER() {
 			0, 0, 1000, 300, 0, 0, ToRadian(0));
 	}
 
+	
 }
 
 
@@ -800,31 +807,35 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 	{
 		if (can[i].can_alive == true)
 		{
-			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };;
+			can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
+			can[i].can_color = 0;
 			can[i].setCAN_ALIVE(false);
 		}
 		if (oba[i].can_alive == true)
 		{
-			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };;
+			oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
+			oba[i].can_color = 0;
 			oba[i].setCAN_ALIVE(false);
 		}
 		if (oji[i].can_alive == true)
 		{
-			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };;
+			oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
+			oji[i].can_color = 0;
 			oji[i].setCAN_ALIVE(false);
 			oji[i].oji_back = false;
 		}
 		if (bom[i].can_alive == true)
 		{
-			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };;
+			bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
+			bom[i].can_color = 0;
 			bom[i].setCAN_ALIVE(false);
 		}
 	}
 
 	generate_num = 0;
 	generate_timer = 0;
-	can_num = 0;
-	can_color = 0;
+	gameOver = false;
+	gameClear = false;
 
 }
 

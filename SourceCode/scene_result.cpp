@@ -3,10 +3,24 @@
 int result_state;
 int result_timer;
 
+extern Can cans[500];
+extern Can obas[500];
+extern Can ojis[500];
+extern Can boms[500];
+extern Can can;
+
+bool Clear;
+
+Result result = Result::Instance();
+
+
 void result_init()
 {
 	result_state = 0;
 	result_timer = 0;
+	can.CAN_RESET(cans, obas, ojis, boms);
+	back_init();
+	result.Reset();
 }
 
 void result_deinit()
@@ -29,7 +43,7 @@ void result_update()
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-
+		
 
 
 		result_state++;
@@ -37,8 +51,21 @@ void result_update()
 
 	case 2:
 		//////// ’Êí ////////
-		
+		if (result.ShutterUpdate()) result_state++;
 		break;
+	case 3:
+		if (result.Update(Clear))
+		{
+			if (TRG(0) & PAD_TRG1)
+			{
+				nextScene = SCENE_TITLE;
+			}
+		}
+
+
+
+
+	break;
 	}
 
 	result_timer++;
@@ -51,4 +78,5 @@ void result_render()
 {
 	GameLib::clear(0,0,0);
 
+	result.Render();
 }

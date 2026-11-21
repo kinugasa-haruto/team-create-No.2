@@ -21,6 +21,9 @@ playerController player;
 extern int debug_flick;
 extern int debug_miss;
 
+static float timer;
+static float inv;
+
 bool nextDay; // ŽŸ‚Ì“ú‚És‚Á‚½‚©‚Ç‚¤‚©
 int gameDay; // Œ»Ý‚Ì“ú•t
 gameNumber gamenumber;
@@ -29,6 +32,8 @@ void game_init()
 {
 	game_state      = 0;
 	game_timer      = 0;
+	timer = 0;
+	inv = 0;
 	gameDay = 1;
 	nextDay = false;
 	can.CAN_RESET(cans, obas, ojis, boms);
@@ -46,6 +51,7 @@ void game_update()
 	{
 	case 0:
 		//////// ‰ŠúÝ’è ////////
+		GameLib::setBlendMode(Blender::BS_ALPHA);
 
 
 		game_state++;
@@ -58,11 +64,12 @@ void game_update()
 
 
 		game_state++;
-		
 		/*fallthrough*/
+
 
 	case 2:
 		//////// ’ÊíŽž ////////
+		if (TRG(0) & PAD_START) can.DEBUG_OVER();
 		if (!nextDay)
 		{
 			// ‚±‚±‚É‰Šú‰»ˆ—
@@ -79,7 +86,16 @@ void game_update()
 		if (starttimer.Update()) {}
 		else
 		{
-
+			if (can.getCAN_GAMEOVER())
+			{
+				timer += 0.01f;
+				inv = Easing::easeIn3(timer);
+				if (inv >= 0.99f)
+				{
+					Clear = false;
+					nextScene = SCENE_RESULT;
+				}
+			}
 			if (!can.CAN_ALL_VANISH(cans, obas, ojis, boms))
 			{
 			 	GAME_DAY(gameDay);
@@ -125,4 +141,6 @@ void game_render()
 	resultBinder.Render();
 	starttimer.Render();
 	nextday.Render();
+	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+
 }
