@@ -11,7 +11,7 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 20.0f,		30,		12.0f,		0,			0,				0,				99,					100},	// 1日目デバック用
+	{ 20.0f,		30,		12.0f,		10,			20,				30,			40,					100},	// 1日目デバック用
 	{ 15.0f,		30,		12.0f,		0,			0,				0,				99,					100},	// 2日目デバック用
 	{ 15.0f,		30,		13.0f,		0,			0,				0,				99,					100},	// 3日目デバック用
 	{ 100.0f,		10,		3.0f,		0,			0,				0,				30,					100},	// 1日目本番用の確率
@@ -49,7 +49,6 @@ void GAME_DAY(int num) {
 
 	can.GAUGE_UPDATE();
 	can.BOM_EFFECT_UPDATE(boms);
-
 }
 void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
@@ -158,6 +157,9 @@ Can::Can() {
 
 	flick_flag = false;
 	bom_dropped = false;
+	bomBhit = false;
+	bomRhit = false;
+	bom_kigen_down = false;
 
 	gameOver = false;
 	gameClear = false;
@@ -172,6 +174,7 @@ Can::~Can() {
 void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 	debug::setString("generate:%i", generate_timer);
 	debug::setString("error_can:%i", errorcan_count);
+	debug::setString("generatenum:%i", generate_num);
 	debug::setString("other_can:%i", othercan_count);
 
 	generate_timer--;
@@ -183,6 +186,7 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 		if (can_num <= days[day - 1].bom_pro) {// 爆弾
 			boms[i].setCAN_ALIVE(true);
+			boms[i].bom_kigen_down = false;
 			othercan_count++;
 		}
 
@@ -201,7 +205,7 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 			errorcan_count++;
 		}
 
- 		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
+		if (can_num > days[day - 1].errorcan_pro && can_num <= days[day - 1].can_pro) {
 			cans[i].setCAN_ALIVE(true);//缶
 		}
 
@@ -361,12 +365,19 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 
 				if (bom[i].pos.x >= SCREEN_W + 50) {
 					//bom[i].can_alive = false;
-					if (boms[i].getBOM_EFFECT() == false) {
-						boms[i].setEFC_TIMER(0);
-						boms[i].setBOM_EFFECT(true);
+					if (bom[i].bomBhit == false) {
+						if (boms[i].getBOM_EFFECT() == false) {
+							boms[i].setEFC_TIMER(0);
+							boms[i].setBOM_EFFECT(true);
+							music::play(BOM);
+						}
+						bom[i].bom_dropped = true;
 					}
-					bom[i].bom_dropped = true;
-					kigen -= 100;
+
+					if (bom[i].bomBhit == true && bom[i].bom_kigen_down == false) {
+						kigen -= 10;
+						bom[i].bom_kigen_down = true;
+					}
 				}
 			}
 
@@ -645,7 +656,7 @@ void Can::GAUGE_RENDER() {
 			0, 0, 1000, 300, 0, 0, ToRadian(0));
 	}
 
-	
+
 }
 
 
@@ -804,6 +815,22 @@ void Can::setFLICK_FLAG(bool flick) {
 //flick_flagのセッター関数
 bool Can::getFLICK_FLAG() {
 	return flick_flag;
+}
+
+void Can::setBOMB_HIT(bool hit) {
+	bomBhit = hit;
+}
+
+bool Can::getBOMB_HIT() {
+	return bomBhit;
+}
+
+void Can::setBOMR_HIT(bool hit) {
+	bomRhit = hit;
+}
+
+bool Can::getBOMR_HIT() {
+	return bomRhit;
 }
 
 void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)

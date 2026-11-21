@@ -100,16 +100,19 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							if (right_hit_area == true) {
 								if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getBBOM_POS(), boms[i].getBBOM_SCALE())) {//右手と青ボタンの処理
 									music::play(BOM_BOTTON);
+									boms[i].setBOMB_HIT(true);
 								}
 								if (HITCHECK_HUND_BUTTON(Rhund_pos, Rhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//右手と赤ボタンの処理
-									//爆発
-									if (boms[i].getBOM_EFFECT() == false) {
-										boms[i].setEFC_TIMER(0);
-										boms[i].setBOM_EFFECT(true);
+									if (boms[i].getBOMB_HIT() == false) {
+										//爆発
+										if (boms[i].getBOM_EFFECT() == false) {
+											boms[i].setEFC_TIMER(0);
+											boms[i].setBOM_EFFECT(true);
+										}
+										//can.MINUSsetKIGEN(100);
+										control_stop_timer2 = 250;
+										music::play(BOM);
 									}
-									//can.MINUSsetKIGEN(100);
-									control_stop_timer2 = 250;
-									music::play(BOM);
 								}
 							}
 							if (right_hit_area == false) {
@@ -117,15 +120,16 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 									music::play(BOM_BOTTON);
 								}
 								if (HITCHECK_HUND_BUTTON(Lhund_pos, Lhund_scale, boms[i].getRBOM_POS(), boms[i].getRBOM_SCALE())) {//左手と赤ボタンの処理
-									//爆発
-									if (boms[i].getBOM_EFFECT() == false) {
-										boms[i].setEFC_TIMER(0);
-										boms[i].setBOM_EFFECT(true);
+									if (boms[i].getBOMB_HIT() == false) {
+										//爆発
+										if (boms[i].getBOM_EFFECT() == false) {
+											boms[i].setEFC_TIMER(0);
+											boms[i].setBOM_EFFECT(true);
+										}
+										control_stop_timer2 = 250;
+										//can.MINUSsetKIGEN(100);
+										music::play(BOM);
 									}
-									control_stop_timer2 = 250;
-									//can.MINUSsetKIGEN(100);
-									music::play(BOM);
-
 								}
 							}
 						}
@@ -378,11 +382,26 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 					if (boms[i].getCAN_ALIVE() == true && cans[i].getCAN_COLOR() <= days[day - 1].bom_pro) {//爆弾
 						if (FLICKCHECK_THING(&boms[i], boms[i].getCAN_SCALE().x * boms[i].getCAN_TEXTSIZE().x * 1.6f,
 							boms[i].getCAN_SCALE().y * boms[i].getCAN_TEXTSIZE().y) == true && boms[i].getFLICK_FLAG() == false) {
-							//爆弾を弾く、消す
-							flick_other_count++;
-							can.PLUSsetKIGEN(KIGEN_PLUS);
-							boms[i].setGRA_FLAG(true);
-							boms[i].setFLICK_FLAG(true);
+							if (boms[i].getBOMB_HIT() == true) {
+								//爆弾を弾く、消す
+								flick_other_count++;
+								can.PLUSsetKIGEN(KIGEN_PLUS);
+								boms[i].setGRA_FLAG(true);
+								boms[i].setFLICK_FLAG(true);
+							}
+
+							if (boms[i].getBOMB_HIT() == false) {
+								if (boms[i].getBOMB_HIT() == false) {
+									//爆発
+									if (boms[i].getBOM_EFFECT() == false) {
+										boms[i].setEFC_TIMER(0);
+										boms[i].setBOM_EFFECT(true);
+									}
+									control_stop_timer2 = 250;
+									//can.MINUSsetKIGEN(100);
+									music::play(BOM);
+								}
+							}
 						}
 					}
 
