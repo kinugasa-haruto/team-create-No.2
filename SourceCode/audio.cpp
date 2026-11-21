@@ -13,7 +13,7 @@ void audio_init()
 	music::load(PAPER, L"./Data/Sounds/リザルトの紙.wav");		//リザルト画面の紙の音〇
 	music::load(CLICK, L"./Data/Sounds/決定音.wav");			//決定音〇
 	music::load(RAGE, L"./Data/Sounds/怒り状態1.wav");			//般若の演出開始時の音〇
-	//music::load(FIRE, L"./Data/Sounds/怒り状態2.wav");			//般若演出時の炎の音
+	//music::load(FIRE, L"./Data/Sounds/怒り状態2.wav");		//般若演出時の炎の音
 	music::load(BOM, L"./Data/Sounds/爆発音.wav");				//爆弾の爆発音〇
 	music::load(BOM_BOTTON, L"./Data/Sounds/爆弾ボタン.wav");	//爆弾のボタン音〇
 	

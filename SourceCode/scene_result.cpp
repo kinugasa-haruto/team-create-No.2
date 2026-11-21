@@ -35,7 +35,6 @@ void result_update()
 	case 0:
 		//////// ‰Šúİ’è ////////
 
-
 		result_state++;
 		/*fallthrough*/
 
@@ -43,7 +42,7 @@ void result_update()
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		
+
 
 
 		result_state++;
@@ -59,6 +58,7 @@ void result_update()
 			if (TRG(0) & PAD_TRG1)
 			{
 				music::play(CLICK);
+
 				spacebar.Reset();
 				nextScene = SCENE_TITLE;
 			}
@@ -67,7 +67,7 @@ void result_update()
 
 
 
-	break;
+		break;
 	}
 
 	result_timer++;
@@ -78,7 +78,7 @@ void result_update()
 //--------------------------------------
 void result_render()
 {
-	GameLib::clear(0,0,0);
+	GameLib::clear(0, 0, 0);
 
 	result.Render();
 }
