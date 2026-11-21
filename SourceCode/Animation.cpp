@@ -17,7 +17,7 @@ void ObachanUpdate()
 	static float animeTimer = 0;
 	static float scale = 1;
 	static bool h = false;
-	
+
 
 	if (!h) animeTimer += 0.1f;
 	if (h) animeTimer -= 0.1f;
@@ -36,6 +36,7 @@ void ObachanUpdate()
 	scale = sinf(animeTimer) * 0.2f + 1.05f;
 	hannyA.SetScale(scale);
 	debug::setString("scale:%f", hannyA.GetScale());
+
 }
 
 
@@ -84,7 +85,7 @@ void Binder::NumberUpdate()
 	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
 	maxOther.Update({ 934 , 850 }, can.getOTHERCAN_COUNT(), 1, 0.6f);
 	collectOther.Update({ 760 , 850 }, player.getFLICK_OTHERCAN_COUNT(), 1, 0.6f);
-	maxCan.Update({ 934 , 510 }, can.getERRORCAN_COUNT(),  1, 0.6f);
+	maxCan.Update({ 934 , 510 }, can.getERRORCAN_COUNT(), 1, 0.6f);
 	collectCan.Update({ 760 , 510 }, player.getFLICK_ERRORCAN_COUNT(), 1, 0.6f);
 	goNext = true;
 }
@@ -95,6 +96,7 @@ void Binder::Render()
 
 	if (scale == 1.0f)
 	{
+		music::play(PAPER);
 		spacebar.Render();
 		sprite_render(leavework, SCREEN_W - 300, SCREEN_H - 175, 1, 1, 0, 0, 200, 100, 0, 0);
 		//text_out(1, "Go NextDay", SCREEN_W - 700, SCREEN_H - 75, 1.2f, 1.2f, 0, 0, 0);
@@ -123,7 +125,7 @@ void NextDay::Update()
 	{
 		inv = Easing::easeOut3(timer);
 	}
-	if (!swap &&inv >= 0.998f)
+	if (!swap && inv >= 0.998f)
 	{
 		inv = 1;
 		swap = true;
@@ -161,12 +163,12 @@ void TitleIcon::Update()
 
 void TitleIcon::Render()
 {
-	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
+	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f, 314 * 0.5f);
 }
 
 SpaceBar spacebar = SpaceBar::Instance();
 
-void SpaceBar::Update(VECTOR2 pos) 
+void SpaceBar::Update(VECTOR2 pos)
 {
 	exist = true;
 	this->pos = pos;
@@ -209,7 +211,7 @@ bool StartTimer::Update()
 		else starttimer.Update({ SCREEN_HALF_W - 20, SCREEN_HALF_H - 20 }, count, 0, 1);
 	}
 	return count > 0;
-	
+
 }
 
 void StartTimer::Render()

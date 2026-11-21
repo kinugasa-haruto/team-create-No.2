@@ -11,8 +11,8 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔			生成個数	缶の速度		爆弾の確率		おばさんの確率		おじさんの確率		不正解の缶の確率		缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 200.0f,		10,		2.0f,		0,			40,				50,				60,					100},	// 1日目
-	{ 150.0f,		10,		2.0f,		10,			20,				80,				90,					100},	// 2日目
+	{ 20.0f,		30,		12.0f,		10,			20,				80,				90,					100},	// 1日目
+	{ 15.0f,		30,		12.0f,		10,			20,				80,				90,					100},	// 2日目
 	{ 150.0f,		10,		3.0f,		10,			20,				80,				90,					100},	// 3日目
 	{ 100.0f,		10,		3.0f,		10,			20,				80,				90,					100},	// 4日目
 	{ 100.0f,		10,		4.0f,		10,			20,				80,				90,					100},	// 5日目
@@ -55,7 +55,7 @@ void GAME_DAY_RENDER(int num) {
 	GameLib::clear(0.2f, 0.2f, 0.4f);
 	back_render();
 	can.OJI_BACK_RENDER(cans, ojis, num);//おじさんがコンベアの後ろに消える処理
-	conveyor_render();
+	//conveyor_render();
 	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
 	judgearea_render();
 	can.GAUGE_RENDER();

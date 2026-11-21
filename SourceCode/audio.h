@@ -22,6 +22,8 @@
 #define NO_CAN2	9
 #define NO_CAN3	10
 #define NO_CAN4	11
+#define BOM_BOTTON	12
+
 
 // XWB‚ÌŽí—Þ
 #define XWB_SYSTEM          0
