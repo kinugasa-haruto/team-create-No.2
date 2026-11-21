@@ -56,7 +56,7 @@ void Binder::Up()
 	{
 		scale = 1;
 		NumberUpdate();
-		spacebar.Update({ SCREEN_W - 300, SCREEN_H - 200 });
+		spacebar.Update({ SCREEN_W - 200, SCREEN_H - 250 });
 	}
 	if (timer >= 1) timer = 1;
 }

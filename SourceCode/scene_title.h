@@ -34,6 +34,14 @@ public:
 	float GetScale() { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
 
+	void Reset()
+	{
+		selected = 0;
+		select = false;
+		selectTimer = 0;
+		inv = 0;
+		scale = 0;
+	}
 private:
 	Title()
 	{

@@ -20,6 +20,7 @@ void title_init()
 	title_timer = 0;
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
+	title.Reset();
 }
 
 void title_deinit()
@@ -34,6 +35,7 @@ void title_update()
 	case 0:
 		//////// ‰ŠúÝ’è ////////
 
+		GameLib::setBlendMode(Blender::BS_ALPHA);
 
 		title_state++;
 		/*fallthrough*/
@@ -41,15 +43,14 @@ void title_update()
 	case 1:
 		//////// ƒpƒ‰ƒ[ƒ^‚ÌÝ’è ////////
 
-		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-
+		
+	
 		title_state++;
 		/*fallthrough*/
 
 	case 2:
 		//////// ’ÊíŽž ////////
-		if (title.GetSelected() == 0 && TRG(0) & PAD_TRG1 && !title.GetSelect())
+		if (title.GetSelected() == 0 && TRG(0) & PAD_TRG1 && !title.GetSelect() && title_timer > 60)
 		{
 			//nextScene = SCENE_TUTORIAL;
 			music::play(1, false);
@@ -93,9 +94,8 @@ void title_update()
 
 		break;
 	}
-
-
 	title_timer++;
+
 }
 
 void title_render()

@@ -58,7 +58,8 @@ private:
 	bool flick_flag;//回収したかの判断
 	bool bom_dropped;//爆弾を流したかの判断
 
-
+	bool gameClear; // クリあ
+	bool gameOver; // オーバー
 public:
 	Can();//コンストラクタ
 	~Can();//デストラクタ
@@ -112,10 +113,13 @@ public:
 	bool getBOM_EFFECT();
 	void setEFC_TIMER(int timer);
 
+	bool getCAN_GAMECLEAR() { return gameClear; }  // kuri
+	bool getCAN_GAMEOVER() { return gameOver; }  //  oba
 
 	void CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom); // 缶のリセット
 	void TUTORIAL_RESET();
 	void TUTORIAL_GENERATE(bool impure, int day, Can* cans);
+	void DEBUG_OVER() { gameOver = true; }
 };
 
 //日にち事の設定
