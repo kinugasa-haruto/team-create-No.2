@@ -161,7 +161,8 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 						if (HITCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
 							cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
 							//‰¹‚ð–Â‚ç‚·
-							music::play(1);
+							music::play(OK_CAN);
+							music::setVolume(OK_CAN, 1.0f);//BGM‚Ì‰¹—Ê’²
 						}
 					}
 				}

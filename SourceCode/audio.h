@@ -10,6 +10,19 @@
 //******************************************************************************
 
 // ’è”‚Ì’è‹`
+#define OK_CAN	0
+#define NO_CAN1	1
+#define OJI		2
+#define PAPER	3
+#define CLICK	4
+#define GAME_BGM	5
+#define RAGE	6
+#define FIRE	7
+#define BOM		8
+#define NO_CAN2	9
+#define NO_CAN3	10
+#define NO_CAN4	11
+
 // XWB‚Ìí—Ş
 #define XWB_SYSTEM          0
 #define XWB_STAGE1          1

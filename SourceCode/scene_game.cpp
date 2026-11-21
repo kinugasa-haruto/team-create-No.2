@@ -54,6 +54,8 @@ void game_update()
 	case 1:
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 		GameLib::setBlendMode(Blender::BS_ALPHA);
+		music::play(GAME_BGM, true);
+
 
 		game_state++;
 		
