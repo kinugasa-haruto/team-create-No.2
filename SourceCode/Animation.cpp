@@ -57,7 +57,7 @@ void Binder::Up()
 	{
 		scale = 1;
 		NumberUpdate();
-		spacebar.Update({ SCREEN_W - 200, SCREEN_H - 250 });
+		spacebar.Update({ SCREEN_W - 225, SCREEN_H - 250 });
 	}
 	if (timer >= 1) timer = 1;
 }
@@ -168,9 +168,10 @@ void TitleIcon::Render()
 
 SpaceBar spacebar = SpaceBar::Instance();
 
-void SpaceBar::Update(VECTOR2 pos)
+void SpaceBar::Update(VECTOR2 pos, float scale) 
 {
 	exist = true;
+	this->scale = scale;
 	this->pos = pos;
 	timer += push ? -1 : +1;
 	if (timer > 20) push = true;
@@ -181,8 +182,8 @@ void SpaceBar::Update(VECTOR2 pos)
 void SpaceBar::Render()
 {
 	if (!exist) return;
-	if (push) sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 450, 0, 450, 200, 0, 0);
-	else sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 0, 0, 450, 200, 0, 0);
+	if (push) sprite_render(space, pos.x, pos.y, scale, scale, 450, 0, 450, 200, 0, 0);
+	else sprite_render(space, pos.x, pos.y, scale, scale, 0, 0, 450, 200, 0, 0);
 }
 
 gameNumber starttimer;

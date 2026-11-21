@@ -54,6 +54,7 @@ void back_update(float speed);
 void back_render();
 void conveyor_render();
 void judgearea_render();
+void flyer_render();
 void back_init();
 void back_deinit();
 #endif//game_back_H

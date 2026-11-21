@@ -24,6 +24,7 @@ extern int debug_miss;
 static float timer;
 static float inv;
 
+static bool musicExist; // ‰¹—¬‚·‚½‚ß‚Ì‚â‚Â
 bool nextDay; // ŽŸ‚Ì“ú‚És‚Á‚½‚©‚Ç‚¤‚©
 int gameDay; // Œ»Ý‚Ì“ú•t
 gameNumber gamenumber;
@@ -36,6 +37,7 @@ void game_init()
 	inv = 0;
 	gameDay = 1;
 	nextDay = false;
+	musicExist = false;
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 }
@@ -81,10 +83,18 @@ void game_update()
 			resultBinder.reset();
 			GAME_DAY(gameDay);
 			nextDay = true;
+			musicExist = false;
 		}
 		if (starttimer.Update()) {}
 		else
 		{
+			if (!musicExist)
+			{
+
+
+				// ‚±‚Ìã‚Émusic::play
+				musicExist = true;
+			}
 			if (can.getCAN_GAMEOVER())
 			{
 				timer += 0.01f;
@@ -106,6 +116,7 @@ void game_update()
 				{
 					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 					{
+						spacebar.Reset();
 						resultBinder.SetBinderType(1);
 					}
 
@@ -115,7 +126,12 @@ void game_update()
 					
 					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
 					{
-						nextday.Update();
+						if (gameDay + 1 > 3)
+						{
+							Clear = true;
+							nextScene = SCENE_RESULT;
+						}
+						else nextday.Update();
 					}
 					
 				}

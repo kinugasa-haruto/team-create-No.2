@@ -190,7 +190,7 @@ void tutorial_update()
 		player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
 		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
 		can.CAN_MOVE(cans, obas, ojis, boms, 9);//缶の移動関数
-		back_update(2.0f);
+		back_update(5.0f);
 		//player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 		can.getCAN_POS();					//缶のposのゲッター関数
 

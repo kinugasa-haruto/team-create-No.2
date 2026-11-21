@@ -179,7 +179,7 @@ public:
 	}
 
 
-	void Update(VECTOR2 pos);
+	void Update(VECTOR2 pos, float scale = 0.2f);
 
 	void Render();
 
@@ -187,6 +187,7 @@ public:
 	{
 		push = false;
 		pos = {};
+		scale = 0.2f;
 		timer = 0;
 		exist = false;
 	}
@@ -197,12 +198,13 @@ private:
 		pos = {};
 		timer = 0;
 		exist = false;
+		scale = 0.2f;
 	}
 	bool exist;
 	bool push;
-	VECTOR2 pos;
 	int timer;
-
+	float scale;
+	VECTOR2 pos;
 
 };
 

@@ -58,6 +58,7 @@ void result_update()
 		{
 			if (TRG(0) & PAD_TRG1)
 			{
+				spacebar.Reset();
 				nextScene = SCENE_TITLE;
 			}
 		}

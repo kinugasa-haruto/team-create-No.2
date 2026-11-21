@@ -68,3 +68,9 @@ void judgearea_render()
 		sprite_render(judgeArea, conveyor_1[i].GetPosition().x, conveyor_1[i].GetPosition().y, 1, 1, 0, 0, SCREEN_W, 238, 0, 0, ToRadian(0), 1, 1, 1, 0.5f);
 	}
 }
+
+void flyer_render()
+{
+	sprite_render(flyer1, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+	sprite_render(flyer2, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+}
