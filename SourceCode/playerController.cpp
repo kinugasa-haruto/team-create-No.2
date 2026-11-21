@@ -38,13 +38,13 @@ playerController::~playerController() {
 //叩くエリアと弾くエリアの描画関数
 void playerController::HITAREA_FLICKAREA_RENDER() {
 	//叩くエリア
-	primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y,
-		0, 0, ToRadian(0), 1, 1, main_conveyor_color, 0.5f);
+	//primitive::rect(hitarea_pos.x, hitarea_pos.y, hitarea_scale.x, hitarea_scale.y,
+	//	0, 0, ToRadian(0), 1, 1, main_conveyor_color, 0.5f);
 
 	if (main_conveyor == true) {
 		if (right_hit_area == true) {
-			primitive::rect(hitarea_pos.x + 120, hitarea_pos.y + 40,
-				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//右の時のデバック用の当たり判定
+			//primitive::rect(hitarea_pos.x + 120, hitarea_pos.y + 40,
+			//	20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//右の時のデバック用の当たり判定
 			if (hit_timer == 0) {
 				sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 20,
 					1, 1, 0, 0, 150, 200, 0, 0, ToRadian(0));//右手の通常時
@@ -55,8 +55,8 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 			}
 		}
 		if (right_hit_area == false) {
-			primitive::rect(hitarea_pos.x + 30, hitarea_pos.y + 50,
-				20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//左の時のデバック用の当たり判定
+			//primitive::rect(hitarea_pos.x + 30, hitarea_pos.y + 50,
+			//	20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//左の時のデバック用の当たり判定
 			if (hit_timer == 0) {
 				sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 20,
 					1, 1, 0, 0, 150, 200, 0, 0, ToRadian(0));//左手の通常時
@@ -69,8 +69,8 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 	}
 
 	//弾くエリア
-	primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y,
-		0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0.5f);//手
+	//primitive::rect(flickarea_pos.x, flickarea_pos.y, flickarea_scale.x, flickarea_scale.y,
+	//	0, 0, ToRadian(0), sub_conveyor_color, 1, 1, 0.5f);//手
 
 	if (main_conveyor == false) {
 		if (flick_timer == 0) {

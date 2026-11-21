@@ -89,8 +89,8 @@ void title_update()
 		icon.Update();
 		back_update(2.0f);
 
-		can.CAN_GENERATE(cans, obas, ojis, boms, 8);//‚P‚Â‚ÌŠÊ‚Ì¶¬ŠÖ”
-		can.CAN_MOVE(cans, obas, ojis, boms, 8);	//‚P‚Â‚ÌŠÊ‚ÌˆÚ“®ŠÖ”
+		can.CAN_GENERATE(cans, obas, ojis, boms, 5);//‚P‚Â‚ÌŠÊ‚Ì¶¬ŠÖ”
+		can.CAN_MOVE(cans, obas, ojis, boms, 5);	//‚P‚Â‚ÌŠÊ‚ÌˆÚ“®ŠÖ”
 
 		break;
 	}
@@ -122,7 +122,7 @@ void title_render()
 	//	break;
 	//}
 
-	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1‚Â‚ÌŠÊ‚Ì•`‰æŠÖ”
+	can.CAN_RENDER(cans, ojis, obas, boms, 5);//1‚Â‚ÌŠÊ‚Ì•`‰æŠÖ”
 	icon.Render();
 
 	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);

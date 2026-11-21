@@ -11,9 +11,9 @@ extern GameTimer gameTimer;
 Day days[] = {
 	//生成間隔	生成個数	缶の速度	爆弾の確率	おばさんの確率	おじさんの確率	不正解の缶の確率	缶の確率
 	//{ 100.0f,		20,		5.0f,		0,			60,				85,				90,					100},	// デバック用
-	{ 20.0f,		30,		12.0f,		10,			20,				30,			40,					100},	// 1日目デバック用
-	{ 15.0f,		30,		12.0f,		0,			0,				0,				99,					100},	// 2日目デバック用
-	{ 15.0f,		30,		13.0f,		0,			0,				0,				99,					100},	// 3日目デバック用
+	//{ 20.0f,		30,		12.0f,		10,			20,				30,			40,					100},	// 1日目デバック用
+	//{ 15.0f,		30,		12.0f,		0,			0,				0,				99,					100},	// 2日目デバック用
+	//{ 15.0f,		30,		13.0f,		0,			0,				0,				99,					100},	// 3日目デバック用
 	{ 100.0f,		10,		3.0f,		0,			0,				0,				30,					100},	// 1日目本番用の確率
 	{ 100.0f,		10,		4.0f,		0,			10,				20,				50,					100},	// 2日目本番用の確率
 	{ 80.0f,		20,		4.0f,		10,			30,				50,				70,					100},	// 3日目本番用の確率
@@ -228,12 +228,12 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 			if (can[i].can_color <= days[day - 1].bom_pro) {
 				sprite_render(Bom, bom[i].pos.x, bom[i].pos.y + 20, bom[i].scale.x * 0.8f, bom[i].scale.y,
 					0, 0, bom_textsize.x, bom_textsize.y, 0, 0, ToRadian(0));//爆弾
-				primitive::rect(bom[i].pos.x, bom[i].pos.y + 20, bom_textsize.x * 0.8f, bom_textsize.y,
-					0, 0, ToRadian(0), 1, 0, 1, 0.3f);//デバック用の当たり判定
-				primitive::rect(bom[i].Bbom_pos.x, bom[i].Bbom_pos.y, bom[i].Bbom_scale.x, bom[i].Bbom_scale.y,
-					0, 0, ToRadian(0), 1, 1, 1, 0.7f);//青ボタンののデバック用の当たり判定
-				primitive::rect(bom[i].Rbom_pos.x, bom[i].Rbom_pos.y, bom[i].Rbom_scale.x, bom[i].Rbom_scale.y,
-					0, 0, ToRadian(0), 0, 0, 0, 0.7f);//赤ボタンののデバック用の当たり判定
+				//primitive::rect(bom[i].pos.x, bom[i].pos.y + 20, bom_textsize.x * 0.8f, bom_textsize.y,
+				//	0, 0, ToRadian(0), 1, 0, 1, 0.3f);//デバック用の当たり判定
+				//primitive::rect(bom[i].Bbom_pos.x, bom[i].Bbom_pos.y, bom[i].Bbom_scale.x, bom[i].Bbom_scale.y,
+				//	0, 0, ToRadian(0), 1, 1, 1, 0.7f);//青ボタンののデバック用の当たり判定
+				//primitive::rect(bom[i].Rbom_pos.x, bom[i].Rbom_pos.y, bom[i].Rbom_scale.x, bom[i].Rbom_scale.y,
+				//	0, 0, ToRadian(0), 0, 0, 0, 0.7f);//赤ボタンののデバック用の当たり判定
 			}
 		}
 
@@ -247,8 +247,8 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 					sprite_render(obasan, oba[i].pos.x - 35, oba[i].pos.y - 50, oba[i].scale.x, oba[i].scale.y,
 						0, 0, oba_textsize.x, oba_textsize.y, 0, 0, ToRadian(0));//おばさん
 				}
-				primitive::rect(oba[i].pos.x, oba[i].pos.y - 50, 130, oba_textsize.y,
-					0, 0, ToRadian(0), 0, 1, 0, 0.3f);//おばさんのデバック用の当たり判定
+				//primitive::rect(oba[i].pos.x, oba[i].pos.y - 50, 130, oba_textsize.y,
+				//	0, 0, ToRadian(0), 0, 1, 0, 0.3f);//おばさんのデバック用の当たり判定
 			}
 		}
 
@@ -259,8 +259,8 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 						sprite_render(ojisan, oji[i].pos.x, oji[i].pos.y - 50, oji[i].scale.x, oji[i].scale.y,
 							0, 0, oji_textsize.x, oji_textsize.y, 0, 0, ToRadian(0));//おじさん
 
-						primitive::rect(oji[i].pos.x + 10, oji[i].pos.y - 50, 180, oji_textsize.y,
-							0, 0, ToRadian(0), 1, 0, 0, 0.3f);//おじさんのデバック用の当たり判定
+						//primitive::rect(oji[i].pos.x + 10, oji[i].pos.y - 50, 180, oji_textsize.y,
+						//	0, 0, ToRadian(0), 1, 0, 0, 0.3f);//おじさんのデバック用の当たり判定
 					}
 				}
 			}
@@ -270,15 +270,15 @@ void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 				sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, can_textsize.x, can_textsize.y, 0, 0, ToRadian(0));//音の違うサバ缶
 
-				primitive::rect(can[i].pos.x, can[i].pos.y, can_textsize.x, can_textsize.y,
-					0, 0, ToRadian(0), 0, 1, 1, 0.3f);//音の違うサバ缶のデバック用の当たり判定
+				//primitive::rect(can[i].pos.x, can[i].pos.y, can_textsize.x, can_textsize.y,
+				//	0, 0, ToRadian(0), 0, 1, 1, 0.3f);//音の違うサバ缶のデバック用の当たり判定
 			}
 			if (can[i].can_color > days[day - 1].errorcan_pro && can[i].can_color <= days[day - 1].can_pro) {
 				sprite_render(sabaCan, can[i].pos.x, can[i].pos.y, can[i].scale.x, can[i].scale.y,
 					0, 0, can_textsize.x, can_textsize.y, 0, 0, ToRadian(0));//サバ缶
 
-				primitive::rect(can[i].pos.x, can[i].pos.y, can_textsize.x, can_textsize.y,
-					0, 0, ToRadian(0), 0, 0, 1, 0.3f);//サバ缶のデバック用の当たり判定
+				//primitive::rect(can[i].pos.x, can[i].pos.y, can_textsize.x, can_textsize.y,
+				//	0, 0, ToRadian(0), 0, 0, 1, 0.3f);//サバ缶のデバック用の当たり判定
 			}
 		}
 	}
@@ -872,7 +872,6 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 	generate_timer = 0;
 	gameOver = false;
 	gameClear = false;
-
 }
 
 void Can::TUTORIAL_RESET()

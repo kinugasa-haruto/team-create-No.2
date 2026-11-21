@@ -40,6 +40,7 @@ void game_init()
 	musicExist = false;
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
+	can.KIGEN_RESET();
 }
 
 void game_deinit()

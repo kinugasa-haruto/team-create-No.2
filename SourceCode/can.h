@@ -129,6 +129,7 @@ public:
 	void TUTORIAL_RESET();
 	void TUTORIAL_GENERATE(bool impure, int day, Can* cans);
 	void DEBUG_OVER() { gameOver = true; }
+	void KIGEN_RESET() {kigen = 60;}
 };
 
 //“ú‚É‚¿–‚Ìİ’è
