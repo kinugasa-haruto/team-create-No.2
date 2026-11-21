@@ -61,6 +61,9 @@ void game_update()
 
 	case 1:
 		//////// パラメータの設定 ////////
+		GameLib::setBlendMode(Blender::BS_ALPHA);
+
+
 		game_state++;
 		/*fallthrough*/
 
@@ -87,6 +90,9 @@ void game_update()
 		{
 			if (!musicExist)
 			{
+				music::play(GAME_BGM);//BGM再生
+				music::stop(GAME_BGM);//BGMストップ
+				music::play(PAPER);//バインダーが出てくるときの音
 
 
 				// この上にmusic::play
@@ -108,11 +114,12 @@ void game_update()
 			}
 			else
 			{
-				if (gameTimer.timerUpdate() == true) {}
+				if (gameTimer.timerUpdate() == true) { music::stop(GAME_BGM); }
 				else
 				{
 					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 					{
+						music::play(CLICK);
 						spacebar.Reset();
 						resultBinder.SetBinderType(1);
 					}

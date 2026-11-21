@@ -19,6 +19,7 @@ private:
 	float sub_conveyor_color;	//サブベルトコンベアの色
 
 	int control_stop_timer;		//プレイヤーの停止時間
+	int control_stop_timer2;		//プレイヤーの停止時間
 	int flick_errorcan_count;	//不正解の缶を回収した合計変数
 	int flick_other_count;		//缶以外の物を回収した合計変数
 
