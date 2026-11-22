@@ -23,6 +23,7 @@ void title_init()
 	title.Reset();
 	music::play(TITLE_BGM, true);
 	music::setVolume(TITLE_BGM, 0.1f);
+	gameDay = 0;
 }
 
 void title_deinit()

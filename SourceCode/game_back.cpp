@@ -43,7 +43,8 @@ void back_render()
 {
 	// âÊñ Çê¬Ç≈ìhÇËÇ¬Ç‘Ç∑
 	sprite_render(sprTime, SCREEN_HALF_W + 300, SCREEN_HALF_H + 150, 1.8f, 1.8f, 0, 0, 1500, 1500, 750, 750, angle.GetAngle());
-	sprite_render(back, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+	if (gameDay == 2 || gameDay == 3) sprite_render(back2, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+	else sprite_render(back1, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 
 
 }
@@ -73,4 +74,9 @@ void flyer_render()
 {
 	sprite_render(flyer1, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 	sprite_render(flyer2, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
+}
+
+void board_render()
+{
+	sprite_render(flyer3, 0, 0, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 }

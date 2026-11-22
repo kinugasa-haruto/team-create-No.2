@@ -57,6 +57,10 @@ void GAME_DAY_RENDER(int num) {
 	{
 		flyer_render();
 	}
+	if (gameDay > 2)
+	{
+		board_render();
+	}
 	can.OJI_BACK_RENDER(cans, ojis, num);//‚¨‚¶‚³‚ñ‚ªƒRƒ“ƒxƒA‚ÌŒã‚ë‚ÉÁ‚¦‚éˆ—
 	conveyor_render();
 	judgearea_render();
