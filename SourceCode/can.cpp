@@ -174,10 +174,10 @@ Can::~Can() {
 
 //ŠÊ‚Ì¶¬ŠÖ”
 void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
-	debug::setString("generate:%i", generate_timer);
-	debug::setString("error_can:%i", errorcan_count);
-	debug::setString("generatenum:%i", generate_num);
-	debug::setString("other_can:%i", othercan_count);
+	//debug::setString("generate:%i", generate_timer);
+	//debug::setString("error_can:%i", errorcan_count);
+	//debug::setString("generatenum:%i", generate_num);
+	//debug::setString("other_can:%i", othercan_count);
 
 	generate_timer--;
 	if (generate_timer < 0 && generate_num < days[day - 1].CAN_NUM) {
@@ -224,7 +224,7 @@ void Can::CAN_GENERATE(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
 
 //ŠÊ‚Ì•`‰æŠÖ”	“ú‚É‚¿‚É‚æ‚Á‚Äí—Ş‚ğ‘‚â‚¹‚é‚æ‚¤‚É‚·‚é
 void Can::CAN_RENDER(Can* can, Can* oba, Can* oji, Can* bom, int day) {
-	debug::setString("cun_num:%i", can_num);
+	//debug::setString("cun_num:%i", can_num);
 	for (int i = 0; i < generate_num; i++) {
 		if (bom[i].can_alive == true) {
 			if (can[i].can_color <= days[day - 1].bom_pro) {
@@ -609,7 +609,7 @@ bool Can::CAN_ALL_VANISH(Can* can, Can* oba, Can* oji, Can* bom) {
 
 //ƒQ[ƒW‚Ìˆ—ŠÖ”
 void Can::GAUGE_UPDATE() {
-	debug::setString("KIGEN:%f", kigen);
+	//debug::setString("KIGEN:%f", kigen);
 	if (kigen < 0) {
 		kigen = 0;
 	}
@@ -854,6 +854,7 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 		can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
 		can[i].can_color = 0;
 		can[i].flick_flag = false;
+		can[i].sound_choice = false;
 		can[i].gravity_flag = false;//d—Í‚ğ‚©‚¯n‚ß‚é”»’f
 		can[i].setCAN_ALIVE(false);
 
@@ -884,6 +885,8 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 
 	}
 
+	errorcan_count = 0;
+	othercan_count = 0;
 	generate_num = 0;
 	generate_timer = 0;
 	gameOver = false;

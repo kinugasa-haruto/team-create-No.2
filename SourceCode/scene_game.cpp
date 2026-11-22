@@ -74,7 +74,6 @@ void game_update()
 
 	case 2:
 		//////// ’Êí ////////
-		if (TRG(0) & PAD_START) can.DEBUG_OVER();
 		if (!nextDay)
 		{
 			// ‚±‚±‚É‰Šú‰»ˆ—

@@ -174,7 +174,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 							if (HITCHECK_THING(&cans[i], cans[i].getCAN_SCALE().x * cans[i].getCAN_TEXTSIZE().x,
 								cans[i].getCAN_SCALE().y * cans[i].getCAN_TEXTSIZE().y) == true) {
 								//音を鳴らす
-								if (day == 1)
+								if (day == 1 || day == 6)
 									music::play(NO_CAN1);
 								if (cans[i].getSOUND_CHOICE() == false) {
 									if (day == 2) {
@@ -384,8 +384,8 @@ bool playerController::HITCHECK_HUND_BUTTON(
 
 //playerの弾く動作関数
 void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* boms, int day) {
-	debug::setString("flick_error_can:%i", flick_errorcan_count);
-	debug::setString("flick_other:%i", flick_other_count);
+	//debug::setString("flick_error_can:%i", flick_errorcan_count);
+	//debug::setString("flick_other:%i", flick_other_count);
 
 	for (int i = 0; i < days[day - 1].CAN_NUM; i++) {
 		if (control_stop_timer <= 0) {
@@ -578,7 +578,7 @@ bool playerController::FLICKCHECK_THING(Can* thing, float textX, float textY) {
 
 //ベルトコンベアの上下と叩くエリアの左右切り替え関数
 void playerController::BELTCONVEYOR_HITAREA_CHANGE() {
-	debug::setString("palyer_stop:%i", control_stop_timer);
+	//debug::setString("palyer_stop:%i", control_stop_timer);
 	if (control_stop_timer <= 0) {
 		//上下
 		if (TRG(0) & PAD_UP) {

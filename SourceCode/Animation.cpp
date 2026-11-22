@@ -35,7 +35,7 @@ void ObachanUpdate()
 
 	scale = sinf(animeTimer) * 0.2f + 1.05f;
 	hannyA.SetScale(scale);
-	debug::setString("scale:%f", hannyA.GetScale());
+	//debug::setString("scale:%f", hannyA.GetScale());
 
 }
 
@@ -95,7 +95,7 @@ void Binder::Down()
 			music = false;
 		}
 	}
-	debug::setString("scale:%f", GetScale());
+	//debug::setString("scale:%f", GetScale());
 }
 
 gameNumber maxCan;
@@ -182,7 +182,7 @@ void TitleIcon::Update()
 		scaleTimer = 0;
 		scale = 1.0f;
 	}
-	debug::setString("scale:%f", scale);
+	//debug::setString("scale:%f", scale);
 }
 
 void TitleIcon::Render()
@@ -200,7 +200,7 @@ void SpaceBar::Update(VECTOR2 pos, float scale)
 	timer += push ? -1 : +1;
 	if (timer > 20) push = true;
 	if (timer < 0) push = false;
-	debug::setString("push:%d", push);
+	//debug::setString("push:%d", push);
 }
 
 void SpaceBar::Render()
@@ -220,7 +220,7 @@ void Wkey::Update(VECTOR2 pos, float scale)
 	timer += push ? -1 : +1;
 	if (timer > 20) push = true;
 	if (timer < 0) push = false;
-	debug::setString("push:%d", push);
+	//debug::setString("push:%d", push);
 }
 
 void Wkey::Render()
@@ -240,7 +240,7 @@ void Skey::Update(VECTOR2 pos, float scale)
 	timer += push ? -1 : +1;
 	if (timer > 20) push = true;
 	if (timer < 0) push = false;
-	debug::setString("push:%d", push);
+	//debug::setString("push:%d", push);
 }
 
 void Skey::Render()

@@ -23,6 +23,7 @@
 #define NO_CAN3	10
 #define NO_CAN4	11
 #define BOM_BOTTON	12
+#define TITLE_BGM	13
 
 
 // XWB‚ÌŽí—Þ

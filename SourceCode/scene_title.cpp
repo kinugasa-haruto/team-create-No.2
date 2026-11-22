@@ -21,11 +21,14 @@ void title_init()
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 	title.Reset();
+	music::play(TITLE_BGM, true);
+	music::setVolume(TITLE_BGM, 0.1f);
 }
 
 void title_deinit()
 {
-
+	music::stop(TITLE_BGM);
+	spacebar.Reset();
 }
 
 void title_update()
@@ -56,6 +59,8 @@ void title_update()
 			music::play(1, false);
 			title.SetSelect(true);
 		}
+		spacebar.Update({ SCREEN_W - 575, 40 });
+
 		if (title.GetSelect())
 		{
 			title.AddTimer(1.0f);
@@ -124,6 +129,7 @@ void title_render()
 
 	can.CAN_RENDER(cans, ojis, obas, boms, 5);//1Ç¬ÇÃä ÇÃï`âÊä÷êî
 	icon.Render();
+	spacebar.Render();
 
 	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 

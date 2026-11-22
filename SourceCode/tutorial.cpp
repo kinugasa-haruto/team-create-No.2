@@ -44,7 +44,7 @@ void SkipButton::Update()
 			nextScene = SCENE_GAME;
 		}
 	}
-	debug::setString("timer:%d", timer);
+	//debug::setString("timer:%d", timer);
 }
 
 void tutorial_init()
@@ -57,11 +57,12 @@ void tutorial_init()
 	timer = 0;
 	player.PLAYER_RESET();
 	tutorialTimer = 0;
+	
 }
 
 void tutorial_deinit()
 {
-	
+	music::stop(GAME_BGM);
 
 }
 
@@ -110,6 +111,8 @@ void tutorial_update()
 
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
+			music::play(GAME_BGM, true);//BGM再生
+			music::setVolume(GAME_BGM, 0.2f);
 			tt.SetProgress(0);
 		}
 		else if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
@@ -196,7 +199,7 @@ void tutorial_update()
 		if (!player.FLICKCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y)) player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
 		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
 		can.CAN_MOVE(cans, obas, ojis, boms, TUTORIAL_DAY);//缶の移動関数
-		back_update(5.0f);
+		back_update(4.0f);
 		//player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 		can.getCAN_POS();					//缶のposのゲッター関数
 

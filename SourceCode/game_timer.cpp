@@ -16,7 +16,7 @@ bool GameTimer::timerUpdate()
 		}
 	}
 	return true;
-	debug::setString("gametimer:%f", scaleY);
+	//debug::setString("gametimer:%f", scaleY);
 }
 
 void GameTimer::timerRender()

@@ -16,6 +16,8 @@ void audio_init()
 	//music::load(FIRE, L"./Data/Sounds/怒り状態2.wav");		//般若演出時の炎の音
 	music::load(BOM, L"./Data/Sounds/爆発音.wav");				//爆弾の爆発音〇
 	music::load(BOM_BOTTON, L"./Data/Sounds/爆弾ボタン.wav");	//爆弾のボタン音〇
+	music::load(TITLE_BGM, L"./Data/Sounds/BGM1.wav");			//タイトルBGM〇
+
 	
 	// // ステージ用のSE
 
