@@ -57,7 +57,7 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 			}
 		}
 		if (right_hit_area == false) {
-			//primitive::rect(hitarea_pos.x + 30, hitarea_pos.y + 50,
+			//primitive::rect(hitarea_pos.x, hitarea_pos.y + 50,
 			//	20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//左の時のデバック用の当たり判定
 			if (hit_timer == 0) {
 				sprite_render(hand, hitarea_pos.x - 20, hitarea_pos.y - 20,
@@ -114,6 +114,8 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 										can.MINUSsetKIGEN(100);
 										control_stop_timer2 = 250;
 										music::play(BOM);
+										music::setVolume(BOM, 0.3f);
+
 									}
 								}
 							}
@@ -131,6 +133,8 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 										control_stop_timer2 = 250;
 										can.MINUSsetKIGEN(100);
 										music::play(BOM);
+										music::setVolume(BOM, 0.3f);
+
 									}
 								}
 							}
@@ -412,6 +416,8 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 									control_stop_timer2 = 250;
 									can.MINUSsetKIGEN(100);
 									music::play(BOM);
+									music::setVolume(BOM, 0.3f);
+
 								}
 							}
 						}

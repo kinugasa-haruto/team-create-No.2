@@ -15,8 +15,8 @@ Day days[] = {
 	//{ 15.0f,		30,		12.0f,		0,			0,				0,				99,					100},	// 2日目デバック用
 	//{ 15.0f,		30,		13.0f,		0,			0,				0,				99,					100},	// 3日目デバック用
 	{ 100.0f,		10,		3.0f,		0,			0,				0,				30,					100},	// 1日目本番用の確率
-	{ 100.0f,		10,		4.0f,		0,			10,				20,				50,					100},	// 2日目本番用の確率
-	{ 80.0f,		20,		4.0f,		10,			30,				50,				70,					100},	// 3日目本番用の確率
+	{ 100.0f,		20,		4.0f,		0,			15,				30,				60,					100},	// 2日目本番用の確率
+	{ 80.0f,		30,		4.0f,		15,			30,				45,				70,					100},	// 3日目本番用の確率
 	{ 70.0f,		20,		5.0f,		10,			20,				80,				90,					100},	// 
 	{ 100.0f,		100,	2.0f,		0,			0,				0,				0,					100},	// 8タイトルの缶
 	{ 0.0f,			2,		4.0f,		0,			0,				0,				50,					100},	// チュートリアル
@@ -59,8 +59,8 @@ void GAME_DAY_RENDER(int num) {
 	}
 	can.OJI_BACK_RENDER(cans, ojis, num);//おじさんがコンベアの後ろに消える処理
 	conveyor_render();
-	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
 	judgearea_render();
+	can.CAN_RENDER(cans, obas, ojis, boms, num);//缶の描画関数
 	can.GAUGE_RENDER();
 	player.HITAREA_FLICKAREA_RENDER();			//叩く,弾くエリアの描画
 	//can.DAY_CLEAR(cans, obas, ojis, boms, num);//CLEAR時の関数	ゲージの描画
@@ -124,10 +124,10 @@ Can::Can() {
 	oji_textsize = { 200,200 };
 	bom_textsize = { 241,100 };
 
-	Bbom_pos = { bom_pos.x + 20 , bom_pos.y + 30 };
-	Rbom_pos = { bom_pos.x + 120 , bom_pos.y + 30 };
-	Bbom_scale = { 60, 50 };
-	Rbom_scale = { 60, 50 };
+	Bbom_pos = { bom_pos.x-180  , bom_pos.y + 30 };
+	Rbom_pos = { bom_pos.x + 140 , bom_pos.y + 30 };
+	Bbom_scale = { 70, 50 };
+	Rbom_scale = { 25, 50 };
 
 	effect_scale = 0.9f;
 
@@ -372,6 +372,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 							boms[i].setEFC_TIMER(0);
 							boms[i].setBOM_EFFECT(true);
 							music::play(BOM);
+							music::setVolume(BOM, 0.3f);
 						}
 						kigen -= 100;
 						bom[i].bom_dropped = true;
