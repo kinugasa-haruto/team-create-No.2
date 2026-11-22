@@ -853,17 +853,20 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 
 		can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
 		can[i].can_color = 0;
+		can[i].flick_flag = false;
 		can[i].gravity_flag = false;//重力をかけ始める判断
 		can[i].setCAN_ALIVE(false);
 
 		oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
 		oba[i].can_color = 0;
+		oba[i].flick_flag = false;
 		oba[i].oba_hit = false;
 		oba[i].gravity_flag = false;//重力をかけ始める判断
 		oba[i].setCAN_ALIVE(false);
 
 		oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
 		oji[i].can_color = 0;
+		oji[i].flick_flag = false;
 		oji[i].oji_back = false;
 		oji[i].oji_hit = false;
 		oji[i].oji_jump = false;
