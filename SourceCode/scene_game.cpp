@@ -25,6 +25,7 @@ static float timer;
 static float inv;
 
 static bool musicExist; // âπó¨Ç∑ÇΩÇﬂÇÃÇ‚Ç¬
+static bool click;
 bool nextDay; // éüÇÃì˙Ç…çsÇ¡ÇΩÇ©Ç«Ç§Ç©
 int gameDay; // åªç›ÇÃì˙ït
 gameNumber gamenumber;
@@ -41,6 +42,8 @@ void game_init()
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 	can.KIGEN_RESET();
+	player.PLAYER_RESET();
+	click = false;
 }
 
 void game_deinit()
@@ -85,6 +88,7 @@ void game_update()
 			resultBinder.reset();
 			GAME_DAY(gameDay);
 			nextDay = true;
+			click = false;
 			musicExist = false;
 		}
 		if (starttimer.Update()) {}
@@ -118,7 +122,11 @@ void game_update()
 				{
 					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 					{
-						music::play(CLICK);
+						if (!click)
+						{
+							music::play(CLICK);
+							click = true;
+						}
 						spacebar.Reset();
 						resultBinder.SetBinderType(1);			
 

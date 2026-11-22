@@ -652,6 +652,9 @@ void playerController::TUTORIAL_HITAREA_CHANGE()
 
 void playerController::PLAYER_RESET()
 {
+	main_conveyor = true;
+	right_hit_area = true;
+
 	control_stop_timer = 0;
 	control_stop_timer2 = 0;
 	flick_errorcan_count = 0;

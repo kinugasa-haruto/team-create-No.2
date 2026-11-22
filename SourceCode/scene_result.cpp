@@ -10,7 +10,7 @@ extern Can boms[500];
 extern Can can;
 
 bool Clear;
-bool click;
+static bool click;
 
 Result result = Result::Instance();
 

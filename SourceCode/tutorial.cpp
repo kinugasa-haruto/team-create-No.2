@@ -55,6 +55,7 @@ void tutorial_init()
 	can.CAN_RESET(cans, obas, ojis, boms);  // ŽŽŒ±“I‚É’Ç‰Á‚µ‚½‚â‚Â
 	back_init();
 	timer = 0;
+	player.PLAYER_RESET();
 	tutorialTimer = 0;
 }
 
