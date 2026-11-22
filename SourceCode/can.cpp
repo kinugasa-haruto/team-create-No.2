@@ -161,6 +161,8 @@ Can::Can() {
 	bomRhit = false;
 	bom_kigen_down = false;
 
+	sound_choice = false;
+
 	gameOver = false;
 	gameClear = false;
 }
@@ -371,6 +373,7 @@ void Can::CAN_MOVE(Can* can, Can* oba, Can* oji, Can* bom, int day) {
 							boms[i].setBOM_EFFECT(true);
 							music::play(BOM);
 						}
+						kigen -= 100;
 						bom[i].bom_dropped = true;
 					}
 
@@ -833,22 +836,32 @@ bool Can::getBOMR_HIT() {
 	return bomRhit;
 }
 
+void Can::setSOUND_CHOICE(bool choice) {
+	sound_choice = choice;
+}
+
+bool Can::getSOUND_CHOICE() {
+	return sound_choice;
+}
+
+
+
 void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 {
 	for (int i = 0; i < 500; i++)
 	{
-	
+
 		can[i].pos = { SCREEN_W,SCREEN_H * 0.48f };
 		can[i].can_color = 0;
 		can[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
 		can[i].setCAN_ALIVE(false);
-	
+
 		oba[i].oba_pos = { SCREEN_W - 35,SCREEN_H * 0.48f - 50 };
 		oba[i].can_color = 0;
 		oba[i].oba_hit = false;
 		oba[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
 		oba[i].setCAN_ALIVE(false);
-	
+
 		oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
 		oji[i].can_color = 0;
 		oji[i].oji_back = false;
@@ -856,7 +869,7 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 		oji[i].oji_jump = false;
 		oji[i].gravity_flag = false;//d—Í‚ð‚©‚¯Žn‚ß‚é”»’f
 		oji[i].setCAN_ALIVE(false);
-	
+
 		bom[i].bom_pos = { SCREEN_W,SCREEN_H * 0.48f + 20 };
 		bom[i].can_color = 0;
 		bom[i].flick_flag = false;
@@ -865,7 +878,7 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 		bom[i].Bomeffect_flag = false;
 		bom[i].efc_timer = 0;
 		bom[i].setCAN_ALIVE(false);
-	
+
 	}
 
 	generate_num = 0;

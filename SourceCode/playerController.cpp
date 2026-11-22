@@ -28,6 +28,8 @@ playerController::playerController() {
 	hit_timer = 0;
 	flick_timer = 0;
 	obaeffect_timer = 0;
+
+	sound = 0;
 }
 
 //デストラクタ
@@ -46,11 +48,11 @@ void playerController::HITAREA_FLICKAREA_RENDER() {
 			//primitive::rect(hitarea_pos.x + 120, hitarea_pos.y + 40,
 			//	20, 20, 0, 0, ToRadian(0), 0, 0, 1, 0.7f);//右の時のデバック用の当たり判定
 			if (hit_timer == 0) {
-				sprite_render(hand, hitarea_pos.x + 130, hitarea_pos.y - 20,
+				sprite_render(hand, hitarea_pos.x + 100, hitarea_pos.y - 20,
 					1, 1, 0, 0, 150, 200, 0, 0, ToRadian(0));//右手の通常時
 			}
 			if (hit_timer > 0) {
-				sprite_render(hand, hitarea_pos.x + 100, hitarea_pos.y - 40,
+				sprite_render(hand, hitarea_pos.x + 70, hitarea_pos.y - 40,
 					1, 0.85f, 0, 0, 150, 200, ToRadian(0));//右手の叩いた時
 			}
 		}
@@ -109,7 +111,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 											boms[i].setEFC_TIMER(0);
 											boms[i].setBOM_EFFECT(true);
 										}
-										//can.MINUSsetKIGEN(100);
+										can.MINUSsetKIGEN(100);
 										control_stop_timer2 = 250;
 										music::play(BOM);
 									}
@@ -127,7 +129,7 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 											boms[i].setBOM_EFFECT(true);
 										}
 										control_stop_timer2 = 250;
-										//can.MINUSsetKIGEN(100);
+										can.MINUSsetKIGEN(100);
 										music::play(BOM);
 									}
 								}
@@ -174,23 +176,33 @@ void playerController::PLAYER_HIT_CAN(Can* cans, Can* obas, Can* ojis, Can* boms
 								//音を鳴らす
 								if (day == 1)
 									music::play(NO_CAN1);
-								if (day == 2) {
-									int sound = rand() % 2 + 1;
-									if (sound == 1)
-										music::play(NO_CAN1);
-									if (sound == 2)
-										music::play(NO_CAN2);
+								if (cans[i].getSOUND_CHOICE() == false) {
+									if (day == 2) {
+										sound = rand() % 2 + 1;
+									}
+									if (day == 3) {
+										sound = rand() % 4 + 1;
+									}
+									cans[i].setSOUND_CHOICE(true);
 								}
-								if (day == 3) {
-									int sound = rand() % 4 + 1;
-									if (sound == 1)
-										music::play(NO_CAN1);
-									if (sound == 2)
-										music::play(NO_CAN2);
-									if (sound == 3)
-										music::play(NO_CAN3);
-									if (sound == 4)
-										music::play(NO_CAN4);
+
+								if (cans[i].getSOUND_CHOICE() == true) {
+									if (day == 2) {
+										if (sound == 1)
+											music::play(NO_CAN1);
+										if (sound == 2)
+											music::play(NO_CAN2);
+									}
+									if (day == 3) {
+										if (sound == 1)
+											music::play(NO_CAN1);
+										if (sound == 2)
+											music::play(NO_CAN2);
+										if (sound == 3)
+											music::play(NO_CAN3);
+										if (sound == 4)
+											music::play(NO_CAN4);
+									}
 								}
 							}
 						}
@@ -398,7 +410,7 @@ void playerController::PLAYER_FLICK_CAN(Can* cans, Can* obas, Can* ojis, Can* bo
 										boms[i].setBOM_EFFECT(true);
 									}
 									control_stop_timer2 = 250;
-									//can.MINUSsetKIGEN(100);
+									can.MINUSsetKIGEN(100);
 									music::play(BOM);
 								}
 							}

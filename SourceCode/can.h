@@ -62,6 +62,8 @@ private:
 	bool bomRhit;  // 赤いボタンを叩いたかの判断
 	bool bom_kigen_down;  // 赤いボタンを叩いたかの判断
 
+	bool sound_choice;
+
 	bool gameClear; // クリあ
 	bool gameOver; // オーバー
 public:
@@ -121,6 +123,9 @@ public:
 	bool getBOMB_HIT();
 	void setBOMR_HIT(bool hit);
 	bool getBOMR_HIT();
+
+	void setSOUND_CHOICE(bool choice);
+	bool getSOUND_CHOICE();
 
 	bool getCAN_GAMECLEAR() { return gameClear; }  // kuri
 	bool getCAN_GAMEOVER() { return gameOver; }  //  oba

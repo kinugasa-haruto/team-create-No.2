@@ -26,6 +26,8 @@ private:
 	float hit_timer;			//’@‚¢‚½Žž‚ÉŽè‚Ì‰æ‘œˆÊ’u‚ð•Ï‚¦‚éŽžŠÔ
 	float flick_timer;			//’e‚¢‚½Žž‚ÉŽè‚Ì‰æ‘œˆÊ’u‚ð•Ï‚¦‚éŽžŠÔ
 
+	int sound;
+
 	float obaeffect_timer;
 
 public:

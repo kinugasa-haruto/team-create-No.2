@@ -93,6 +93,7 @@ void game_update()
 			if (!musicExist)
 			{
 				music::play(GAME_BGM);//BGMçƒê∂
+				music::setVolume(GAME_BGM, 0.2f);
 				// Ç±ÇÃè„Ç…music::play
 				musicExist = true;
 			}
