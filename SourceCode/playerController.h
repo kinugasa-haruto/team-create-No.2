@@ -19,11 +19,14 @@ private:
 	float sub_conveyor_color;	//サブベルトコンベアの色
 
 	int control_stop_timer;		//プレイヤーの停止時間
+	int control_stop_timer2;		//プレイヤーの停止時間
 	int flick_errorcan_count;	//不正解の缶を回収した合計変数
 	int flick_other_count;		//缶以外の物を回収した合計変数
 
 	float hit_timer;			//叩いた時に手の画像位置を変える時間
 	float flick_timer;			//弾いた時に手の画像位置を変える時間
+
+	int sound;
 
 	float obaeffect_timer;
 
@@ -32,7 +35,7 @@ public:
 	~playerController();				//デストラクタ
 	void HITAREA_FLICKAREA_RENDER();	//叩くエリアと弾くエリアの描画関数
 	void PLAYER_HIT_CAN(Can* can, Can* oba, Can* oji, Can* bom, int day);	//playerの缶を叩く動作関数
-	
+
 	//bool HITCHECK_CAN(Can* can);	//缶と叩くエリアの当たり判定関数
 	//bool HITCHECK_OBA(Can* oba);	//おばさんと叩くエリアの当たり判定関数
 	//bool HITCHECK_OJI(Can* oji);	//おじさんと叩くエリアの当たり判定関数
@@ -59,6 +62,8 @@ public:
 
 	void TUTORIAL_HITAREA_CHANGE(); // 左右のみの切替
 	bool GetMAIN_CONVEYOR() { return main_conveyor; } // メインコンベアゲッター関数
+	void PLAYER_RESET();
+
 };
 
 #define HIT_HUND_RENDER_TIMER (5)	//叩いた時に手の画像位置を変える時間

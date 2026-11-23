@@ -42,7 +42,7 @@ public:
 		sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 		//text_out(1, "skip", pos.x + 10, pos.y + 10, 1, 1, 1, 1, 1);
 		//primitive::rect(0, 0, SCREEN_W, SCREEN_H, 0, 0, ToRadian(0), 0, 0, 0, inv);
-		debug::setString("timerRender:%d", timer);
+		//debug::setString("timerRender:%d", timer);
 	}
 
 private:

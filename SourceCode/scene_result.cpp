@@ -10,7 +10,8 @@ extern Can boms[500];
 extern Can can;
 
 bool Clear;
-
+static bool click;
+static bool musicExist;
 Result result = Result::Instance();
 
 
@@ -21,11 +22,14 @@ void result_init()
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 	result.Reset();
+	click = false;
+	musicExist = false;
 }
 
 void result_deinit()
 {
-
+	if (Clear) music::stop(GAMECLEAR);
+	else music::stop(GAMEOVER);
 }
 
 void result_update()
@@ -35,7 +39,6 @@ void result_update()
 	case 0:
 		//////// èâä˙ê›íË ////////
 
-
 		result_state++;
 		/*fallthrough*/
 
@@ -43,7 +46,7 @@ void result_update()
 		//////// ÉpÉâÉÅÅ[É^ÇÃê›íË ////////
 
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-		
+
 
 
 		result_state++;
@@ -56,8 +59,28 @@ void result_update()
 	case 3:
 		if (result.Update(Clear))
 		{
+			if (!musicExist)
+			{
+				if (Clear)
+				{
+					music::play(GAMECLEAR, true);
+					music::setVolume(GAMECLEAR, 0.1f);
+					musicExist = true;
+				}
+				else
+				{
+					music::play(GAMEOVER, false);
+					musicExist = true;
+				}
+			}
 			if (TRG(0) & PAD_TRG1)
 			{
+				if (!click)
+				{
+					music::play(CLICK);
+					click = true;
+				}
+				spacebar.Reset();
 				nextScene = SCENE_TITLE;
 			}
 		}
@@ -65,7 +88,7 @@ void result_update()
 
 
 
-	break;
+		break;
 	}
 
 	result_timer++;
@@ -76,7 +99,7 @@ void result_update()
 //--------------------------------------
 void result_render()
 {
-	GameLib::clear(0,0,0);
+	GameLib::clear(0, 0, 0);
 
 	result.Render();
 }

@@ -68,16 +68,20 @@ public:
 		binderType = 0;
 		anime = 0;
 		goNext = false;
+		music = false;
+		musicresult = false;
 	}
 
 private:
-	VECTOR2 pos;
-	VECTOR4 rect;
+	bool goNext;
+	bool music;
+	bool musicresult;
 	int binderType;
+	int anime;
 	float timer;
 	float scale;
-	int anime;
-	bool goNext;
+	VECTOR4 rect;
+	VECTOR2 pos;
 };
 
 extern Binder resultBinder;
@@ -179,7 +183,7 @@ public:
 	}
 
 
-	void Update(VECTOR2 pos);
+	void Update(VECTOR2 pos, float scale = 0.3f);
 
 	void Render();
 
@@ -187,6 +191,7 @@ public:
 	{
 		push = false;
 		pos = {};
+		scale = 0.2f;
 		timer = 0;
 		exist = false;
 	}
@@ -197,16 +202,99 @@ private:
 		pos = {};
 		timer = 0;
 		exist = false;
+		scale = 0.2f;
 	}
 	bool exist;
 	bool push;
-	VECTOR2 pos;
 	int timer;
-
+	float scale;
+	VECTOR2 pos;
 
 };
 
 extern SpaceBar spacebar;
+
+class Wkey
+{
+public:
+	static Wkey Instance()
+	{
+		Wkey instance;
+		return instance;
+	}
+
+
+	void Update(VECTOR2 pos, float scale = 0.3f);
+
+	void Render();
+
+	void Reset()
+	{
+		push = false;
+		pos = {};
+		scale = 0.2f;
+		timer = 0;
+		exist = false;
+	}
+private:
+	Wkey()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+		scale = 0.2f;
+	}
+	bool exist;
+	bool push;
+	int timer;
+	float scale;
+	VECTOR2 pos;
+
+};
+
+extern Wkey wKey;
+
+class Skey
+{
+public:
+	static Skey Instance()
+	{
+		Skey instance;
+		return instance;
+	}
+
+
+	void Update(VECTOR2 pos, float scale = 0.2f);
+
+	void Render();
+
+	void Reset()
+	{
+		push = false;
+		pos = {};
+		scale = 0.2f;
+		timer = 0;
+		exist = false;
+	}
+private:
+	Skey()
+	{
+		push = false;
+		pos = {};
+		timer = 0;
+		exist = false;
+		scale = 0.2f;
+	}
+	bool exist;
+	bool push;
+	int timer;
+	float scale;
+	VECTOR2 pos;
+
+};
+
+extern Skey sKey;
 
 class StartTimer
 {

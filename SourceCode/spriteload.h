@@ -1,11 +1,15 @@
 #pragma once
 
 // ここにextern
-extern Sprite* back; // 背景
+extern Sprite* back1; // 背景
+extern Sprite* back2; // 背景
 extern Sprite* sprTime; // 窓の外の景色
 extern Sprite* judgeArea; // 赤いエリア
 extern Sprite* conveyor1; // コンベア（動かないほう）
 extern Sprite* conveyor2; // コンベア（動くほう）
+extern Sprite* flyer1; // おじさん張り紙
+extern Sprite* flyer2; // おばさん張り紙
+extern Sprite* flyer3; // ボンバーマン
 
 extern Sprite* sabaCan;		//サバ缶
 extern Sprite* ojisan;		//おじ
@@ -35,6 +39,8 @@ extern Sprite* nowday; // 今日が何日目か
 
 extern Sprite* number; // 数字
 extern Sprite* space; // スペースキー
+extern Sprite* skey; // sキー
+extern Sprite* wkey; // wキー
 extern Sprite* endwork; // 業務終了
 extern Sprite* leavework; // 退勤
 extern Sprite* skip; // スキップ

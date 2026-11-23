@@ -24,6 +24,8 @@ extern int debug_miss;
 static float timer;
 static float inv;
 
+static bool musicExist; // 音流すためのやつ
+static bool click;
 bool nextDay; // 次の日に行ったかどうか
 int gameDay; // 現在の日付
 gameNumber gamenumber;
@@ -36,8 +38,12 @@ void game_init()
 	inv = 0;
 	gameDay = 1;
 	nextDay = false;
+	musicExist = false;
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
+	can.KIGEN_RESET();
+	player.PLAYER_RESET();
+	click = false;
 }
 
 void game_deinit()
@@ -59,17 +65,20 @@ void game_update()
 
 	case 1:
 		//////// パラメータの設定 ////////
+		GameLib::setBlendMode(Blender::BS_ALPHA);
+
+		
 		game_state++;
 		/*fallthrough*/
 
 
 	case 2:
 		//////// 通常時 ////////
-		if (TRG(0) & PAD_START) can.DEBUG_OVER();
 		if (!nextDay)
 		{
 			// ここに初期化処理
 			can.CAN_RESET(cans, obas, ojis, boms);
+			player.PLAYER_RESET();
 			back_init();
 			starttimer.Reset();
 			gamenumber.Update({ SCREEN_HALF_W - 300, SCREEN_HALF_H - 50 }, gameDay, 0);
@@ -78,10 +87,19 @@ void game_update()
 			resultBinder.reset();
 			GAME_DAY(gameDay);
 			nextDay = true;
+			click = false;
+			musicExist = false;
 		}
 		if (starttimer.Update()) {}
 		else
 		{
+			if (!musicExist)
+			{
+				music::play(GAME_BGM);//BGM再生
+				music::setVolume(GAME_BGM, 0.2f);
+				// この上にmusic::play
+				musicExist = true;
+			}
 			if (can.getCAN_GAMEOVER())
 			{
 				timer += 0.01f;
@@ -98,12 +116,19 @@ void game_update()
 			}
 			else
 			{
-				if (gameTimer.timerUpdate() == true) {}
+				if (gameTimer.timerUpdate() == true) { music::stop(GAME_BGM); }
 				else
 				{
 					if (resultBinder.GetNext() && TRG(0) & PAD_TRG1)
 					{
-						resultBinder.SetBinderType(1);
+						if (!click)
+						{
+							music::play(CLICK);
+							click = true;
+						}
+						spacebar.Reset();
+						resultBinder.SetBinderType(1);			
+
 					}
 
 					if (resultBinder.GetBinderType() == 0) resultBinder.Up();
@@ -112,7 +137,12 @@ void game_update()
 					
 					if (resultBinder.GetBinderType() == 1 && resultBinder.GetScale() == 0)
 					{
-						nextday.Update();
+						if (gameDay + 1 > 3)
+						{
+							Clear = true;
+							nextScene = SCENE_RESULT;
+						}
+						else nextday.Update();
 					}
 					
 				}

@@ -58,6 +58,12 @@ private:
 	bool flick_flag;//回収したかの判断
 	bool bom_dropped;//爆弾を流したかの判断
 
+	bool bomBhit; // 青いボタンを叩いたかの判断
+	bool bomRhit;  // 赤いボタンを叩いたかの判断
+	bool bom_kigen_down;  // 赤いボタンを叩いたかの判断
+
+	bool sound_choice;
+
 	bool gameClear; // クリあ
 	bool gameOver; // オーバー
 public:
@@ -113,6 +119,14 @@ public:
 	bool getBOM_EFFECT();
 	void setEFC_TIMER(int timer);
 
+	void setBOMB_HIT(bool hit);
+	bool getBOMB_HIT();
+	void setBOMR_HIT(bool hit);
+	bool getBOMR_HIT();
+
+	void setSOUND_CHOICE(bool choice);
+	bool getSOUND_CHOICE();
+
 	bool getCAN_GAMECLEAR() { return gameClear; }  // kuri
 	bool getCAN_GAMEOVER() { return gameOver; }  //  oba
 
@@ -120,6 +134,7 @@ public:
 	void TUTORIAL_RESET();
 	void TUTORIAL_GENERATE(bool impure, int day, Can* cans);
 	void DEBUG_OVER() { gameOver = true; }
+	void KIGEN_RESET() {kigen = 60;}
 };
 
 //日にち事の設定

@@ -1,6 +1,6 @@
 #include "all.h"
 
-
+#define TUTORIAL_DAY 6
 
 int tutorial_state;
 int tutorial_timer;
@@ -44,7 +44,7 @@ void SkipButton::Update()
 			nextScene = SCENE_GAME;
 		}
 	}
-	debug::setString("timer:%d", timer);
+	//debug::setString("timer:%d", timer);
 }
 
 void tutorial_init()
@@ -55,12 +55,14 @@ void tutorial_init()
 	can.CAN_RESET(cans, obas, ojis, boms);  // 試験的に追加したやつ
 	back_init();
 	timer = 0;
+	player.PLAYER_RESET();
 	tutorialTimer = 0;
+	
 }
 
 void tutorial_deinit()
 {
-	
+	music::stop(GAME_BGM);
 
 }
 
@@ -109,6 +111,8 @@ void tutorial_update()
 
 		if (tutorialTimer > 3 * 60 && tt.GetProgress() == -1)
 		{
+			music::play(GAME_BGM, true);//BGM再生
+			music::setVolume(GAME_BGM, 0.2f);
 			tt.SetProgress(0);
 		}
 		else if (tutorialTimer == 6 * 60 && tt.GetProgress() == 0)
@@ -118,21 +122,21 @@ void tutorial_update()
 			// ここ！！！！
 			// ここ！！！！
 			// ここ！！！！ 
-			can.TUTORIAL_GENERATE(false, 9, cans); // チュートリアル用の生成関数
+			can.TUTORIAL_GENERATE(false, TUTORIAL_DAY, cans); // チュートリアル用の生成関数
 		}
 		else if (tutorialTimer == 4 * 60 && tt.GetProgress() == 1)
 		{
-			can.TUTORIAL_GENERATE(true, 9, cans); //不正解の缶の生成関数
+			can.TUTORIAL_GENERATE(true, TUTORIAL_DAY, cans); //不正解の缶の生成関数
    			tt.SetProgress(2);
 		}
 
 
 		if (player.HITCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y) && tt.GetProgress() == 0)//缶と叩くエリアの当たり判定関数
 		{
-				spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50});
+				spacebar.Update({ SCREEN_W * 0.515f , SCREEN_HALF_H - 50});
 				if (TRG(0) & PAD_TRG1)
 				{
-					player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
+					player.PLAYER_HIT_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
 					//can.TUTORIAL_RESET();
 					tt.SetProgress(1);
 					tutorialTimer = 0;
@@ -151,10 +155,11 @@ void tutorial_update()
 		// ここ！！！
 	    else if (player.HITCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 2) // ここがtrueにならない
 		{
-			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_HALF_H - 50 });
+			spacebar.Update({ SCREEN_W * 0.51f , SCREEN_HALF_H - 50 });
+			
 			if (TRG(0) & PAD_TRG1 && player.GetMAIN_CONVEYOR())
 			{
-				player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
+				player.PLAYER_HIT_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
 				tt.SetProgress(3);
 				tutorialTimer = 0;
 				spacebar.Reset();
@@ -163,13 +168,17 @@ void tutorial_update()
 		}
 		else if (player.FLICKCHECK_THING(&cans[1], cans[1].getCAN_TEXTSIZE().x, cans[1].getCAN_TEXTSIZE().y) && tt.GetProgress() == 3)
 		{
-			spacebar.Update({ SCREEN_W * 0.52f , SCREEN_H * 0.77f - 50 });
+			spacebar.Update({ SCREEN_W * 0.515f , SCREEN_H * 0.77f - 50 });
+			sKey.Update({ SCREEN_W * 0.485f , SCREEN_HALF_H - 50 }, 0.5f);
+			wKey.Update({ SCREEN_W * 0.485f , SCREEN_H * 0.77f - 50 }, 0.5f);
 			if (TRG(0) & PAD_TRG1 && !player.GetMAIN_CONVEYOR())
 			{
-				player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
+				player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
 				tt.SetProgress(4);
 				tutorialTimer = 0;
 				spacebar.Reset();
+				wKey.Reset();
+				sKey.Reset();
 			}
 			break;
 		}
@@ -187,10 +196,10 @@ void tutorial_update()
 
 		//TUTORIAL_CAN_UPDATE();		//正しい缶の生成と缶を叩く、弾く動作を入れた関数
 		//TUTORIAL_MISSCAN_UPDATE();//不正解の缶の生成と缶を叩く、弾く動作を入れた関数
-		player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
-		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, 9); //playerの缶を叩く動作関数
-		can.CAN_MOVE(cans, obas, ojis, boms, 9);//缶の移動関数
-		back_update(2.0f);
+		if (!player.FLICKCHECK_THING(&cans[0], cans[0].getCAN_TEXTSIZE().x, cans[0].getCAN_TEXTSIZE().y)) player.PLAYER_FLICK_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
+		player.PLAYER_HIT_CAN(cans, obas, ojis, boms, TUTORIAL_DAY); //playerの缶を叩く動作関数
+		can.CAN_MOVE(cans, obas, ojis, boms, TUTORIAL_DAY);//缶の移動関数
+		back_update(4.0f);
 		//player.BELTCONVEYOR_HITAREA_CHANGE();//ベルトコンベアの上下と叩くエリアの左右切り替え関数
 		can.getCAN_POS();					//缶のposのゲッター関数
 
@@ -210,13 +219,15 @@ void tutorial_render()
 	conveyor_render();
 	tt.Render();
 	//正しい缶と不正解の缶のRENDER関数は必要に応じて呼んでほしい
-	can.CAN_RENDER(cans, obas, ojis, boms, 9);		//正解の缶の描画関数
+	can.CAN_RENDER(cans, obas, ojis, boms, TUTORIAL_DAY);		//正解の缶の描画関数
 	//can.CAN_RENDER(cans, obas, ojis, boms, 9);		//正解の缶の描画関数
 	//can.CAN_RENDER(cans, obas, ojis, boms, 9);	//不正解の缶の描画関数
 	judgearea_render();
 	player.HITAREA_FLICKAREA_RENDER();			//手の描画
 
 	spacebar.Render();
+	sKey.Render();
+	wKey.Render();
 	skipbutton.Render();
 	
 	sprite_render(shutter, 0, 0 - SCREEN_H * inv, 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);

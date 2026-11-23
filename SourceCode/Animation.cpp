@@ -17,7 +17,7 @@ void ObachanUpdate()
 	static float animeTimer = 0;
 	static float scale = 1;
 	static bool h = false;
-	
+
 
 	if (!h) animeTimer += 0.1f;
 	if (h) animeTimer -= 0.1f;
@@ -35,7 +35,8 @@ void ObachanUpdate()
 
 	scale = sinf(animeTimer) * 0.2f + 1.05f;
 	hannyA.SetScale(scale);
-	debug::setString("scale:%f", hannyA.GetScale());
+	//debug::setString("scale:%f", hannyA.GetScale());
+
 }
 
 
@@ -49,6 +50,12 @@ Binder resultBinder;
 
 void Binder::Up()
 {
+	if (!music && scale <= 0.1f)
+	{
+		music::play(PAPER);//バインダーが出てくるときの音
+		music = true;
+	}
+
 	timer += 1.0f / (60 * 2);
 
 	scale = Easing::easeOut3(timer);
@@ -56,7 +63,19 @@ void Binder::Up()
 	{
 		scale = 1;
 		NumberUpdate();
-		spacebar.Update({ SCREEN_W - 200, SCREEN_H - 250 });
+		spacebar.Update({ SCREEN_W - 225, SCREEN_H - 250 });
+		if (!musicresult)
+		{
+			music::play(GAME_RESULT);
+			music::setVolume(GAME_RESULT, 0.1f);
+			musicresult = true;
+		}
+		if (music)
+		{
+			music::stop(PAPER);//バインダーが出てくるときの音
+			music = false;
+		}
+
 	}
 	if (timer >= 1) timer = 1;
 }
@@ -64,12 +83,26 @@ void Binder::Up()
 void Binder::Down()
 {
 
+	if (!music && scale >= 0.9f)
+	{
+		music::play(PAPER);//バインダーが出てくるときの音
+		music::stop(GAME_RESULT);
+		music = true;
+	}
 	if (scale >= 0.999f) scale = 1;
 	timer -= 1.0f / (60 * 2);
 
 	scale = 1 - Easing::easeOut3(1 - timer);
-	if (scale <= 0.001f) scale = 0;
-	debug::setString("scale:%f", GetScale());
+	if (scale <= 0.001f)
+	{
+		scale = 0;
+		if (music)
+		{
+			music::stop(PAPER);//バインダーが出てくるときの音
+			music = false;
+		}
+	}
+	//debug::setString("scale:%f", GetScale());
 }
 
 gameNumber maxCan;
@@ -84,7 +117,7 @@ void Binder::NumberUpdate()
 	//if (collectCan >= // ここにゲッター) collectCan = // ここにげったー
 	maxOther.Update({ 934 , 850 }, can.getOTHERCAN_COUNT(), 1, 0.6f);
 	collectOther.Update({ 760 , 850 }, player.getFLICK_OTHERCAN_COUNT(), 1, 0.6f);
-	maxCan.Update({ 934 , 510 }, can.getERRORCAN_COUNT(),  1, 0.6f);
+	maxCan.Update({ 934 , 510 }, can.getERRORCAN_COUNT(), 1, 0.6f);
 	collectCan.Update({ 760 , 510 }, player.getFLICK_ERRORCAN_COUNT(), 1, 0.6f);
 	goNext = true;
 }
@@ -123,7 +156,7 @@ void NextDay::Update()
 	{
 		inv = Easing::easeOut3(timer);
 	}
-	if (!swap &&inv >= 0.998f)
+	if (!swap && inv >= 0.998f)
 	{
 		inv = 1;
 		swap = true;
@@ -156,32 +189,74 @@ void TitleIcon::Update()
 		scaleTimer = 0;
 		scale = 1.0f;
 	}
-	debug::setString("scale:%f", scale);
+	//debug::setString("scale:%f", scale);
 }
 
 void TitleIcon::Render()
 {
-	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f,  314 * 0.5f);
+	sprite_render(titleIcon, pos.x, pos.y, 1, 1, 0, 0, 931, 314, 931 * 0.5f, 314 * 0.5f);
 }
 
 SpaceBar spacebar = SpaceBar::Instance();
 
-void SpaceBar::Update(VECTOR2 pos) 
+void SpaceBar::Update(VECTOR2 pos, float scale) 
 {
 	exist = true;
+	this->scale = scale;
 	this->pos = pos;
 	timer += push ? -1 : +1;
 	if (timer > 20) push = true;
 	if (timer < 0) push = false;
-	debug::setString("push:%d", push);
+	//debug::setString("push:%d", push);
 }
 
 void SpaceBar::Render()
 {
 	if (!exist) return;
-	if (push) sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 450, 0, 450, 200, 0, 0);
-	else sprite_render(space, pos.x, pos.y, 0.2f, 0.2f, 0, 0, 450, 200, 0, 0);
+	if (push) sprite_render(space, pos.x, pos.y, scale, scale, 450, 0, 450, 200, 0, 0);
+	else sprite_render(space, pos.x, pos.y, scale, scale, 0, 0, 450, 200, 0, 0);
 }
+
+Wkey wKey = Wkey::Instance();
+
+void Wkey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	//debug::setString("push:%d", push);
+}
+
+void Wkey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(wkey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(wkey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
+Skey sKey = Skey::Instance();
+
+void Skey::Update(VECTOR2 pos, float scale)
+{
+	exist = true;
+	this->scale = scale;
+	this->pos = pos;
+	timer += push ? -1 : +1;
+	if (timer > 20) push = true;
+	if (timer < 0) push = false;
+	//debug::setString("push:%d", push);
+}
+
+void Skey::Render()
+{
+	if (!exist) return;
+	if (push) sprite_render(skey, pos.x, pos.y, scale, scale, 110, 0, 110, 100, 0, 0);
+	else sprite_render(skey, pos.x, pos.y, scale, scale, 0, 0, 110, 100, 0, 0);
+}
+
 
 gameNumber starttimer;
 
@@ -209,7 +284,7 @@ bool StartTimer::Update()
 		else starttimer.Update({ SCREEN_HALF_W - 20, SCREEN_HALF_H - 20 }, count, 0, 1);
 	}
 	return count > 0;
-	
+
 }
 
 void StartTimer::Render()

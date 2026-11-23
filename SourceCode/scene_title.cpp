@@ -21,11 +21,15 @@ void title_init()
 	can.CAN_RESET(cans, obas, ojis, boms);
 	back_init();
 	title.Reset();
+	music::play(TITLE_BGM, true);
+	music::setVolume(TITLE_BGM, 0.1f);
+	gameDay = 0;
 }
 
 void title_deinit()
 {
-
+	music::stop(TITLE_BGM);
+	spacebar.Reset();
 }
 
 void title_update()
@@ -56,6 +60,8 @@ void title_update()
 			music::play(1, false);
 			title.SetSelect(true);
 		}
+		spacebar.Update({ SCREEN_W - 575, 40 });
+
 		if (title.GetSelect())
 		{
 			title.AddTimer(1.0f);
@@ -72,7 +78,12 @@ void title_update()
 				title.SetInv(Easing::easeOut3(timer));
 				if (title.GetInv() >= 0.99f) timer = 0;
 			}
-			if (title.GetInv() >= 0.99f) nextScene = SCENE_TUTORIAL;
+			if (title.GetInv() >= 0.99f)
+			{
+				nextScene = SCENE_TUTORIAL;
+				//nextScene = SCENE_RESULT;
+				//Clear = true;
+			}
 
 		}
 
@@ -89,8 +100,8 @@ void title_update()
 		icon.Update();
 		back_update(2.0f);
 
-		can.CAN_GENERATE(cans, obas, ojis, boms, 8);//‚P‚Â‚ÌŠÊ‚Ì¶¬ŠÖ”
-		can.CAN_MOVE(cans, obas, ojis, boms, 8);	//‚P‚Â‚ÌŠÊ‚ÌˆÚ“®ŠÖ”
+		can.CAN_GENERATE(cans, obas, ojis, boms, 5);//‚P‚Â‚ÌŠÊ‚Ì¶¬ŠÖ”
+		can.CAN_MOVE(cans, obas, ojis, boms, 5);	//‚P‚Â‚ÌŠÊ‚ÌˆÚ“®ŠÖ”
 
 		break;
 	}
@@ -122,8 +133,9 @@ void title_render()
 	//	break;
 	//}
 
-	can.CAN_RENDER(cans, ojis, obas, boms, 8);//1‚Â‚ÌŠÊ‚Ì•`‰æŠÖ”
+	can.CAN_RENDER(cans, ojis, obas, boms, 5);//1‚Â‚ÌŠÊ‚Ì•`‰æŠÖ”
 	icon.Render();
+	spacebar.Render();
 
 	sprite_render(shutter, 0, -SCREEN_H + SCREEN_H * title.GetInv(), 1, 1, 0, 0, SCREEN_W, SCREEN_H, 0, 0);
 

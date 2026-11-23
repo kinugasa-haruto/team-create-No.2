@@ -1,10 +1,14 @@
 #include "all.h"
 
-Sprite* back; // 背景
+Sprite* back1; // 背景
+Sprite* back2; // 背景
 Sprite* sprTime; // 窓の外の景色
 Sprite* judgeArea; // 赤いエリア
 Sprite* conveyor1; // コンベア（動かないほう）
 Sprite* conveyor2; // コンベア（動くほう）
+Sprite* flyer1; // おじさん張り紙
+Sprite* flyer2; // おばさん張り紙
+Sprite* flyer3; // ボンバーマン
 
 Sprite* sabaCan;	//サバ缶
 Sprite* ojisan;		//おじ
@@ -34,6 +38,8 @@ Sprite* nowday; // 何日目か表示
 
 Sprite* number; // 数字
 Sprite* space; // スペースキー
+Sprite* wkey; // Wキー
+Sprite* skey; // Sキー
 Sprite* endwork; // 業務終了
 Sprite* leavework; // 退勤
 Sprite* skip; // スキップ
@@ -49,11 +55,15 @@ Sprite* tutorialText; // チュートリアル文言
 
 void spriteload_init()
 {
-	back = sprite_load(L"./Data/Images/game_2.png");
+	back1 = sprite_load(L"./Data/Images/game_2.png");
+	back2 = sprite_load(L"./Data/Images/game_3.png");
 	sprTime = sprite_load(L"./Data/Images/view.png");
 	judgeArea = sprite_load(L"./Data/Images/judge_area.png");
 	conveyor1 = sprite_load(L"./Data/Images/konbea_1.png");
 	conveyor2 = sprite_load(L"./Data/Images/konbea_2.png");
+	flyer1 = sprite_load(L"./Data/Images/flyer_1.png");
+	flyer2 = sprite_load(L"./Data/Images/flyer_2.png");
+	flyer3 = sprite_load(L"./Data/Images/board.png");
 
 	sabaCan = sprite_load(L"./Data/Images/saba_can.png");
 	ojisan = sprite_load(L"./Data/Images/ojisan.png");
@@ -83,6 +93,8 @@ void spriteload_init()
 
 	number = sprite_load(L"./Data/Images/number.png");
 	space = sprite_load(L"./Data/Images/space_key.png");
+	wkey = sprite_load(L"./Data/Images/key_w.png");
+	skey = sprite_load(L"./Data/Images/key_s.png");
 	endwork = sprite_load(L"./Data/Images/end_of_work.png");
 	leavework = sprite_load(L"./Data/Images/leave_work.png");
 	skip = sprite_load(L"./Data/Images/skip.png");
@@ -99,11 +111,15 @@ void spriteload_init()
 
 void spriteload_deinit()
 {
-	safe_delete(back);
+	safe_delete(back1);
+	safe_delete(back2);
 	safe_delete(sprTime);
 	safe_delete(conveyor1);
 	safe_delete(conveyor2);
 	safe_delete(judgeArea);
+	safe_delete(flyer1);
+	safe_delete(flyer2);
+	safe_delete(flyer3);
 
 	safe_delete(sabaCan);
 	safe_delete(ojisan);
@@ -132,6 +148,8 @@ void spriteload_deinit()
 
 	safe_delete(number);
 	safe_delete(space);
+	safe_delete(wkey);
+	safe_delete(skey);
 	safe_delete(endwork);
 	safe_delete(leavework);
 	safe_delete(skip);
