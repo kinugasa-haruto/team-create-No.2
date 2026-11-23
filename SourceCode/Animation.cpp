@@ -64,6 +64,12 @@ void Binder::Up()
 		scale = 1;
 		NumberUpdate();
 		spacebar.Update({ SCREEN_W - 225, SCREEN_H - 250 });
+		if (!musicresult)
+		{
+			music::play(GAME_RESULT);
+			music::setVolume(GAME_RESULT, 0.1f);
+			musicresult = true;
+		}
 		if (music)
 		{
 			music::stop(PAPER);//バインダーが出てくるときの音
@@ -80,6 +86,7 @@ void Binder::Down()
 	if (!music && scale >= 0.9f)
 	{
 		music::play(PAPER);//バインダーが出てくるときの音
+		music::stop(GAME_RESULT);
 		music = true;
 	}
 	if (scale >= 0.999f) scale = 1;

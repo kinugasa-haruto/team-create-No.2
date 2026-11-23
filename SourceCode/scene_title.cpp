@@ -78,7 +78,12 @@ void title_update()
 				title.SetInv(Easing::easeOut3(timer));
 				if (title.GetInv() >= 0.99f) timer = 0;
 			}
-			if (title.GetInv() >= 0.99f) nextScene = SCENE_TUTORIAL;
+			if (title.GetInv() >= 0.99f)
+			{
+				nextScene = SCENE_TUTORIAL;
+				//nextScene = SCENE_RESULT;
+				//Clear = true;
+			}
 
 		}
 

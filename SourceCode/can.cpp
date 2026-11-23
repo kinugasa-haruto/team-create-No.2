@@ -872,6 +872,8 @@ void Can::CAN_RESET(Can* can, Can* oba, Can* oji, Can* bom)
 
 		oji[i].oji_pos = { SCREEN_W,SCREEN_H * 0.48f - 50 };
 		oji[i].can_color = 0;
+		oji[i].oji_speed = 0;
+		oji[i].scale = { 1, 1 };
 		oji[i].flick_flag = false;
 		oji[i].oji_back = false;
 		oji[i].oji_hit = false;

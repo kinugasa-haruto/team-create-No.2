@@ -69,11 +69,13 @@ public:
 		anime = 0;
 		goNext = false;
 		music = false;
+		musicresult = false;
 	}
 
 private:
 	bool goNext;
 	bool music;
+	bool musicresult;
 	int binderType;
 	int anime;
 	float timer;

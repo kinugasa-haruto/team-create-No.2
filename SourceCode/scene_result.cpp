@@ -11,7 +11,7 @@ extern Can can;
 
 bool Clear;
 static bool click;
-
+static bool musicExist;
 Result result = Result::Instance();
 
 
@@ -23,11 +23,13 @@ void result_init()
 	back_init();
 	result.Reset();
 	click = false;
+	musicExist = false;
 }
 
 void result_deinit()
 {
-
+	if (Clear) music::stop(GAMECLEAR);
+	else music::stop(GAMEOVER);
 }
 
 void result_update()
@@ -57,6 +59,20 @@ void result_update()
 	case 3:
 		if (result.Update(Clear))
 		{
+			if (!musicExist)
+			{
+				if (Clear)
+				{
+					music::play(GAMECLEAR, true);
+					music::setVolume(GAMECLEAR, 0.1f);
+					musicExist = true;
+				}
+				else
+				{
+					music::play(GAMEOVER, false);
+					musicExist = true;
+				}
+			}
 			if (TRG(0) & PAD_TRG1)
 			{
 				if (!click)

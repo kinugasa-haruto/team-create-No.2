@@ -67,7 +67,7 @@ void game_update()
 		//////// ƒpƒ‰ƒ[ƒ^‚Ìİ’è ////////
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
-
+		
 		game_state++;
 		/*fallthrough*/
 

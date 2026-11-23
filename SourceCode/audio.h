@@ -24,6 +24,9 @@
 #define NO_CAN4	11
 #define BOM_BOTTON	12
 #define TITLE_BGM	13
+#define GAMECLEAR 14
+#define GAMEOVER 15
+#define GAME_RESULT 16
 
 
 // XWB‚ÌŽí—Þ
